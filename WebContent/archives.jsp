@@ -1,9 +1,34 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<!--  TEST -->
+
+<jsp:useBean id="date" class="java.util.Date" />
+<fmt:formatDate value="${date}" pattern="yyyy" var="currentYear" />
+
 <div class="container-fluid">
-	<h2>Events</h2>
+	<div class="d-flex justify-content-between">
+		<h2>Archives</h2>
+		<div>
+			<form action="actions/search" method="GET" class="navbar-form navbar-right">
+				<div class="form-row">
+					<div class="form-group border rounded">
+						<input type="number" class="form-control" min="1900" max="${currentYear}" step="1" value="2016" name="search">
+					</div>
+					<div class="form-group border rounded">
+						<button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+					</div>
+				</div>
+				
+			</form>
+		</div>
+	</div>
 	<div>
+		
+		<c:if test="${empty events}">
+		<div class="alert alert-primary">
+			<strong>Hey !</strong> Enter a date and we will search past events for you !
+		</div>
+		</c:if>
+	
 		<c:forEach items="${events}" var="event">
 			<c:choose>
 				<c:when test="${event.type == 'Congress'}">
