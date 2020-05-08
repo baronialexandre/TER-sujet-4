@@ -6,7 +6,7 @@
 
 <div class="container-fluid">
 	<div class="d-flex justify-content-between">
-		<h2>Archives</h2>
+		<h1>Archives</h1>
 		<div>
 			<form action="actions/search" method="GET" class="navbar-form navbar-right">
 				<div class="form-row">
