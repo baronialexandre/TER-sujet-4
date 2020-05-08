@@ -46,7 +46,7 @@
 				</div>
 				<div class="card-footer text-${typeColor}" style="display: flex;">
 					<p class="card-text" style="flex: auto;">
-						<c:out value="${fn:length(event.attendies)}" default="Test::0" />
+						<c:out value="${fn:length(event.attendees)}" default="Test::0" />
 						/
 						<c:out value="${event.attendeeCap}" default="Test::15" />
 					</p>

@@ -6,7 +6,7 @@
 
 <div class="container-fluid">
 	<div class="d-flex justify-content-between">
-		<h1>Archives</h1>
+		<h2>Archives</h2>
 		<div>
 			<form action="actions/search" method="GET" class="navbar-form navbar-right">
 				<div class="form-row">
@@ -71,7 +71,7 @@
 				</div>
 				<div class="card-footer text-${typeColor}" style="display: flex;">
 					<p class="card-text" style="flex: auto;">
-						<c:out value="${fn:length(event.attendies)}" default="Test::0" />
+						<c:out value="${fn:length(event.attendees)}" default="Test::0" />
 						/
 						<c:out value="${event.attendeeCap}" default="Test::15" />
 					</p>
