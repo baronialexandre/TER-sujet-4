@@ -3,14 +3,23 @@ package springapp.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PostUpdate;
 import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
@@ -25,20 +34,23 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.format.annotation.DateTimeFormat;
 
-@Entity(name = "Person")
-public class Person implements Serializable {
+import springapp.model.utils.Role;
+
+@Entity(name = "Researcher")
+public class Researcher implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id()
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long personId;
-
+	private long researcherId;
+	
 	@Basic(optional = false)
-	@Column(name = "username", length = 200,
+	@Email(message = "Email should be valid")
+	@Column(name = "email", length = 200,
 	nullable = false, unique = true)
 	@Size(max = 200, message = "200 characters max")
-	private String username;
+	private String email;
 
 	@Basic(optional = false)
 	@Column(name = "first_name", length = 200,
@@ -51,13 +63,6 @@ public class Person implements Serializable {
 	nullable = false)
 	@Size(max = 200, message = "200 characters max")
 	private String lastName;
-
-	@Basic(optional = false)
-	@Email(message = "Email should be valid")
-	@Column(name = "email", length = 200,
-	nullable = false)
-	@Size(max = 200, message = "200 characters max")
-	private String email;
 
 	@Basic(optional = false)
 	@Column(name = "website", length = 200,
@@ -75,6 +80,11 @@ public class Person implements Serializable {
 	@Column(name = "password", length = 200,
 	nullable = false)
 	private String password;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "role", length = 200,
+	nullable = false)
+	private Role role;
 
 	@Version()
 	private long version = 0;
@@ -83,22 +93,30 @@ public class Person implements Serializable {
 	public static long updateCounter = 0;
 	
     @ManyToOne(optional = true)
-    @JoinColumn(name = "team")
-    private Team team;
+    @JoinColumn(name = "lab")
+    private Lab lab;
+    
+	@ManyToMany(mappedBy = "attendees")
+	private Set<Event> eventsAttending;
+    
+	@OneToMany(
+			cascade = { CascadeType.MERGE,  CascadeType.REMOVE }, //CascadeType.PERSIST enlevé
+			fetch = FetchType.LAZY, mappedBy = "organizer")
+	private Set<Event> eventsOrganized;
 
-	public Person() {
+	public Researcher() {
 		super();
 	}
 
-	public Person(String username, String firstName, String lastName, String email, String website, Date birthDay, String password) {
+	public Researcher(String email, String firstName, String lastName,  String website, Date birthDay, String password, Role role) {
 		super();
-		this.username = username;
+		this.email = email;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.email = email;
 		this.website = website;
 		this.birthDay = birthDay;
 		this.password = password;
+		this.role = role;
 	}
 
 	@PreUpdate
@@ -112,20 +130,12 @@ public class Person implements Serializable {
 		updateCounter++;
 	}
 
-	public long getPersonId() {
-		return personId;
+	public long getResearcherId() {
+		return researcherId;
 	}
 
-	public void setPersonId(long personId) {
-		this.personId = personId;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
+	public void setResearcherId(long researcherId) {
+		this.researcherId = researcherId;
 	}
 
 	public String getFirstName() {
@@ -184,19 +194,59 @@ public class Person implements Serializable {
 		this.version = version;
 	}
 
-	public Team getTeam() {
-		return team;
+	public Lab getLab() {
+		return lab;
 	}
 
-	public void setTeam(Team team) {
-		this.team = team;
+	public void setLab(Lab lab) {
+		this.lab = lab;
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+	public Set<Event> getEventsAttending() {
+		return eventsAttending;
+	}
+
+	public void setEventsAttending(Set<Event> eventsAttending) {
+		this.eventsAttending = eventsAttending;
+	}
+
+	public void addAttendingEvent(Event event) {
+		if (eventsAttending == null) {
+			eventsAttending = new HashSet<>();
+		}
+		eventsAttending.add(event);
+	}
+
+	public Set<Event> getEventsOrganized() {
+		return eventsOrganized;
+	}
+
+	public void setEventsOrganized(Set<Event> eventsOrganized) {
+		this.eventsOrganized = eventsOrganized;
+	}
+	
+	public void addOrganizedEvent(Event event) {
+		if (eventsOrganized == null) {
+			eventsOrganized = new HashSet<>();
+		}
+		eventsOrganized.add(event);
 	}
 
 	@Override
 	public String toString() {
-		return "Person [id=" + personId + ", username=" + username + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", email=" + email + ", website=" + website + ", birthDay=" + birthDay + ", password=" + password
-				+ ", version=" + version + "]";
+		return "Researcher [researcherId=" + researcherId + ", email=" + email + ", firstName=" + firstName
+				+ ", lastName=" + lastName + ", website=" + website + ", birthDay=" + birthDay + ", password="
+				+ password + ", role=" + role + ", version=" + version + "]";
 	}
+
+
 
 }

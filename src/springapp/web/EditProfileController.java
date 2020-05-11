@@ -25,7 +25,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import springapp.business.IPersonManager;
 import springapp.model.Person;
-import springapp.model.User;
+import springapp.model.utils.User;
 
 @Controller()
 public class EditProfileController {

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import springapp.dao.Dao;
-import springapp.model.User;
+import springapp.model.utils.User;
 
 @Service("userManager")
 public class InMemoryUserManager implements IUserManager {

@@ -1,4 +1,4 @@
-package springapp.model;
+package springapp.model.utils;
 
 public class User {
 	

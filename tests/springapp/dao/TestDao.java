@@ -12,17 +12,22 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
 import springapp.dao.Dao;
 import springapp.dao.SpringDAOConfiguration;
-import springapp.model.Person;
-import springapp.model.Team;
-import springapp.model.User;
+import springapp.model.Event;
+import springapp.model.Lab;
+import springapp.model.Researcher;
+import springapp.model.utils.EventType;
+import springapp.model.utils.Role;
+import springapp.model.utils.User;
 
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -35,12 +40,23 @@ public class TestDao {
 	@Autowired
 	Dao dao;
 	Random rnd = new Random();
+	Researcher researcherAdd, researcherGet, researcherUpd;
+	Lab labAdd, labGet, labUpd;
+	Event eventAdd, eventGet, eventUpd;
 	
-	Person personAdd,personGet,personUpd,personTeam1,personTeam2,personTeam3,personAuth,personAuth2,personHas;
-	Team teamAdd,teamGet,teamUpd,team,teamSearch1,teamSearch2, teamGetAll;
 	
 	@BeforeAll
 	public void beforeAll() {
+		researcherAdd = new Researcher("ADD@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.USER);
+		researcherGet = new Researcher("GET@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.USER);
+		researcherUpd = new Researcher("UPD@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.USER);
+		labAdd = new Lab("addlab");
+		labGet = new Lab("getlab");
+		labUpd = new Lab("updlab");
+		eventAdd = new Event("ADD FYRE CONF",EventType.CONFERENCE,"l'ilot",new Date(),new Date(),"cette conference de feu",Arrays.asList("Jean MICHELE","DJ dog"),new Float(5.05),new Long(150));
+		eventGet = new Event("GET FYRE CONF",EventType.CONFERENCE,"l'ilot",new Date(),new Date(),"cette conference de feu",Arrays.asList("Jean MICHELE","DJ dog"),new Float(5.05),new Long(150));
+		eventUpd = new Event("UPD FYRE CONF",EventType.CONFERENCE,"l'ilot",new Date(),new Date(),"cette conference de feu",Arrays.asList("Jean MICHELE","DJ dog"),new Float(5.05),new Long(150));
+		/*
 		personAdd = new Person("napolimanADD"+rnd.nextInt(),"NAPOLI","Marcel","napoliman76@gmuil.com","www.napolo.com",new Date(), "pwd");
 		personGet = new Person("napolimanGET"+rnd.nextInt(),"NAPOLI","Marcel","napoliman76@gmuil.com","www.napolo.com",new Date(), "pwd");
 		personUpd = new Person("napolimanUP"+rnd.nextInt(),"NAPOLI","Marcel","napoliman76@gmuil.com","www.napolo.com",new Date(), "pwd");
@@ -57,11 +73,14 @@ public class TestDao {
 		teamGetAll = new Team("GetAllTeam "+rnd.nextInt());
 		teamSearch1 = new Team("ADD for testSearchTeams : POISSON : "+rnd.nextInt());
 		teamSearch2 = new Team("ADD for testSearchTeams : POISSON 2 : "+rnd.nextInt());
+		*/
 		//dao.clearDatabase();
 	}
 
 	@AfterAll
 	public void afterAll() {
+		
+		/*
 		dao.removePerson(personAdd.getPersonId());
 		dao.removePerson(personGet.getPersonId());
 		dao.removePerson(personUpd.getPersonId());
@@ -77,6 +96,7 @@ public class TestDao {
 		dao.removeTeam(teamGetAll.getTeamId());
 		dao.removeTeam(teamSearch1.getTeamId());
 		dao.removeTeam(teamSearch2.getTeamId());
+		*/
 	}
 
 	@BeforeEach
@@ -87,7 +107,116 @@ public class TestDao {
 	public void tearDown() {
 	}
 	
+	//Researcher(String email, String firstName, String lastName,  String website, Date birthDay, String password, Role role) 
+	@Test
+	public void testAddResearcher() {
+		researcherAdd = dao.addResearcher(researcherAdd);
+		assertTrue(true);
+	}
 
+	@Test
+	public void testFindResearcher() {
+		researcherGet = dao.addResearcher(researcherGet);
+		Researcher researcherGet2 = dao.findResearcher(researcherGet.getResearcherId());
+		assertEquals(researcherGet.getResearcherId(), researcherGet2.getResearcherId());
+	}
+
+	@Test
+	public void testUpdateResearcher() {
+		researcherUpd = dao.addResearcher(researcherUpd);
+		researcherUpd.setFirstName("PREMIERnon");
+		dao.updateResearcher(researcherUpd);
+		assertEquals("PREMIERnon", dao.findResearcher(researcherUpd.getResearcherId()).getFirstName());
+	}
+
+	@Test
+	public void testRemoveResearcher() {
+		Researcher researcherRem = new Researcher("rem@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.USER);
+		researcherRem = dao.addResearcher(researcherRem);
+		dao.removeResearcher(researcherRem.getResearcherId());
+		try {
+			dao.findResearcher(researcherRem.getResearcherId());
+		} catch(Exception e) {
+			assertTrue(true);
+			return;
+		}
+		fail();
+	}
+	
+	
+	//Lab(String labName)
+	@Test
+	public void testAddLab() {
+		labAdd = dao.addLab(labAdd);
+		assertTrue(true);
+	}
+
+	@Test
+	public void testFindLab() {
+		labGet = dao.addLab(labGet);
+		Lab labGet2 = dao.findLab(labGet.getLabId());
+		assertEquals(labGet.getLabId(), labGet2.getLabId());
+	}
+
+	@Test
+	public void testUpdateLab() {
+		labUpd = dao.addLab(labUpd);
+		labUpd.setLabName("UPDATEDlab");
+		dao.updateLab(labUpd);
+		assertEquals("UPDATEDlab", dao.findLab(labUpd.getLabId()).getLabName());
+	}
+
+	@Test
+	public void testRemoveLab() {
+		Lab labRem = new Lab("rem lab lab");
+		labRem = dao.addLab(labRem);
+		dao.removeLab(labRem.getLabId());
+		try {
+			dao.findLab(labRem.getLabId());
+		} catch(Exception e) {
+			assertTrue(true);
+			return;
+		}
+		fail();
+	}
+	
+	//Event(String eventName, EventType type, String location, Date beginDate, Date endDate, String description, List<String> speakers, Float fee, Long attendeeCap, Researcher organizer) 
+	@Test
+	public void testAddEvent() {
+		eventAdd = dao.addEvent(eventAdd);
+		assertTrue(true);
+	}
+
+	@Test
+	public void testFindEvent() {
+		eventGet = dao.addEvent(eventGet);
+		Event eventGet2 = dao.findEvent(eventGet.getEventId());
+		assertEquals(eventGet.getEventId(), eventGet2.getEventId());
+	}
+
+	@Test
+	public void testUpdateEvent() {
+		eventUpd = dao.addEvent(eventUpd);
+		eventUpd.setEventName("UPDATEDevent");
+		dao.updateEvent(eventUpd);
+		assertEquals("UPDATEDevent", dao.findEvent(eventUpd.getEventId()).getEventName());
+	}
+
+	@Test
+	public void testRemoveEvent() {
+		Event eventRem = new Event("REM FYRE CONF",EventType.CONFERENCE,"l'ilot",new Date(),new Date(),"cette conference de feu",Arrays.asList("Jean MICHELE","DJ dog"),new Float(5.05),new Long(150));
+		eventRem = dao.addEvent(eventRem);
+		dao.removeEvent(eventRem.getEventId());
+		try {
+			dao.findEvent(eventRem.getEventId());
+		} catch(Exception e) {
+			assertTrue(true);
+			return;
+		}
+		fail();
+	}
+	
+	/*
 	@Test
 	public void testAddTeam() {
 		teamAdd = dao.addTeam(teamAdd);
@@ -240,6 +369,6 @@ public class TestDao {
 		assertTrue(dao.hasPerson(personHas.getUsername()));
 		dao.removePerson(personHas.getPersonId());
 		assertFalse(dao.hasPerson(personHas.getUsername()));
-	}
+	}*/
 	
 }
