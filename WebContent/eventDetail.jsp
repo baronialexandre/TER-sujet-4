@@ -8,11 +8,20 @@
 	  <div class="card-body"><c:out value="${event.description}" default="description::TEST"/></div>
 	</div>
 	<div class="d-flex justify-content-around bd-highlight">
-	    <div class="p-2">
-	    	<a href="actions/join-event?id=${event.id}">
-				<button type="button" class="btn btn-info pull-right">Join</button>
-			</a>
-		</div>
+		<c:if test="${fees} == 0">
+			<div class="p-2">
+		    	<a href="actions/join-event?id=${event.id}">
+					<button type="button" class="btn btn-info pull-right">Join</button>
+				</a>
+			</div>
+		</c:if>
+	    <c:otherwise>
+	    	<div class="p-2">
+		    	<a href="actions/pay-event?id=${event.id}">
+					<button type="button" class="btn btn-info pull-right">Pay to join</button>
+				</a>
+			</div>
+	    </c:otherwise>
 	    <c:if test="${(researcher.id == creatorId) || (researcher.role == 'admin')}">
 		    <div class="p-2">
 				<a href="actions/edit-event?id=${event.id}">
