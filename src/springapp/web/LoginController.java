@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import springapp.business.IUserManager;
-import springapp.model.User;
+import springapp.model.utils.User;
 
 @Controller()
 @ControllerAdvice

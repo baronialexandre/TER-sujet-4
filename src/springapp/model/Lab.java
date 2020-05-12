@@ -21,19 +21,19 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
-@Entity(name = "Team")
-public class Team implements Serializable {
+@Entity(name = "Lab")
+public class Lab implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id()
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long teamId;
+	private long labId;
 
 	@Basic(optional = false)
-	@Column(name = "teamName", length = 200,
+	@Column(name = "labName", length = 200,
 	nullable = false, unique = true)
-	private String teamName;
+	private String labName;
 
 	@Version()
 	private long version = 0;
@@ -42,17 +42,17 @@ public class Team implements Serializable {
 	public static long updateCounter = 0;
 
 	@OneToMany(
-			cascade = { CascadeType.MERGE,  CascadeType.REMOVE }, //CascadeType.PERSIST enlevé
-			fetch = FetchType.LAZY, mappedBy = "team")
-	private Set<Person> members;
+			cascade = { CascadeType.MERGE,  CascadeType.REMOVE },
+			fetch = FetchType.LAZY, mappedBy = "lab")
+	private Set<Researcher> researchers;
 
-	public Team() {
+	public Lab() {
 		super();
 	}
 
-	public Team(String name) {
+	public Lab(String labName) {
 		super();
-		this.teamName = name;
+		this.labName = labName;
 	}
 
 	@PreUpdate
@@ -66,20 +66,20 @@ public class Team implements Serializable {
 		updateCounter++;
 	}
 	
-	public long getTeamId() {
-		return teamId;
+	public long getLabId() {
+		return labId;
 	}
 
-	public void setTeamId(long teamId) {
-		this.teamId = teamId;
+	public void setLabId(long labId) {
+		this.labId = labId;
 	}
 
-	public void setTeamName(String name) {
-		this.teamName = name;
+	public void setLabName(String name) {
+		this.labName = name;
 	}
 
-	public String getTeamName() {
-		return teamName;
+	public String getLabName() {
+		return labName;
 	}
 
 	public long getVersion() {
@@ -90,25 +90,25 @@ public class Team implements Serializable {
 		this.version = version;
 	}
 
-	public Set<Person> getMembers() {
-		return members;
+	public Set<Researcher> getResearchers() {
+		return researchers;
 	}
 
-	public void setPersons(Set<Person> members) {
-		this.members = members;
+	public void setResearchers(Set<Researcher> researchers) {
+		this.researchers = researchers;
 	}
 
-	public void addPerson(Person p) {
-		if (members == null) {
-			members = new HashSet<>();
+	public void addResearcher(Researcher p) {
+		if (researchers == null) {
+			researchers = new HashSet<>();
 		}
-		p.setTeam(this);
-		members.add(p);
+		p.setLab(this);
+		researchers.add(p);
 	}
 
 	@Override
 	public String toString() {
-		return "Team [id=" + teamId + ", name=" + teamName + ", version=" + version + ", members=" + members + "]";
+		return "Lab [id=" + labId + ", name=" + labName + ", version=" + version + ", researchers=" + researchers + "]";
 	}
 
 
