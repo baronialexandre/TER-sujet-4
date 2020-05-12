@@ -4,7 +4,7 @@
 	<h2>Informations</h2>
 	<form:form class="form-horizontal"
 		action="${pageContext.servletContext.contextPath}/actions/register"
-		method="POST" modelAttribute="researcher">
+		method="POST" >
 		<form:errors path="*" cssClass="alert alert-danger" element="div" />
 		<table class="table table-dark table-striped">
 			<tr>
