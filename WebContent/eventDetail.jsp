@@ -8,7 +8,7 @@
 	  <div class="card-body"><c:out value="${event.description}" default="description::TEST"/></div>
 	</div>
 	<div class="d-flex justify-content-around bd-highlight">
-		<c:if test="${fees} == 0">
+		<c:if test="${fees == 0}">
 			<div class="p-2">
 		    	<a href="actions/join-event?id=${event.id}">
 					<button type="button" class="btn btn-info pull-right">Join</button>
