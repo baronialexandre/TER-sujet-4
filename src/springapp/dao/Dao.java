@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import springapp.model.Event;
 import springapp.model.Lab;
 import springapp.model.Researcher;
+import springapp.model.utils.Role;
 import springapp.model.utils.User;
 
 @Service
@@ -135,8 +136,24 @@ public class Dao {
 		return events;
 	}
 	
-
+	//USER
+	public User authUser(User user) {
+		System.out.println("DAO AUTH user:"+user);
+		Query query = em.createQuery("SELECT r.researcherId FROM Researcher AS r WHERE email=?1 AND password =?2").setParameter(1, user.getEmail()).setParameter(2, user.getPassword());
+		if(query.getResultList().isEmpty())
+			return user;
+		System.out.println(query.getResultList().get(0));
+		long result = (long) query.getResultList().get(0);
+		Query queryRole = em.createQuery("SELECT r.role FROM Researcher AS r WHERE researcherId=?1").setParameter(1,result);
+		Role role = (Role) queryRole.getResultList().get(0);
+		System.out.println(result);
+		user.setId(result);
+		user.setLoggedIn(true);
+		user.setRole(role);
+ 		return user;
+	}
 	
+	 
 	/*
 	
 	public User authUser(User user) {

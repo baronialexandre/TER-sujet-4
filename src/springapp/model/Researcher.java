@@ -96,7 +96,7 @@ public class Researcher implements Serializable {
     @JoinColumn(name = "lab")
     private Lab lab;
     
-	@ManyToMany(mappedBy = "attendees")
+	@ManyToMany(mappedBy = "attendees") 
 	private Set<Event> eventsAttending;
     
 	@OneToMany(
