@@ -48,7 +48,7 @@ public class SpringDAOConfiguration {
         em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         // Configuration d'hibernate
         Properties properties = new Properties();
-        properties.setProperty("hibernate.hbm2ddl.auto", "create-drop"); //create-drop pour drop à la fin du test ou update
+        properties.setProperty("hibernate.hbm2ddl.auto", "update"); //create-drop pour drop à la fin du test ou update
         properties.setProperty("hibernate.dialect", //
                 "org.hibernate.dialect.H2Dialect");
         properties.setProperty("hibernate.show_sql", "true");

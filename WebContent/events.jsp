@@ -55,7 +55,7 @@
 							style="flex: auto;">
 							More
 							<c:choose>
-								<c:when test="${personId != event.organizer.id}">
+								<c:when test="${researcher.lab.id == event.organizer.lab.id && ( researcher.role == 'organizer' || researcher.role == 'admin')}">
 									<i class="far fa-edit"></i>
 								</c:when>
 								<c:otherwise>
