@@ -7,7 +7,6 @@ import javax.persistence.*;
 
 
 
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -62,6 +61,12 @@ public class Dao {
 			researchers.add(this.findResearcher(r.getResearcherId()));
 		}
 		return researchers;
+	}
+	
+	public boolean hasResearcher(String email) {
+		System.out.println("find " + email);
+		Query query = em.createQuery("SELECT r.id FROM Researcher AS r WHERE email=?1").setParameter(1, email);
+		return !query.getResultList().isEmpty();
 	}
 	
 	// DAO LAB

@@ -41,7 +41,9 @@ public class TestDao {
 	@Autowired
 	Dao dao;
 	Random rnd = new Random();
-	Researcher researcherAdd, researcherGet, researcherUpd, researcherLab1, researcherLab2, researcherLab3,attendeeEvent1,attendeeEvent2,attendeeEvent3,researcherAuth,researcherAuth2;
+	Researcher researcherAdd, researcherGet, researcherUpd, researcherLab1, researcherLab2, researcherLab3,attendeeEvent1,attendeeEvent2,attendeeEvent3,researcherAuth,researcherAuth2,
+	researcherHas;
+	
 	Lab labAdd, labGet, labUpd, lab;
 	Event eventAdd, eventGet, eventUpd, event;
 	
@@ -58,6 +60,7 @@ public class TestDao {
 		attendeeEvent3 = new Researcher("attendee3"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.ADMIN);
 		researcherAuth = new Researcher("authgood"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.ADMIN);
 		researcherAuth2 = new Researcher("authwrongo"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.ADMIN);
+		researcherHas = new Researcher("HAS"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.USER);
 		labAdd = new Lab("addlab"+rnd.nextInt());
 		labGet = new Lab("getlab"+rnd.nextInt());
 		labUpd = new Lab("updlab"+rnd.nextInt());
@@ -290,6 +293,14 @@ public class TestDao {
 	@Test
 	public void testGenTest() {
 		EventLabResearcherGenerator.generateEventsLabsResearchers(dao, 10, 10);
+	}
+	
+	@Test
+	public void testHasResearcher() {
+		dao.addResearcher(researcherHas);
+		assertTrue(dao.hasResearcher(researcherHas.getEmail()));
+		dao.removeResearcher(researcherHas.getResearcherId());
+		assertFalse(dao.hasResearcher(researcherHas.getEmail()));
 	}
 	
 	
