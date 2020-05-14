@@ -2,6 +2,7 @@ package springapp.dao;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import javax.persistence.*;
 
@@ -144,6 +145,25 @@ public class Dao {
 	
 	public Collection<Event> getAllEvents(){
 		Collection<Event> eventsLazy = em.createQuery("Select eve from Event eve", Event.class).getResultList();
+		Collection<Event> events = new ArrayList<Event>();
+		for(Event e : eventsLazy) {
+			events.add(this.findEvent(e.getEventId()));
+		}
+		return events;
+	}
+	
+	public Collection<Event> getActiveEvents() { //todo : test
+		Date now = new Date();
+		Collection<Event> eventsLazy = em.createQuery("Select eve from Event eve Where eve.beginDate<=?1", Event.class).setParameter(1, now).getResultList();
+		Collection<Event> events = new ArrayList<Event>();
+		for(Event e : eventsLazy) {
+			events.add(this.findEvent(e.getEventId()));
+		}
+		return events;
+	}
+
+	public Collection<Event> getEventsYear(int year) { //todo : test
+		Collection<Event> eventsLazy = em.createQuery("Select eve from Event eve Where year(eve.beginDate)=?1", Event.class).setParameter(1, year).getResultList();
 		Collection<Event> events = new ArrayList<Event>();
 		for(Event e : eventsLazy) {
 			events.add(this.findEvent(e.getEventId()));

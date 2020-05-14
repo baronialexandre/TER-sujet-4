@@ -35,7 +35,7 @@ public class ListController{
     	}
         logger.info("List of events (actives)");
         
-        Collection<Event> events = eventManager.findAll();
+        Collection<Event> events = eventManager.findActive();
         logger.info(events.toString());
         ModelAndView modelAndView = new ModelAndView();
         request.getSession().setAttribute("events", events);

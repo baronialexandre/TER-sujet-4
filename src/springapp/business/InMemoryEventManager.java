@@ -43,4 +43,14 @@ public class InMemoryEventManager implements IEventManager {
 		return null;
 	}
 
+	@Override
+	public Collection<Event> findActive() {
+		return dao.getActiveEvents();
+	}
+
+	@Override
+	public Collection<Event> findAtYear(int year) {
+		return dao.getEventsYear(year);
+	}
+
 }
