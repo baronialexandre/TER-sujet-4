@@ -1,8 +1,9 @@
 package springapp.business;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Random;
-import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,11 +22,6 @@ public class InMemoryLabManager implements ILabManager {
 
     public InMemoryLabManager() {
     }
-    
-    @PostConstruct
-    public void init() {
-    	EventLabResearcherGenerator.generateEventsLabsResearchers(dao, 10, 5);
-    }
 
     @Override
     public Collection<Lab> findAll() {
@@ -40,6 +36,18 @@ public class InMemoryLabManager implements ILabManager {
 	@Override
 	public Lab find(long id) {
 		return null;
+	}
+
+	public List<String> getAllLabNames() {
+		List<Lab> allLabs = new ArrayList<Lab>(findAll());
+		List<String> allLabNames = new ArrayList<>();
+		for(Lab lab : allLabs)
+			allLabNames.add(lab.getLabName());
+		return allLabNames;
+	}
+
+	public Lab findByName(String name) {
+		return dao.findLab(name);
 	}
 
 }
