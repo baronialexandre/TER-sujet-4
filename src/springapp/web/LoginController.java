@@ -27,6 +27,7 @@ public class LoginController{
     @RequestMapping(value = "login", method = RequestMethod.POST)
     public ModelAndView logIn(HttpServletRequest request,
             HttpServletResponse response) {
+    	
     	String email = request.getParameter("email");
     	String password = request.getParameter("password");
     	logger.info("email :" + email + " | password :"+ password);
@@ -38,7 +39,7 @@ public class LoginController{
     	}
     	request.getSession().setAttribute("userId", user.getId());
     	request.getSession().setAttribute("userRole", user.getRole());
-        return new ModelAndView("redirect:/actions/eventEdit");
+        return new ModelAndView("redirect:/actions/events");
     }
     
     @RequestMapping(value = "logout")

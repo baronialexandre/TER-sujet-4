@@ -6,16 +6,16 @@
 	<div>
 		<c:forEach items="${events}" var="event">
 			<c:choose>
-				<c:when test="${event.type == 'Congress'}">
+				<c:when test="${event.type == EventType.CONGRESS}">
 					<!--primary-->
 					<c:set var="typeColor" scope="request" value="primary" />
 					<c:out value="${salary}" />
 				</c:when>
-				<c:when test="${event.type == 'Conference'}">
+				<c:when test="${event.type == EventType.CONFERENCE}">
 					<!--danger-->
 					<c:set var="typeColor" value="danger" />
 				</c:when>
-				<c:when test="${event.type == 'Seminar'}">
+				<c:when test="${event.type == EventType.SEMINAR}">
 					<!--success-->
 					<c:set var="typeColor" value="success" />
 				</c:when>
@@ -27,7 +27,7 @@
 			<div class="card border-${typeColor} mb-3">
 				<div class="card-header" style="display: flex;">
 					<h2 class="card-text" style="flex: none;">
-						<c:out value="${event.name}" default="Test::Name" />
+						<c:out value="${event.eventName}" default="Test::Name" />
 					</h2>
 					<p class="card-text" style="flex: auto; margin-left: 1em;">
 						<c:out value="${event.type}" default="Test::Seminaire" />
@@ -38,7 +38,7 @@
 				</div>
 				<div class="card-body text-${typeColor}" style="display: flex;">
 					<p class="card-text" style="flex: auto;">
-						<c:out value="${event.organizer.lab}" default="Test::Labo" />
+						<c:out value="${event.organizer.lab.labName}" default="Test::Labo" />
 					</p>
 					<p class="card-text" style="flex: auto; text-align: right;">
 						<c:out value="${event.location}" default="Test::Lieu" />
@@ -55,7 +55,7 @@
 							style="flex: auto;">
 							More
 							<c:choose>
-								<c:when test="${researcher.lab.id == event.organizer.lab.id && ( researcher.role == 'organizer' || researcher.role == 'admin')}">
+								<c:when test="${researcher.lab.labId == event.organizer.lab.labId && ( researcher.role == Role.ORGANIZER || researcher.role == Role.ADMIN)}">
 									<i class="far fa-edit"></i>
 								</c:when>
 								<c:otherwise>

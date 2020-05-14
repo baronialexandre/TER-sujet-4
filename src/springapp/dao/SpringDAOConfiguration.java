@@ -31,7 +31,8 @@ public class SpringDAOConfiguration {
         dataSource.setDriverClassName("org.h2.Driver");
         dataSource.setUsername("bandol");
         dataSource.setPassword("bandol");
-        dataSource.setUrl("jdbc:h2:file:./data_TER_04/h2db"); // lien dans le projet a faire
+        //dataSource.setUrl("jdbc:h2:file:.\\data_TER_04\\h2db"); // A activer si .war
+        dataSource.setUrl("jdbc:h2:file:D:/Master/Ter/data_TER_04/h2db"); // A modifier localement pour dev, ne pas commit ce fichier (une fois modif) :)
         return dataSource;
     }
 

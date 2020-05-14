@@ -89,20 +89,20 @@ public class EventLabResearcherGenerator {
 		}
 
 		Faker faker = new Faker(new Locale("FR"));
-		if (dao.hasResearcher("admin@test.test")) {
+		if (!dao.hasResearcher("admin@test.test")) {
 			Researcher adminTest = new Researcher("admin@test.test", "Adminator", "Adminus", "admin4ever.com",
 					faker.date().birthday(), "admin", Role.ADMIN);
 			researchers.add(adminTest);
 			labs.get(0).addResearcher(adminTest);
 		}
-		if (dao.hasResearcher("orga@test.test")) {
+		if (!dao.hasResearcher("orga@test.test")) {
 			Researcher orgaTest = new Researcher("orga@test.test", "Organisator", "Organum", "orga.com",
 					faker.date().birthday(), "orga", Role.ORGANIZER);
 			researchers.add(orgaTest);
 			labs.get(0).addResearcher(orgaTest);
 
 		}
-		if (dao.hasResearcher("user@test.test")) {
+		if (!dao.hasResearcher("user@test.test")) {
 			Researcher userTest = new Researcher("user@test.test", "Userator", "Usarus", "proud2use.com",
 					faker.date().birthday(), "user", Role.USER);
 			researchers.add(userTest);

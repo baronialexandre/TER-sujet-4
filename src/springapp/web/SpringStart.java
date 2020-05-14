@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
@@ -24,9 +25,9 @@ import springapp.dao.SpringDAOConfiguration;
 
 @Configuration
 @EnableWebMvc
-@Import({SpringBusinessConfig.class,SpringDAOConfiguration.class})
+@Import({SpringBusinessConfig.class, SpringDAOConfiguration.class})
 @ComponentScan(basePackageClasses = SpringStart.class)
-@ComponentScan(basePackageClasses = SpringDAOConfiguration.class)
+//@ComponentScan(basePackageClasses = SpringDAOConfiguration.class)
 public class SpringStart implements WebApplicationInitializer, WebMvcConfigurer {
 
     @Override
@@ -49,7 +50,8 @@ public class SpringStart implements WebApplicationInitializer, WebMvcConfigurer 
     public ViewResolver viewResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
         viewResolver.setViewClass(JstlView.class);
-        viewResolver.setPrefix("/WEB-INF/");
+        //viewResolver.setPrefix("/WEB-INF/");
+        viewResolver.setPrefix("/");
         viewResolver.setSuffix(".jsp");
         return viewResolver;
     }

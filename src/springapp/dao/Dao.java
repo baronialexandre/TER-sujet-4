@@ -143,7 +143,7 @@ public class Dao {
 	}
 	
 	public Collection<Event> getAllEvents(){
-		Collection<Event> eventsLazy = em.createQuery("Select e from Event e", Event.class).getResultList();
+		Collection<Event> eventsLazy = em.createQuery("Select eve from Event eve", Event.class).getResultList();
 		Collection<Event> events = new ArrayList<Event>();
 		for(Event e : eventsLazy) {
 			events.add(this.findEvent(e.getEventId()));

@@ -12,10 +12,10 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import springapp.business.ILabManager;
-import springapp.model.Lab;
+
+import springapp.business.IEventManager;
+import springapp.model.Event;
 
 @Controller()
 public class ListController{
@@ -25,7 +25,7 @@ public class ListController{
 	
     protected final Log logger = LogFactory.getLog(getClass());
 
-    @RequestMapping(value = "list")
+    @RequestMapping(value = "events")
     public ModelAndView listEvent(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	try {
     		if(request.getSession().getAttribute("userId") == null)
@@ -33,13 +33,13 @@ public class ListController{
     	} catch (Exception e) {
     		return new ModelAndView("redirect:/login.jsp");
     	}
-        logger.info("List of events (not passed)");
+        logger.info("List of events (actives)");
         
         Collection<Event> events = eventManager.findAll();
         logger.info(events.toString());
         ModelAndView modelAndView = new ModelAndView();
         request.getSession().setAttribute("events", events);
-        modelAndView.setViewName("redirect:/events.jsp");
+        modelAndView.setViewName("events");
         return modelAndView;
     }
 
