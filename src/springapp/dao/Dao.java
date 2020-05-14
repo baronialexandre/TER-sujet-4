@@ -85,6 +85,16 @@ public class Dao {
 		return l;
 	}
 	
+	public Lab findLab(String name) {
+		System.out.println("find lab " + name);
+		Query query = em.createQuery("SELECT l.id FROM Lab AS l WHERE labName=?1").setParameter(1, name);
+		if(query.getResultList().isEmpty())
+			return null;
+		System.out.println(query.getResultList().get(0));
+		long id = (long) query.getResultList().get(0);
+		return findLab(id);
+	}
+	
 	public void updateLab(Lab l) {
 		em.merge(l);
 		System.out.println("updateLab with id=" + l.getLabId());

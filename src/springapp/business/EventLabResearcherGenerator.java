@@ -1,8 +1,6 @@
 package springapp.business;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -51,33 +49,33 @@ public class EventLabResearcherGenerator {
 				eventDuration.setTime(begin);
 				eventDuration.add(Calendar.DATE, rnd.nextInt(4));
 				Date end = eventDuration.getTime();
-
+				// genere speaker funny name
 				List<String> speakers = new ArrayList<>();
-				for (int iii = 0; iii < rnd.nextInt(5)+1; iii++)
+				for (int iii = 0; iii < rnd.nextInt(5) + 1; iii++)
 					speakers.add(faker.funnyName().name());
 				Event e = null;
-				
+
 				switch (rnd.nextInt(2)) {
 				case (0):
 					e = new Event("Congrés de " + faker.ancient().god() + " " + rnd.nextInt(100), EventType.CONGRESS,
 							faker.address().city(), begin, end,
 							"Description description de ce congrés " + faker.lorem().characters(500), speakers,
-							100+rnd.nextInt(400)+0.0f, new Long(rnd.nextInt(20) * 100));
+							100 + rnd.nextInt(400) + 0.0f, new Long(rnd.nextInt(20) * 100));
 					break;
 				case (1):
 					e = new Event("Séminaire " + faker.app().name() + " " + rnd.nextInt(100), EventType.SEMINAR,
 							faker.address().city(), begin, end,
 							"Description du séminaire: " + faker.lorem().characters(500), speakers,
-							100+rnd.nextInt(400)+0.0f, new Long(rnd.nextInt(50)));
+							100 + rnd.nextInt(400) + 0.0f, new Long(rnd.nextInt(50)));
 					break;
 				case (2):
 					e = new Event("Conférence " + faker.commerce().department() + " " + rnd.nextInt(100),
 							EventType.CONFERENCE, faker.address().city(), begin, end,
 							"Description de la conf: " + faker.lorem().characters(500), speakers,
-							100+rnd.nextInt(400)+0.0f, new Long(rnd.nextInt(80) * 10));
+							100 + rnd.nextInt(400) + 0.0f, new Long(rnd.nextInt(80) * 10));
 					break;
 				}
-				
+
 				e.addOrganizer(r);
 				for (int iii = 0; iii < e.getAttendeeCap() || iii < rnd.nextInt(numberOfLabs); iii++) {
 					Researcher attendee = researchers.get(rnd.nextInt(researchers.size()));
@@ -89,33 +87,33 @@ public class EventLabResearcherGenerator {
 				i++;
 			}
 		}
-		
+
 		Faker faker = new Faker(new Locale("FR"));
-		Researcher adminTest = new Researcher("admin@test.test", "Adminator",
-				"Adminus", "admin4ever.com", faker.date().birthday(),
-				"admin", Role.ADMIN);
-		Researcher orgaTest = new Researcher("orga@test.test", "Organisator",
-				"Organum", "orga.com", faker.date().birthday(),
-				"orga", Role.ORGANIZER);
-		Researcher userTest = new Researcher("user@test.test", "Userator",
-				"Usarus", "proud2use.com", faker.date().birthday(),
-				"user", Role.USER);
-		researchers.add(adminTest);
-		researchers.add(orgaTest);
-		researchers.add(userTest);
-		labs.get(0).addResearcher(adminTest);
-		labs.get(0).addResearcher(orgaTest);
-		labs.get(0).addResearcher(userTest);
-		
-		
+		if (dao.hasResearcher("admin@test.test")) {
+			Researcher adminTest = new Researcher("admin@test.test", "Adminator", "Adminus", "admin4ever.com",
+					faker.date().birthday(), "admin", Role.ADMIN);
+			researchers.add(adminTest);
+			labs.get(0).addResearcher(adminTest);
+		}
+		if (dao.hasResearcher("orga@test.test")) {
+			Researcher orgaTest = new Researcher("orga@test.test", "Organisator", "Organum", "orga.com",
+					faker.date().birthday(), "orga", Role.ORGANIZER);
+			researchers.add(orgaTest);
+			labs.get(0).addResearcher(orgaTest);
+
+		}
+		if (dao.hasResearcher("user@test.test")) {
+			Researcher userTest = new Researcher("user@test.test", "Userator", "Usarus", "proud2use.com",
+					faker.date().birthday(), "user", Role.USER);
+			researchers.add(userTest);
+			labs.get(0).addResearcher(userTest);
+		}
+
 		for (Lab l : labs) {
 			dao.addLab(l);
 		}
 		for (Researcher r : researchers) {
-			try {
 			dao.addResearcher(r);
-			} catch(Exception e) {
-			}
 		}
 		for (Event e : events) {
 			dao.addEvent(e);
