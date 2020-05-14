@@ -13,7 +13,7 @@ public class InMemoryResearcherManager implements IResearcherManager {
 	Dao dao;
 	
 	@Override
-	public Researcher getPerson(long id) {
+	public Researcher getResearcher(long id) {
 		return dao.findResearcher(id);
 	}
 

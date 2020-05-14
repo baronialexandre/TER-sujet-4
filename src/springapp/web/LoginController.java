@@ -27,23 +27,25 @@ public class LoginController{
     @RequestMapping(value = "login", method = RequestMethod.POST)
     public ModelAndView logIn(HttpServletRequest request,
             HttpServletResponse response) {
-    	String username = request.getParameter("username");
+    	String email = request.getParameter("email");
     	String password = request.getParameter("password");
-    	logger.info("username :" + username + " | password :"+ password);
-    	User user = new User(username,password);
+    	logger.info("email :" + email + " | password :"+ password);
+    	User user = new User(email, password);
     	userManager.authentificate(user);
     	if(!user.isLoggedIn()) {
     		request.getSession().setAttribute("loginFailed", true);
     		return new ModelAndView("redirect:/");
     	}
     	request.getSession().setAttribute("userId", user.getId());
-        return new ModelAndView("redirect:/actions/list");
+    	request.getSession().setAttribute("userRole", user.getRole());
+        return new ModelAndView("redirect:/actions/eventEdit");
     }
     
     @RequestMapping(value = "logout")
     public ModelAndView logOut(HttpServletRequest request,
             HttpServletResponse response) {
     	request.getSession().setAttribute("userId", null);
+    	request.getSession().setAttribute("userRole", null);
         return new ModelAndView("redirect:/logout.jsp");
     }
 

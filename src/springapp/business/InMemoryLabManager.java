@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import springapp.dao.Dao;
 import springapp.model.Lab;
 
-@Service("teamManager")
+@Service("labManager")
 public class InMemoryLabManager implements ILabManager {
 
 	@Autowired

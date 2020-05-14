@@ -13,36 +13,35 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import springapp.business.IPersonManager;
-import springapp.model.Person;
+import springapp.business.IResearcherManager;
+import springapp.model.Researcher;
 
 @Controller()
 public class ProfileController {
 	
 	@Autowired
-	IPersonManager personManager;
+	IResearcherManager researcherManager;
 
     protected final Log logger = LogFactory.getLog(getClass());
     
     @RequestMapping(value = "profile", method = RequestMethod.GET)
-    public ModelAndView getProfile(HttpServletRequest request,
-            HttpServletResponse response) throws ServletException, IOException {
-    	long personId;
+    public ModelAndView getProfile(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	long researcherId;
     	try {
-    		personId = Long.parseLong(request.getParameter("personId"));
+    		researcherId = Long.parseLong(request.getParameter("researcherId"));
     		} catch (Exception e) {
-    		personId=-1;
+    		researcherId=-1;
     	}
-    	if(personId == -1) {
+    	if(researcherId == -1) {
     		try {
-        		personId = (long) request.getSession().getAttribute("userId");
+        		researcherId = (long) request.getSession().getAttribute("userId");
         	} catch (Exception e) {
         		return new ModelAndView("redirect:/login.jsp");
         	}
     	}
     	
-    	Person person = personManager.getPerson(personId);
-    	request.getSession().setAttribute("person", person);
+    	Researcher researcher = researcherManager.getResearcher(researcherId);
+    	request.getSession().setAttribute("researcher", researcher);
     	
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/profile.jsp");
