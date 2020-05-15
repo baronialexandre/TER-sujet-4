@@ -35,12 +35,12 @@ public class InMemoryEventManager implements IEventManager {
 
 	@Override
 	public void save(Event event) {
-		return;
+		dao.updateEvent(event);
 	}
 
 	@Override
 	public Event find(long id) {
-		return null;
+		return dao.findEvent(id);
 	}
 
 	@Override
