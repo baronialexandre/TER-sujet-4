@@ -15,13 +15,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import springapp.business.IEventManager;
+import springapp.business.IResearcherManager;
 import springapp.model.Event;
+import springapp.model.Researcher;
 
 @Controller()
 public class ListController{
 
 	@Autowired
 	IEventManager eventManager;
+	
+	@Autowired
+	IResearcherManager researcherManager;
 	
     protected final Log logger = LogFactory.getLog(getClass());
 
@@ -34,6 +39,13 @@ public class ListController{
     		return new ModelAndView("redirect:/login.jsp");
     	}
         logger.info("List of events (actives)");
+        
+        if(request.getSession().getAttribute("researcher") == null)
+        {
+	        Researcher currResearcher = researcherManager.getResearcher((Long)request.getSession().getAttribute("userId"));
+	        logger.info(currResearcher.getRole());
+	        request.getSession().setAttribute("researcher",currResearcher);
+        }
         
         Collection<Event> events = eventManager.findActive();
         logger.info(events.toString());

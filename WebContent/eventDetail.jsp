@@ -4,31 +4,34 @@
 <h1>Event</h1>
 <div class="container">
 	<div class="card">
-	  <div class="card-header"><c:out value="${event.name}" default="name::TEST"/></div>
+	  <div class="card-header"><c:out value="${event.eventName}" default="name::TEST"/></div>
 	  <div class="card-body"><c:out value="${event.description}" default="description::TEST"/></div>
 	</div>
 	<div class="d-flex justify-content-around bd-highlight">
-		<c:if test="${fees == 0}">
+	<c:choose>
+		<c:when test="${fees == 0}">
 			<div class="p-2">
-		    	<a href="actions/join-event?id=${event.id}">
+		    	<a href="actions/join-event?id=${event.eventId}">
 					<button type="button" class="btn btn-info pull-right">Join</button>
 				</a>
 			</div>
-		</c:if>
+		</c:when>
 	    <c:otherwise>
 	    	<div class="p-2">
-		    	<a href="actions/pay-event?id=${event.id}">
+		    	<a href="actions/pay-event?id=${event.eventId}">
 					<button type="button" class="btn btn-info pull-right">Pay to join</button>
 				</a>
 			</div>
 	    </c:otherwise>
-	    <c:if test="${(researcher.id == creatorId) || (researcher.role == 'admin')}">
-		    <div class="p-2">
-				<a href="actions/edit-event?id=${event.id}">
-					<button type="button" class="btn btn-info pull-right">Edit</button>
-				</a>
-			</div>
-		</c:if>
+	 </c:choose>
+	 
+    <c:if test="${(researcher.lab.labId == event.organizer.lab.labId && researcher.role == 'ORGANIZER') || researcher.role == 'ADMIN'}">
+	    <div class="p-2">
+			<a href="actions/edit-event?id=${event.eventId}">
+				<button type="button" class="btn btn-info pull-right">Edit</button>
+			</a>
+		</div>
+	</c:if>
 	 </div>
 	 <div class="card">
 	  <div class="card-header">Involved</div>
