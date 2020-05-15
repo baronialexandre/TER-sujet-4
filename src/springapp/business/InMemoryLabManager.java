@@ -28,9 +28,14 @@ public class InMemoryLabManager implements ILabManager {
         return dao.getAllLabs();
     }
 
-	@Override
-	public void save(Lab lab) {
-		return;
+    @Override
+	public void update(Lab lab) {
+		dao.updateLab(lab);
+	}
+    
+    @Override
+	public void add(Lab lab) {
+		dao.addLab(lab);
 	}
 
 	@Override

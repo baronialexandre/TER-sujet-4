@@ -9,11 +9,13 @@ public interface ILabManager {
 
     Collection<Lab> findAll();
 
-    void save(Lab lab);
+    void update(Lab lab);
 
     Lab find(long id);
     
     List<String> getAllLabNames();
     
     Lab findByName(String name);
+
+	void add(Lab lab);
 }

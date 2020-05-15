@@ -7,5 +7,6 @@ public interface IResearcherManager {
 	Researcher getResearcher(long id);
 	void update(Researcher p);
 	boolean hasResearcher(String email);
+	void add(Researcher r);
 
 }

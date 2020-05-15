@@ -33,8 +33,13 @@ public class InMemoryEventManager implements IEventManager {
         return dao.getAllEvents();
     }
 
-	@Override
-	public void save(Event event) {
+    @Override
+	public void add(Event event) {
+		dao.addEvent(event);
+	}
+    
+    @Override
+	public void update(Event event) {
 		dao.updateEvent(event);
 	}
 

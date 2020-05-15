@@ -21,6 +21,11 @@ public class InMemoryResearcherManager implements IResearcherManager {
 	public void update(Researcher r) {
 		dao.updateResearcher(r);
 	}
+	
+	@Override
+	public void add(Researcher r) {
+		dao.addResearcher(r);
+	}
 
 	@Override
 	public boolean hasResearcher(String email) {

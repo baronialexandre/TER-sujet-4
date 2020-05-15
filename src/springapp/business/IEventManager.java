@@ -12,8 +12,10 @@ public interface IEventManager {
 	
 	Collection<Event> findAtYear(int year);
 
-    void save(Event event);
+    void update(Event event);
 
     Event find(long id);
+
+	void add(Event event);
     
 }
