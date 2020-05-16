@@ -21,7 +21,7 @@ import springapp.model.Event;
 import springapp.model.Researcher;
 
 @Controller()
-public class eventDetailController{
+public class JoinEventController{
 
 	@Autowired
 	IEventManager eventManager;
@@ -33,8 +33,8 @@ public class eventDetailController{
 
     
 
-    @RequestMapping(value="eventdetail", method = RequestMethod.GET)
-    public ModelAndView listEvent(HttpServletRequest request, HttpServletResponse response,@RequestParam(value = "eventId", required = true) long eventId) throws ServletException, IOException {
+    @RequestMapping(value="joinevent", method = RequestMethod.GET)
+    public ModelAndView joinEvent(HttpServletRequest request, HttpServletResponse response,@RequestParam(value = "eventId", required = true) long eventId) throws ServletException, IOException {
     	try {
     		if(request.getSession().getAttribute("userId") == null)
     			return new ModelAndView("redirect:/login.jsp");
@@ -57,6 +57,9 @@ public class eventDetailController{
         {
         	return new ModelAndView("redirect:/events.jsp");
         }
+        
+        curEvent.addAttendee((Researcher) request.getSession().getAttribute("researcher"));
+        eventManager.update(curEvent);
         
         logger.info(curEvent.toString());
         request.getSession().setAttribute("event", curEvent);
