@@ -50,12 +50,12 @@
 						/
 						<c:out value="${event.attendeeCap}" default="Test::15" />
 					</p>
-					<a href="#"> <!-- LIEN "MORE" -->
+					<a href="${pageContext.servletContext.contextPath}/actions/eventdetail?eventId=${event.eventId}"> <!-- LIEN "MORE" -->
 						<button type="button" class="btn btn-outline-${typeColor} btn-sm"
 							style="flex: auto;">
 							More
 							<c:choose>
-								<c:when test="${researcher.lab.labId == event.organizer.lab.labId && ( researcher.role == Role.ORGANIZER || researcher.role == Role.ADMIN)}">
+								<c:when test="${(researcher.lab.labId == event.organizer.lab.labId && researcher.role == 'ORGANIZER') || researcher.role == 'ADMIN'}">
 									<i class="far fa-edit"></i>
 								</c:when>
 								<c:otherwise>

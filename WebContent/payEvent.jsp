@@ -7,12 +7,12 @@
 		
 		<div class="d-flex justify-content-around bd-highlight">
 			<div class="p-2">
-				<a href="actions/pay-event-success?id=${event.id}">
+				<a href="${pageContext.servletContext.contextPath}/actions/joinevent?eventId=${event.eventId}">
 					<button type="button" class="btn btn-info pull-right">Pay</button>
 				</a>
 			</div>
 			<div class="p-2">
-				<a href="actions/pay-event-cancel?id=${event.id}">
+				<a href="${pageContext.servletContext.contextPath}/actions/eventdetail?eventId=${event.eventId}">
 					<button type="button" class="btn btn-info pull-right">Cancel</button>
 				</a>
 			</div>
