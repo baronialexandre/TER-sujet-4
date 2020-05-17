@@ -1,1 +1,1 @@
-<c:redirect url="/login.jsp"/>
+<c:redirect url="login.jsp"/>

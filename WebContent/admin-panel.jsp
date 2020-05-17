@@ -1,6 +1,5 @@
+<%@ include file="WEB-INF/jsp/protection.jsp"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
-
 <div class="container-fluid">
 	<div class="d-flex justify-content-between">
 		<h2>Admin panel</h2>

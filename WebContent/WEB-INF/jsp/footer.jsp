@@ -1,15 +1,16 @@
 <footer class="footer">
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-		<div class="navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav mr-auto">
-				<li class="nav-item"><a class="nav-link" href="<%=application.getContextPath()%>/terms-of-service.jsp">Terms of service</a>
-				</li>
-			</ul>
-			<c:if test="${userRole == \"ADMIN\"}">
-				<ul class="navbar-nav mr-inline">
-					<li class="nav-item"><a class="nav-link" href="<%=application.getContextPath()%>/actions/admin-panel">Admin panel</a></li>
-				</ul>
-			</c:if>
-		</div>
-	</nav>
+<hr/>
+<div class="d-flex justify-content-between align-items-center">
+	<a class="text-muted" href="<%=application.getContextPath()%>/terms-of-service.jsp">Terms of service</a>
+	<i class="fas fa-crow text-muted"></i>
+	<div>
+		<c:if test="${userRole == \"ADMIN\"}">
+			<a class="text-muted" href="<%=application.getContextPath()%>/actions/admin-panel">Admin panel</a>
+		</c:if>
+		<c:if test="${userRole != \"ADMIN\"}">
+			<div class="text-muted" href="#">all rights reserved</div>
+		</c:if>
+	</div>
+</div>
+<br/>
 </footer>

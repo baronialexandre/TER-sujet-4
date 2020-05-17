@@ -1,3 +1,4 @@
+<%@ include file="WEB-INF/jsp/protection.jsp"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 

@@ -36,7 +36,7 @@ public class ProfileController {
     		try {
         		researcherId = (long) request.getSession().getAttribute("userId");
         	} catch (Exception e) {
-        		return new ModelAndView("login");
+        		return new ModelAndView("redirect:/login.jsp");
         	}
     	}
     	

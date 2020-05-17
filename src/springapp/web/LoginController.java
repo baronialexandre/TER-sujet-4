@@ -37,7 +37,7 @@ public class LoginController{
     	userManager.authentificate(user);
     	if(!user.isLoggedIn()) {
     		request.getSession().setAttribute("loginFailed", true);
-    		return new ModelAndView("redirect:/");
+    		return new ModelAndView("redirect:/login.jsp");
     	}
     	request.getSession().setAttribute("userId", user.getId());
     	request.getSession().setAttribute("userRole", user.getRole());
@@ -49,7 +49,7 @@ public class LoginController{
             HttpServletResponse response) {
     	request.getSession().removeAttribute("userId");
     	request.getSession().removeAttribute("userRole");
-        return new ModelAndView("redirect:/logout.jsp");
+        return new ModelAndView("redirect:/login.jsp");
     }
 
 }

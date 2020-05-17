@@ -37,7 +37,7 @@ public class EventDetailController{
     public ModelAndView eventDetail(HttpServletRequest request, HttpServletResponse response,@RequestParam(value = "eventId", required = true) long eventId) throws ServletException, IOException {
     	try {
     		if(request.getSession().getAttribute("userId") == null)
-    			return new ModelAndView("redirect:/login.jsp");
+        		return new ModelAndView("redirect:/login.jsp");
     	} catch (Exception e) {
     		return new ModelAndView("redirect:/login.jsp");
     	}

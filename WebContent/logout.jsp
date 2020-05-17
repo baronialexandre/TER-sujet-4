@@ -1,1 +1,1 @@
-<c:redirect url="/login.jsp"/>
+<c:redirect url="redirect:<%=application.getContextPath()%>/login"/>
