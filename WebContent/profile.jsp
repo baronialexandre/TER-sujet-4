@@ -2,7 +2,17 @@
 
 <h1>Profile</h1>
 <div class="container">
-	<h2>Informations</h2>
+	<div class="d-flex justify-content-between">
+		<h2>Informations</h2>
+		<div>
+			<c:if test="${researcher.researcherId == userId || userRole == \"ADMIN\"}">
+				<a href="actions/edit-profile?id=${researcher.researcherId}">
+					<button type="button" class="btn btn-info pull-right">Edit</button>
+				</a>
+			</c:if>
+		</div>
+	</div>
+	
 	<table class="table table-dark table-striped">
 		<tr>
 			<td>Role</td>
@@ -36,9 +46,4 @@
 			<td><c:out value="${researcher.lab.labName}" default="Laboratory::TEST" /></td>
 		</tr>
 	</table>
-	<c:if test="${researcher.researcherId == userId || userRole == \"ADMIN\"}">
-		<a href="actions/edit-profile?id=${researcher.researcherId}">
-			<button type="button" class="btn btn-info pull-right">Edit</button>
-		</a>
-	</c:if>
 </div>
