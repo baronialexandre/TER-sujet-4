@@ -6,16 +6,15 @@
 	<div>
 		<c:forEach items="${events}" var="event">
 			<c:choose>
-				<c:when test="${event.type == EventType.CONGRESS}">
+				<c:when test="${event.type == \"CONGRESS\"}">
 					<!--primary-->
-					<c:set var="typeColor" scope="request" value="primary" />
-					<c:out value="${salary}" />
+					<c:set var="typeColor" value="primary" />
 				</c:when>
-				<c:when test="${event.type == EventType.CONFERENCE}">
+				<c:when test="${event.type == \"CONFERENCE\"}">
 					<!--danger-->
 					<c:set var="typeColor" value="danger" />
 				</c:when>
-				<c:when test="${event.type == EventType.SEMINAR}">
+				<c:when test="${event.type == \"SEMINAR\"}">
 					<!--success-->
 					<c:set var="typeColor" value="success" />
 				</c:when>
