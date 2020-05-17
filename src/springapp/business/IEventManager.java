@@ -17,5 +17,9 @@ public interface IEventManager {
     Event find(long id);
 
 	void add(Event event);
+
+	Collection<Event> findLast(int howMany);
+
+	Collection<Event> findLastArchives(int howMany);
     
 }

@@ -144,7 +144,7 @@ public class Dao {
 	}
 	
 	public Collection<Event> getAllEvents(){
-		Collection<Event> eventsLazy = em.createQuery("Select eve from Event eve", Event.class).getResultList();
+		Collection<Event> eventsLazy = em.createQuery("Select eve from Event eve ORDER BY eve.beginDate", Event.class).getResultList();
 		Collection<Event> events = new ArrayList<Event>();
 		for(Event e : eventsLazy) {
 			events.add(this.findEvent(e.getEventId()));
@@ -154,7 +154,17 @@ public class Dao {
 	
 	public Collection<Event> getActiveEvents() { //todo : test
 		Date now = new Date();
-		Collection<Event> eventsLazy = em.createQuery("Select eve from Event eve Where eve.beginDate<=?1", Event.class).setParameter(1, now).getResultList();
+		Collection<Event> eventsLazy = em.createQuery("Select eve from Event eve Where eve.beginDate>=?1 ORDER BY eve.beginDate", Event.class).setParameter(1, now).getResultList();
+		Collection<Event> events = new ArrayList<Event>();
+		for(Event e : eventsLazy) {
+			events.add(this.findEvent(e.getEventId()));
+		}
+		return events;
+	}
+	
+	public Collection<Event> getArchivesEvents() { //todo : test
+		Date now = new Date();
+		Collection<Event> eventsLazy = em.createQuery("Select eve from Event eve Where eve.beginDate<?1 ORDER BY eve.beginDate", Event.class).setParameter(1, now).getResultList();
 		Collection<Event> events = new ArrayList<Event>();
 		for(Event e : eventsLazy) {
 			events.add(this.findEvent(e.getEventId()));
@@ -162,11 +172,37 @@ public class Dao {
 		return events;
 	}
 
-	public Collection<Event> getEventsYear(int year) { //todo : test
+	public Collection<Event> getEventsYear(int year) { //todo : à test
 		Collection<Event> eventsLazy = em.createQuery("Select eve from Event eve Where year(eve.beginDate)=?1", Event.class).setParameter(1, year).getResultList();
 		Collection<Event> events = new ArrayList<Event>();
 		for(Event e : eventsLazy) {
 			events.add(this.findEvent(e.getEventId()));
+		}
+		return events;
+	}
+	
+	public Collection<Event> getLastEvents(int howMany) { //todo : à tester
+		Collection<Event> eventsLazy = getAllEvents();
+		Collection<Event> events = new ArrayList<Event>();
+		if(eventsLazy.size()<=howMany)
+			return eventsLazy;
+		
+		ArrayList<Event> eventsArray = new ArrayList<>(eventsLazy);
+		for(int i=0; i<howMany; i++) {
+			events.add(eventsArray.get(i));
+		}
+		return events;
+	}
+	
+	public Collection<Event> getLastEventsArchives(int howMany) { //todo : à tester
+		Collection<Event> eventsLazy = getArchivesEvents();
+		Collection<Event> events = new ArrayList<Event>();
+		if(eventsLazy.size()<=howMany)
+			return eventsLazy;
+		
+		ArrayList<Event> eventsArray = new ArrayList<>(eventsLazy);
+		for(int i=0; i<howMany; i++) {
+			events.add(eventsArray.get(i));
 		}
 		return events;
 	}

@@ -58,4 +58,14 @@ public class InMemoryEventManager implements IEventManager {
 		return dao.getEventsYear(year);
 	}
 
+	@Override
+	public Collection<Event> findLast(int howMany) {
+		return dao.getLastEvents(howMany);
+	}
+	
+	@Override
+	public Collection<Event> findLastArchives(int howMany) {
+		return dao.getLastEventsArchives(howMany);
+	}
+
 }

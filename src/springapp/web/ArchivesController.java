@@ -40,17 +40,20 @@ public class ArchivesController {
     	} catch (Exception e) {
     		return new ModelAndView("redirect:/login.jsp");
     	}
-        logger.info("List of events (actives)");
+    	
+    	Collection<Event> events;
+    	try {
+    		int yearResearched = Integer.parseInt(request.getParameter("yearResearched"));
+    		logger.info("List of events (archive) year " + yearResearched);
+    		events = eventManager.findAtYear(yearResearched);
+    	}
+    	catch (Exception e)
+    	{
+    		events = eventManager.findLastArchives(5);
+    		logger.info("List of events (archive) last " + events.size());
+    	}        
         
-        if(request.getSession().getAttribute("researcher") == null)
-        {
-	        Researcher currResearcher = researcherManager.getResearcher((Long)request.getSession().getAttribute("userId"));
-	        logger.info(currResearcher.getRole());
-	        request.getSession().setAttribute("researcher",currResearcher);
-        }
         
-        int actualYear = Calendar.getInstance().get(Calendar.YEAR);
-        Collection<Event> events = eventManager.findAtYear(actualYear);
         logger.info(events.toString());
         ModelAndView modelAndView = new ModelAndView();
         request.getSession().setAttribute("events", events);
