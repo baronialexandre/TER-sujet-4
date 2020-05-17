@@ -47,8 +47,8 @@ public class LoginController{
     @RequestMapping(value = "logout")
     public ModelAndView logOut(HttpServletRequest request,
             HttpServletResponse response) {
-    	request.getSession().setAttribute("userId", null);
-    	request.getSession().setAttribute("userRole", null);
+    	request.getSession().removeAttribute("userId");
+    	request.getSession().removeAttribute("userRole");
         return new ModelAndView("redirect:/logout.jsp");
     }
 

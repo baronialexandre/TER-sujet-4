@@ -45,7 +45,7 @@
 		</c:if>
 
 		<c:if
-			test="${(researcher.lab.labId == event.organizer.lab.labId && researcher.role == 'ORGANIZER') || researcher.role == 'ADMIN'}">
+			test="${((researcher.lab.labId == event.organizer.lab.labId) and (userRole == 'ORGANIZER')) || userRole == 'ADMIN'}">
 			<div class="p-2">
 				<a
 					href="${pageContext.servletContext.contextPath}/actions/editevent?id=${event.eventId}">

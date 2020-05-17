@@ -1,7 +1,7 @@
 <h1>Login</h1>
 <div class="container-fluid">
 	<!-- Login Form -->
-	<form class="form-horizontal" action="actions/login" method="POST" >
+	<form class="form-horizontal" action="${pageContext.servletContext.contextPath}/actions/login" method="POST" >
 		<div class="form-group">
 			<div class="col-sm-offset-1 col-xs-8" style="min-width: 200px;">
 				<span>Email</span> <input type="email" class="form-control"
@@ -22,7 +22,7 @@
 		<c:set var = "loginFailed" scope = "session" value = "${false}"> </c:set>
 		<div class="form-group">
 			<div class="col-xs-8" style="min-width: 200px; text-align: right;">
-				<button onclick="location.href='#'" class="btn btn-info" type="button">Sign in</button>
+				<button onclick="location.href='${pageContext.servletContext.contextPath}/actions/register'" class="btn btn-info" type="button">Sign in</button>
 				<button name="submit" class="btn btn-success">Log in</button>
 			</div>
 		</div>
