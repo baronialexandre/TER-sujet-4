@@ -26,9 +26,9 @@
 		<c:if test="${empty events}">
 			<div class="alert alert-primary" role="alert">
 				<h4 class="alert-heading">Oups!</h4>
-				<p>There is no events for this year!</p>
+				<p>There is no event for this year!</p>
 				<hr>
-				<p class="mb-0">Enter a date and we will search past events for you!</p>
+				<p class="mb-0">Enter a date and we will search past event(s) for you!</p>
 			</div>
 		</c:if>
 	
