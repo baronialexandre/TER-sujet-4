@@ -1,9 +1,7 @@
 package springapp.web;
 
 import java.io.IOException;
-import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 import springapp.business.IEventManager;
 import springapp.business.IResearcherManager;
 import springapp.model.Event;
-import springapp.model.Researcher;
 
 @Controller()
 public class ArchivesController {

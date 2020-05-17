@@ -28,14 +28,14 @@
 					<h2 class="card-text" style="flex: none;">
 						<c:out value="${event.eventName}" default="Test::Name" />
 					</h2>
-					<p class="card-text" style="flex: auto; margin-left: 1em;">
+					<p class="card-text text-${typeColor}" style="flex: auto; margin-left: 1em;">
 						<c:out value="${event.type}" default="Test::Seminaire" />
 					</p>
 					<p class="card-text" style="flex: auto; text-align: right;">
 						<c:out value="${event.beginDate}" default="Test::03/09/2020" />
 					</p>
 				</div>
-				<div class="card-body text-${typeColor}" style="display: flex;">
+				<div class="card-body" style="display: flex;">
 					<p class="card-text" style="flex: auto;">
 						<c:out value="${event.organizer.lab.labName}" default="Test::Labo" />
 					</p>
@@ -43,14 +43,14 @@
 						<c:out value="${event.location}" default="Test::Lieu" />
 					</p>
 				</div>
-				<div class="card-footer text-${typeColor}" style="display: flex;">
+				<div class="card-footer" style="display: flex;">
 					<p class="card-text" style="flex: auto;">
 						<c:out value="${fn:length(event.attendees)}" default="Test::0" />
 						/
 						<c:out value="${event.attendeeCap}" default="Test::15" />
 					</p>
 					<a href="${pageContext.servletContext.contextPath}/actions/eventdetail?eventId=${event.eventId}"> <!-- LIEN "MORE" -->
-						<button type="button" class="btn btn-outline-${typeColor} btn-sm"
+						<button type="button" class="btn btn-outline-${typeColor} btn-sm text-dark"
 							style="flex: auto;">
 							More
 							<c:choose>
