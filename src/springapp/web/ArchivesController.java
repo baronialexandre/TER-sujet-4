@@ -30,7 +30,7 @@ public class ArchivesController {
     protected final Log logger = LogFactory.getLog(getClass());
 
     @RequestMapping(value = "archives")
-    public ModelAndView listEvent(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public ModelAndView listArchives(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	try {
     		if(request.getSession().getAttribute("userId") == null)
     			return new ModelAndView("redirect:/login.jsp");
@@ -40,16 +40,15 @@ public class ArchivesController {
     	
     	Collection<Event> events;
     	try {
-    		int yearResearched = Integer.parseInt(request.getParameter("yearResearched"));
+    		int yearResearched = Integer.parseInt(request.getParameter("year"));
     		logger.info("List of events (archive) year " + yearResearched);
-    		events = eventManager.findAtYear(yearResearched);
+    		events = eventManager.findArchiveAtYear(yearResearched);
     	}
     	catch (Exception e)
     	{
     		events = eventManager.findLastArchives(5);
     		logger.info("List of events (archive) last " + events.size());
     	}        
-        
         
         logger.info(events.toString());
         ModelAndView modelAndView = new ModelAndView();

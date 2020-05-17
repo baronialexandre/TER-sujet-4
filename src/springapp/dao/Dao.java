@@ -172,8 +172,9 @@ public class Dao {
 		return events;
 	}
 
-	public Collection<Event> getEventsYear(int year) { //todo : à test
-		Collection<Event> eventsLazy = em.createQuery("Select eve from Event eve Where year(eve.beginDate)=?1", Event.class).setParameter(1, year).getResultList();
+	public Collection<Event> getArchivesAtYear(int year) { //todo : à test
+		Date now = new Date();
+		Collection<Event> eventsLazy = em.createQuery("Select eve from Event eve Where year(eve.beginDate)=?1 AND eve.beginDate<?2", Event.class).setParameter(1, year).setParameter(2, now).getResultList();
 		Collection<Event> events = new ArrayList<Event>();
 		for(Event e : eventsLazy) {
 			events.add(this.findEvent(e.getEventId()));

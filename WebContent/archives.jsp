@@ -8,10 +8,10 @@
 	<div class="d-flex justify-content-between">
 		<h2>Archives</h2>
 		<div>
-			<form action="actions/search" method="GET" class="navbar-form navbar-right">
+			<form action="<%=application.getContextPath()%>/actions/archives" method="GET" class="navbar-form navbar-right">
 				<div class="form-row">
 					<div class="form-group border rounded">
-						<input type="number" class="form-control" min="1900" max="${currentYear}" step="1" value="2016" name="search">
+						<input type="number" class="form-control" min="1900" max="${currentYear}" step="1" value="${currentYear}" name="year">
 					</div>
 					<div class="form-group border rounded">
 						<button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
@@ -24,9 +24,12 @@
 	<div>
 		
 		<c:if test="${empty events}">
-		<div class="alert alert-primary">
-			<strong>Hey !</strong> Enter a date and we will search past events for you !
-		</div>
+			<div class="alert alert-primary" role="alert">
+				<h4 class="alert-heading">Oups!</h4>
+				<p>There is no events for this year!</p>
+				<hr>
+				<p class="mb-0">Enter a date and we will search past events for you!</p>
+			</div>
 		</c:if>
 	
 		<c:forEach items="${events}" var="event">

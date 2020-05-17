@@ -54,8 +54,8 @@ public class InMemoryEventManager implements IEventManager {
 	}
 
 	@Override
-	public Collection<Event> findAtYear(int year) {
-		return dao.getEventsYear(year);
+	public Collection<Event> findArchiveAtYear(int year) {
+		return dao.getArchivesAtYear(year);
 	}
 
 	@Override

@@ -10,7 +10,7 @@ public interface IEventManager {
 
 	Collection<Event> findActive();
 	
-	Collection<Event> findAtYear(int year);
+	Collection<Event> findArchiveAtYear(int year);
 
     void update(Event event);
 
