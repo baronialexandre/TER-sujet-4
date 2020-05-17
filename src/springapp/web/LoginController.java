@@ -15,6 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 import springapp.business.IUserManager;
 import springapp.model.utils.User;
 
+
+//DONE
 @Controller()
 @ControllerAdvice
 public class LoginController{

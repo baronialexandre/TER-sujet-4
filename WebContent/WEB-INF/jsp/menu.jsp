@@ -13,14 +13,21 @@
 
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item active"><a class="nav-link" href="#">Events</a>
+				<li class="nav-item active"><a class="nav-link" href="<%=application.getContextPath()%>/actions/events">Events</a>
 				</li>
-				<li class="nav-item"><a class="nav-link" href="#">Archives</a>
+				<li class="nav-item"><a class="nav-link" href="<%=application.getContextPath()%>/actions/archives">Archives</a>
 				</li>
 			</ul>
 			<ul class="navbar-nav mr-inline">
-				<li class="nav-item"><a class="nav-link" href="#">Profile</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">Connect</a></li>
+				<li class="nav-item"><a class="nav-link" href="<%=application.getContextPath()%>/actions/profile">Profile</a></li>
+				<c:choose>
+					<c:when test="${empty userId}">
+						<li class="nav-item"><a class="nav-link" href="<%=application.getContextPath()%>">Connect</a></li>
+					</c:when>
+					<c:otherwise>
+						<li class="nav-item"><a class="nav-link" href="<%=application.getContextPath()%>/actions/logout">Disconnect</a></li>
+					</c:otherwise>
+				</c:choose>
 			</ul>
 		</div>
 	</nav>

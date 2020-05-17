@@ -32,7 +32,7 @@
 					aria-labelledby="heading-${lab.labId}" data-parent="#accordion">
 					<div class="card-body">
 						<c:forEach items="${lab.researchers}" var="rs">
-							<a href="actions/profile?personId=${rs.researcherId}">
+							<a href="<%=application.getContextPath()%>/actions/profile?researcherId=${rs.researcherId}">
 								${rs.firstName} ${rs.lastName}
 							</a><br />
 						</c:forEach>

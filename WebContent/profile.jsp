@@ -33,13 +33,11 @@
 		</tr>
 		<tr>
 			<td>Laboratory</td>
-			<td><c:out value="${researcher.Laboratory}"
-					default="Laboratory::TEST" /></td>
+			<td><c:out value="${researcher.lab.labName}" default="Laboratory::TEST" /></td>
 		</tr>
 	</table>
-	<c:if
-		test="${(researcher.id == userId) || (researcher.role == 'admin')}">
-		<a href="actions/edit-profile?id=${researcher.id}">
+	<c:if test="${researcher.researcherId == userId || userRole == \"ADMIN\"}">
+		<a href="actions/edit-profile?id=${researcher.researcherId}">
 			<button type="button" class="btn btn-info pull-right">Edit</button>
 		</a>
 	</c:if>
