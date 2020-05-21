@@ -55,29 +55,30 @@ public class EventLabResearcherGenerator {
 					speakers.add(faker.funnyName().name());
 				Event e = null;
 
-				switch (rnd.nextInt(2)) {
+				switch (rnd.nextInt(3)) {
 				case (0):
-					e = new Event("Congrés de " + faker.ancient().god() + " " + rnd.nextInt(100), EventType.CONGRESS,
+					e = new Event("Congrés de " + faker.ancient().god() + " " + rnd.nextInt(1000000), EventType.CONGRESS,
 							faker.address().city(), begin, end,
 							"Description description de ce congrés " + faker.lorem().characters(500), speakers,
-							100 + rnd.nextInt(400) + 0.0f, new Long(rnd.nextInt(20) * 100));
+							100 + rnd.nextInt(400) + 0.0f, new Long((rnd.nextInt(20) + 2) * 100));
 					break;
 				case (1):
-					e = new Event("Séminaire " + faker.app().name() + " " + rnd.nextInt(100), EventType.SEMINAR,
+					e = new Event("Séminaire " + faker.app().name() + " " + rnd.nextInt(1000000), EventType.SEMINAR,
 							faker.address().city(), begin, end,
 							"Description du séminaire: " + faker.lorem().characters(500), speakers,
-							100 + rnd.nextInt(400) + 0.0f, new Long(rnd.nextInt(50)));
+							100 + rnd.nextInt(400) + 0.0f, new Long((rnd.nextInt(50) + 5)));
 					break;
 				case (2):
-					e = new Event("Conférence " + faker.commerce().department() + " " + rnd.nextInt(100),
+					e = new Event("Conférence " + faker.commerce().department() + " " + rnd.nextInt(1000000),
 							EventType.CONFERENCE, faker.address().city(), begin, end,
 							"Description de la conf: " + faker.lorem().characters(500), speakers,
-							100 + rnd.nextInt(400) + 0.0f, new Long(rnd.nextInt(80) * 10));
+							100 + rnd.nextInt(400) + 0.0f, new Long((rnd.nextInt(80) + 2) * 10));
 					break;
 				}
 
 				e.addOrganizer(r);
-				for (int iii = 0; iii < e.getAttendeeCap() || iii < rnd.nextInt(numberOfLabs); iii++) {
+				int attendeeNb = rnd.nextInt(e.getAttendeeCap().intValue());
+				for (int iii = 0; iii < attendeeNb && iii < researchers.size() ; iii++) {
 					Researcher attendee = researchers.get(rnd.nextInt(researchers.size()));
 					if (e.getAttendees() != null && e.getAttendees().contains(attendee))
 						continue;
@@ -125,8 +126,8 @@ public class EventLabResearcherGenerator {
 	public static Lab fillLab(Lab lab) {
 		for (int i = 0; i < rnd.nextInt(18) + 2; i++) {
 			Faker faker = new Faker(new Locale("FR"));
-			Researcher r = new Researcher(rnd.nextInt(100) + faker.internet().emailAddress(), faker.name().firstName(),
-					faker.name().lastName(), faker.internet().url(), faker.date().birthday(),
+			Researcher r = new Researcher(rnd.nextInt(1000000) + faker.internet().emailAddress(),
+					faker.name().firstName(), faker.name().lastName(), faker.internet().url(), faker.date().birthday(),
 					faker.internet().password(), Role.USER);
 			lab.addResearcher(r);
 			researchers.add(r);
