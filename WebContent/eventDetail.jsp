@@ -1,4 +1,5 @@
 <%@ include file="WEB-INF/jsp/protection.jsp"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <h1>Event</h1>
@@ -7,9 +8,37 @@
 		<div class="card-header">
 			<c:out value="${event.eventName}" default="name::TEST" />
 		</div>
+		<ul class="list-group list-group-flush">
+			<li class="list-group-item">
+				<span style="text-decoration: underline;">Speaker(s)</span> 
+				<c:forEach items="${event.speakers}" var="speaker">
+					; <c:out value="${speaker}" default="speakerName::TEST"/>
+				</c:forEach>
+			</li>
+		</ul>
 		<div class="card-body">
 			<c:out value="${event.description}" default="description::TEST" />
 		</div>
+		
+		
+		<c:choose>
+			<c:when test="${event.organizer.lab.labName == researcher.lab.labName or event.fee == 0.0}">
+				<div class="card-footer text-muted">
+    				Subscription fee if you're not working in the lab <c:out value="${event.organizer.lab.labName}" default="lab::TEST" /> : <b>$<c:out value="${event.fee}" default="lab::TEST" /></b>.
+  				</div>
+			</c:when>
+			<c:when test="${fn:contains(event.attendees, researcher)}">
+				<div class="card-footer text-muted">
+    				You are already registered.
+  				</div>
+			</c:when>
+			<c:otherwise>
+				<div class="card-footer text-muted">
+    				Subscription fee : <b>$<c:out value="${event.fee}" default="lab::TEST" /></b>.
+  				</div>
+			</c:otherwise>
+		</c:choose>
+		
 	</div>
 
 	<c:set var="contains" value="false" />
@@ -19,17 +48,20 @@
 		</c:if>
 	</c:forEach>
 
-
-
 	<div class="d-flex justify-content-around bd-highlight">
 		<c:if test="${not contains}">
 			<c:choose>
-				<c:when test="${fees == 0}">
+				<c:when test="${event.organizer.lab.labName == researcher.lab.labName or event.fee == 0.0}">
 					<div class="p-2">
 						<a
 							href="${pageContext.servletContext.contextPath}/actions/joinevent?eventId=${event.eventId}">
 							<button type="button" class="btn btn-info pull-right">Join</button>
 						</a>
+					</div>
+				</c:when>
+				<c:when test="${fn:contains(event.attendees, researcher)}">
+					<div class="p-2">
+						<button type="button" class="btn btn-info pull-right" disabled>Join</button>
 					</div>
 				</c:when>
 				<c:otherwise>
@@ -48,14 +80,14 @@
 			test="${((researcher.lab.labId == event.organizer.lab.labId) and (userRole == 'ORGANIZER')) || userRole == 'ADMIN'}">
 			<div class="p-2">
 				<a
-					href="${pageContext.servletContext.contextPath}/actions/editevent?id=${event.eventId}">
+					href="${pageContext.servletContext.contextPath}/actions/editevent?eventId=${event.eventId}">
 					<button type="button" class="btn btn-info pull-right">Edit</button>
 				</a>
 			</div>
 		</c:if>
 	</div>
 	<div class="card">
-		<div class="card-header">Involved</div>
+		<div class="card-header">Involved (<c:out value="${fn:length(event.attendees)}" />/<c:out value="${event.attendeeCap}" />)</div>
 		<div class="card-body">
 			<table class="table table-dark table-striped">
 				<c:forEach items="${event.attendees}" var="p">
@@ -63,7 +95,7 @@
 						<td><c:out value="${p.firstName}" /></td>
 						<td><c:out value="${p.lastName}" /></td>
 						<td><a class="btn btn-primary"
-							href="${pageContext.servletContext.contextPath}/actions/profile?id=${p.researcherId}"
+							href="${pageContext.servletContext.contextPath}/actions/profile?researcherId=${p.researcherId}"
 							role="button">View</a></td>
 					</tr>
 				</c:forEach>

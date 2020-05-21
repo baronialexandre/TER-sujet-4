@@ -49,6 +49,7 @@ public class LoginController{
             HttpServletResponse response) {
     	request.getSession().removeAttribute("userId");
     	request.getSession().removeAttribute("userRole");
+    	request.getSession().removeAttribute("researcher");
         return new ModelAndView("redirect:/login.jsp");
     }
 
