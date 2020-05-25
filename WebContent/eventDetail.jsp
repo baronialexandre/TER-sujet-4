@@ -80,7 +80,7 @@
 			test="${((researcher.lab.labId == event.organizer.lab.labId) and (userRole == 'ORGANIZER')) || userRole == 'ADMIN'}">
 			<div class="p-2">
 				<a
-					href="${pageContext.servletContext.contextPath}/actions/editevent?eventId=${event.eventId}">
+					href="${pageContext.servletContext.contextPath}/actions/edit-event?eventId=${event.eventId}">
 					<button type="button" class="btn btn-info pull-right">Edit</button>
 				</a>
 			</div>

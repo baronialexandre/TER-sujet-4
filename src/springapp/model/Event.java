@@ -55,13 +55,13 @@ public class Event implements Serializable {
 	
 	@Basic(optional = false)
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "dd/mm/yyyy")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "begin_date")
 	private Date beginDate;
 	
 	@Basic(optional = false)
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "dd/mm/yyyy")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "end_date")
 	private Date endDate;
 
