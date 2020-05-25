@@ -1,5 +1,12 @@
 package springapp.web;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -13,8 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import springapp.business.ILabManager;
 import springapp.business.IResearcherManager;
+import springapp.model.Lab;
 import springapp.model.Researcher;
+import springapp.model.utils.Role;
 
 @Controller()
 public class EditProfileController {
@@ -22,6 +33,9 @@ public class EditProfileController {
 	IResearcherManager researcherManager;
 	@Autowired
 	ResearcherValidator validator;
+	
+	@Autowired
+	ILabManager labManager;
 	
     protected final Log logger = LogFactory.getLog(getClass());
 
@@ -94,40 +108,45 @@ public class EditProfileController {
     
      ///////////////////////////////////////////
     @RequestMapping(value = "edit-profile", method = RequestMethod.GET)
-    public ModelAndView submit(@Valid @ModelAttribute("researcher")Researcher researcher, HttpServletRequest request) {
+    public ModelAndView loadEditProfile(@Valid @ModelAttribute("researcher")Researcher researcher, HttpServletRequest request) {
         logger.info("edit profile " + researcher);
 		request.getSession().setAttribute("disableMenu", false);
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/editProfile");
+        modelAndView.setViewName("editProfile");
         modelAndView.addObject(researcher);
+        List<String> labs = labManager.getAllLabNames();
+        request.getSession().setAttribute("labs", labs);
+        System.out.print("loadEditProfile :: loaded");
         return modelAndView;
     }
     
     @ModelAttribute
     public Researcher newResearcher(
         @RequestParam(value = "researcherId", required = true) Integer researcherNumber) {
+    	Researcher researcher = new Researcher("","","","",new Date(), "", Role.USER);
+        researcher = researcherManager.getResearcher(researcherNumber);
         logger.info("find researcher " + researcherNumber);
-        return researcherManager.getResearcher(researcherNumber);
+        return researcher;
     }
     
-    @RequestMapping(value = "save-profile", method = RequestMethod.POST)
+    @RequestMapping(value = "change-admin-profile", method = RequestMethod.POST)
     public ModelAndView saveEditProfile(@Valid @ModelAttribute("researcher")Researcher researcher, BindingResult result, HttpServletRequest request) {
-        logger.info("Save Edit Profile");
+        logger.info("change-admin-profile");
         Researcher resear = researcher;
         validator.validate(researcher, result);
         if (result.hasErrors()) {
-            logger.info("Epic fail - "+ researcher.getBirthDay());
             ModelAndView modelAndView = new ModelAndView();
-            modelAndView.setViewName("/edit");
+            modelAndView.setViewName("editProfile");
             modelAndView.addObject(resear);
-    		request.getSession().setAttribute("disableMenu", true);
             return modelAndView;
         }
+        Lab lab = labManager.findByName((String) result.getFieldValue("lab.labName"));
+        researcher.setLab(lab);
         researcherManager.update(researcher);
-        
         System.out.println(researcher.toString());
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:profile?researcherId="+researcher.getResearcherId());
+        modelAndView.setViewName("editProfile");
+        request.getSession().setAttribute("editProfileNotification", "Edited !");
         return modelAndView;
     }
     

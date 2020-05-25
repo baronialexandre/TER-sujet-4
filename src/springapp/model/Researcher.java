@@ -117,6 +117,7 @@ public class Researcher implements Serializable {
 		this.birthDay = birthDay;
 		this.password = password;
 		this.role = role;
+		this.lab = null;
 	}
 
 	@PreUpdate

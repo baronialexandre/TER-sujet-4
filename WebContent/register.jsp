@@ -2,9 +2,7 @@
 <h1>Register</h1>
 <div class="container">
 	<h2>Informations</h2>
-	<form:form class="form-horizontal"
-		action="${pageContext.servletContext.contextPath}/actions/register"
-		method="POST" modelAttribute="researcher">
+	<form:form class="form-horizontal" action="${pageContext.servletContext.contextPath}/actions/register" method="POST" modelAttribute="researcher">
 		<form:errors path="*" cssClass="alert alert-danger" element="div" />
 		<table class="table table-striped">
 			<tr>
