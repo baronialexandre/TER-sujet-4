@@ -4,9 +4,9 @@
 	<h2>Informations</h2>
 	<form:form class="form-horizontal"
 		action="${pageContext.servletContext.contextPath}/actions/register"
-		method="POST" >
+		method="POST" modelAttribute="researcher">
 		<form:errors path="*" cssClass="alert alert-danger" element="div" />
-		<table class="table table-dark table-striped">
+		<table class="table table-striped">
 			<tr>
 				<td><form:label path="email">Email</form:label></td>
 				<td><form:input type="email" class="form-control" path="email"
@@ -50,15 +50,14 @@
 						element="div" /></td>
 			</tr>
 			<tr>
-				<td><form:label path="laboratory">Laboratory</form:label></td>
+				<td><form:label path="lab">Laboratory</form:label></td>
 				<td><form:input type="text" class="form-control"
-						path="laboratory" placeholder="Enter your Laboratory" /></td>
-				<td><form:errors path="laboratory"
+						path="lab" placeholder="Enter your Laboratory" /></td>
+				<td><form:errors path="lab"
 						cssClass="alert alert-warning" element="div" /></td>
 			</tr>
 		</table>
 		<button name="submit" class="btn btn-success pull-right">Register</button>
 	</form:form>
-	<c:set var="disableMenu" scope="session" value="${true}">
-	</c:set>
+
 </div>

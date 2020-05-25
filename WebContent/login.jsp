@@ -23,7 +23,7 @@
 		<div class="form-group">
 			<div class="col-xs-8" style="min-width: 200px; text-align: right;">
 				<button name="submit" class="btn btn-success">Log in</button>
-				<button onclick="location.href='${pageContext.servletContext.contextPath}/register'" class="btn btn-info" type="button">Register</button>
+				<button onclick="location.href='${pageContext.servletContext.contextPath}/actions/register'" class="btn btn-info" type="button">Register</button>
 			</div>
 		</div>
 	</form>
