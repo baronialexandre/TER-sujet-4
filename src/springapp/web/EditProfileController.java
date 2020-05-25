@@ -96,7 +96,7 @@ public class EditProfileController {
     @RequestMapping(value = "edit-profile", method = RequestMethod.GET)
     public ModelAndView submit(@Valid @ModelAttribute("researcher")Researcher researcher, HttpServletRequest request) {
         logger.info("edit profile " + researcher);
-		//request.getSession().setAttribute("disableMenu", true);
+		request.getSession().setAttribute("disableMenu", false);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("/editProfile");
         modelAndView.addObject(researcher);
