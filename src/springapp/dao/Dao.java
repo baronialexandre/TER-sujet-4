@@ -50,9 +50,9 @@ public class Dao {
 		return researchersLazy;
 	}
 	
-	public Collection<Researcher> getResearchersWithNoLab() { //a test //a faire
-		Collection<Researcher> researchersLazy = em.createQuery("Select r from Researcher r", Researcher.class).getResultList();
-		return researchersLazy;
+	public Collection<Researcher> getResearchersWithNoLab() { //a test
+		Collection<Researcher> researchers = em.createQuery("Select r from Researcher r WHERE r.lab IS NULL", Researcher.class).getResultList();
+		return researchers;
 	}
 	
 	public void updateResearcher(Researcher r) {
@@ -111,9 +111,16 @@ public class Dao {
 		System.out.println("updateLab with id=" + l.getLabId());
 	}
 
-	public void removeLab(long id) {
-		em.remove(em.merge(findLab(id)));
-		System.out.println("removeLab with id=" + id);
+	public void removeLab(long id) { //à tester
+		Lab lab = findLab(id);
+		for(Researcher r : lab.getResearchers()) {
+			r.setLab(null);
+			updateResearcher(r);
+		}
+		lab.getResearchers().clear();
+		updateLab(lab);
+		em.remove(em.merge(lab));
+		System.out.println("removeLab = " + lab.getLabName());
 	}
 	
 	public Collection<Lab> getAllLabs(){

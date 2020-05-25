@@ -42,10 +42,9 @@ public class AdminPanelController {
         
         Collection<Lab> labs = labManager.findAll();
         
-        ModelAndView modelAndView = new ModelAndView();
+        ModelAndView modelAndView = new ModelAndView("admin-panel");
         request.getSession().setAttribute("labs", labs);
         request.getSession().setAttribute("researchersWithoutLab", researcherManager.getResearchersWithNoLab());
-        modelAndView.setViewName("admin-panel");
         return modelAndView;
     }
     
