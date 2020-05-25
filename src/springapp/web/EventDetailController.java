@@ -1,6 +1,7 @@
 package springapp.web;
 
 import java.io.IOException;
+import java.util.Collections;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -58,7 +59,7 @@ public class EventDetailController{
         	return new ModelAndView("redirect:/events.jsp");
         }
         
-        logger.info(curEvent.toString());
+        
         request.getSession().setAttribute("event", curEvent);
         return new ModelAndView("eventDetail");
     }

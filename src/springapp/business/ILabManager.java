@@ -18,4 +18,7 @@ public interface ILabManager {
     Lab findByName(String name);
 
 	void add(Lab lab);
+	
+	boolean delete(long id);
+
 }

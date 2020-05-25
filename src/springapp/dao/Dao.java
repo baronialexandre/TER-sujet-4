@@ -45,6 +45,16 @@ public class Dao {
 		return r;
 	}
 	
+	public Collection<Researcher> findResearchers(String firstOrLastname) { //a test
+		Collection<Researcher> researchersLazy = em.createQuery("Select r from Researcher r WHERE r.lastName=?1 OR r.firstName=?2 ORDER BY r.lastName, r.firstName", Researcher.class).setParameter(1, firstOrLastname).setParameter(2, firstOrLastname).getResultList();
+		return researchersLazy;
+	}
+	
+	public Collection<Researcher> getResearchersWithNoLab() { //a test //a faire
+		Collection<Researcher> researchersLazy = em.createQuery("Select r from Researcher r", Researcher.class).getResultList();
+		return researchersLazy;
+	}
+	
 	public void updateResearcher(Researcher r) {
 		em.merge(r);
 		System.out.println("updateResearcher with id=" + r.getResearcherId());

@@ -38,10 +38,20 @@ public class InMemoryLabManager implements ILabManager {
 		dao.addLab(lab);
 	}
 
-	@Override
+    @Override
 	public Lab find(long id) {
-		return null;
+		return dao.findLab(id);
 	}
+    
+    @Override
+    public boolean delete(long id) {
+    	try {
+    		dao.removeLab(id);
+    		return true;
+    	} catch(Exception e) {
+    		return false;
+    	}
+    }
 
 	public List<String> getAllLabNames() {
 		List<Lab> allLabs = new ArrayList<Lab>(findAll());
