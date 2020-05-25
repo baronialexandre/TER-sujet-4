@@ -6,7 +6,7 @@
 		<h2>Informations</h2>
 		<div>
 			<c:if test="${researcher.researcherId == userId || userRole == \"ADMIN\"}">
-				<a href="actions/edit-profile?id=${researcher.researcherId}">
+				<a href="<%=application.getContextPath()%>/actions/edit-profile?researcherId=${researcher.researcherId}">
 					<button type="button" class="btn btn-info pull-right">Edit</button>
 				</a>
 			</c:if>

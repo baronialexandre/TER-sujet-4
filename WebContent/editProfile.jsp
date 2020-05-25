@@ -4,7 +4,7 @@
 <div class="container">
 	<h2>Informations</h2>
 	<form:form class="form-horizontal"
-		action="${pageContext.servletContext.contextPath}/actions/save-profile?id=${researcher.id}"
+		action="${pageContext.servletContext.contextPath}/actions/save-profile?id=${researcher.researcherId}"
 		method="POST" modelAttribute="researcher">
 		<form:errors path="*" cssClass="alert alert-danger" element="div" />
 
@@ -13,17 +13,17 @@
 			<div class="card-body">
 				<table class="table table-dark table-striped">
 					<tr>
-						<td><form:label path="change-password1">New password</form:label></td>
+						<td><form:label path="password">New password</form:label></td>
 						<td><form:input type="password" class="form-control"
-								path="change-password1" placeholder="Enter password" value="" /></td>
-						<td><form:errors path="change-password1"
+								path="password" placeholder="Enter password" value="" /></td>
+						<td><form:errors path="password"
 								cssClass="alert alert-warning" element="div" /></td>
 					</tr>
 					<tr>
-						<td><form:label path="change-password2">Confirm new password</form:label></td>
+						<td><form:label path="password">Confirm new password</form:label></td>
 						<td><form:input type="password" class="form-control"
-								path="change-password2" placeholder="Enter password" value="" /></td>
-						<td><form:errors path="change-password2"
+								path="password" placeholder="Enter password" value="" /></td>
+						<td><form:errors path="password"
 								cssClass="alert alert-warning" element="div" /></td>
 					</tr>
 				</table>
@@ -36,18 +36,18 @@
 			<div class="card-body">
 				<table class="table table-dark table-striped">
 					<tr>
-						<td><form:label path="change-email1">New Email</form:label></td>
+						<td><form:label path="email">New Email</form:label></td>
 						<td><form:input type="email" class="form-control"
-								path="change-email1" placeholder="Enter email" value="" /></td>
-						<td><form:errors path="change-email1"
-								cssClass="alert alert-warning" element="div" /></td>
+								path="email" placeholder="Enter email" value="" /></td>
+						<td><form:errors path="email" cssClass="alert alert-warning"
+								element="div" /></td>
 					</tr>
 					<tr>
-						<td><form:label path="change-email2">Confirm new Email</form:label></td>
+						<td><form:label path="email">Confirm new Email</form:label></td>
 						<td><form:input type="email" class="form-control"
-								path="change-email2" placeholder="Enter email" value="" /></td>
-						<td><form:errors path="change-email2"
-								cssClass="alert alert-warning" element="div" /></td>
+								path="email" placeholder="Enter email" value="" /></td>
+						<td><form:errors path="email" cssClass="alert alert-warning"
+								element="div" /></td>
 					</tr>
 				</table>
 				<br />
@@ -87,14 +87,7 @@
 				<td><form:errors path="birthDay" cssClass="alert alert-warning"
 						element="div" /></td>
 			</tr>
-			<tr>
-				<td><form:label path="website">Laboratory</form:label></td>
-				<td><form:input type="text" class="form-control"
-						path="laboratory" placeholder="Enter your Laboratory"
-						value='<c:out value="${researcher.Lab}" default="laboratory::TEST" />' /></td>
-				<td><form:errors path="laboratory"
-						cssClass="alert alert-warning" element="div" /></td>
-			</tr>
+
 		</table>
 		<button name="submit" class="btn btn-success pull-right">Save</button>
 	</form:form>

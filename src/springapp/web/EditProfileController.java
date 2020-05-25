@@ -96,16 +96,16 @@ public class EditProfileController {
     @RequestMapping(value = "edit-profile", method = RequestMethod.GET)
     public ModelAndView submit(@Valid @ModelAttribute("researcher")Researcher researcher, HttpServletRequest request) {
         logger.info("edit profile " + researcher);
+		//request.getSession().setAttribute("disableMenu", true);
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/edit");
+        modelAndView.setViewName("/editProfile");
         modelAndView.addObject(researcher);
-		request.getSession().setAttribute("disableMenu", true);
         return modelAndView;
     }
     
     @ModelAttribute
     public Researcher newResearcher(
-        @RequestParam(value = "id", required = true) Integer researcherNumber) {
+        @RequestParam(value = "researcherId", required = true) Integer researcherNumber) {
         logger.info("find researcher " + researcherNumber);
         return researcherManager.getResearcher(researcherNumber);
     }
