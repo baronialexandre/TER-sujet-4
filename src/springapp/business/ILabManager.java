@@ -2,6 +2,7 @@ package springapp.business;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import springapp.model.Lab;
 
@@ -13,7 +14,7 @@ public interface ILabManager {
 
     Lab find(long id);
     
-    List<String> getAllLabNames();
+    Map<Long,String> getLabNameMap();
     
     Lab findByName(String name);
 

@@ -14,27 +14,29 @@
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active"><a class="nav-link" href="<%=application.getContextPath()%>/actions/events">Events</a>
 				</li>
-				<li class="nav-item"><a class="nav-link" href="<%=application.getContextPath()%>/actions/archives">Archives</a>
+				<li class="nav-item"><a class="nav-link" href="<%=application.getContextPath()%>/actions/archives">Archived events</a>
 				</li>
 			</ul>
 			<ul class="navbar-nav mr-inline">
 				<li class="nav-item"><a class="nav-link" href="<%=application.getContextPath()%>/actions/profile">Profile</a></li>
 				<c:choose>
 					<c:when test="${empty userId}">
-						<li class="nav-item"><a class="nav-link" href="<%=application.getContextPath()%>">Connect</a></li>
+						<li class="nav-item"><a class="nav-link" href="<%=application.getContextPath()%>">Log in</a></li>
 					</c:when>
 					<c:otherwise>
-						<li class="nav-item"><a class="nav-link" href="<%=application.getContextPath()%>/actions/logout">Disconnect</a></li>
+						<li class="nav-item"><a class="nav-link" href="<%=application.getContextPath()%>/actions/logout">Log out</a></li>
 					</c:otherwise>
 				</c:choose>
 			</ul>
 		</div>
 	</nav>
 </c:if>
-<div class="alert alert-info alert-dismissible fade show" role="alert">
-  <strong>Notification : </strong>
-  <c:out value="Your id is ${userId} ; your role is ${userRole}" default="---"/>
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
+<c:if test="${not empty userId}">
+	<div class="alert alert-info alert-dismissible fade show" role="alert">
+	  <strong>Notification : </strong>
+	  <c:out value="Your id is ${userId} ; your role is ${userRole}" default="---"/>
+	  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	    <span aria-hidden="true">&times;</span>
+	  </button>
+	</div>
+</c:if>

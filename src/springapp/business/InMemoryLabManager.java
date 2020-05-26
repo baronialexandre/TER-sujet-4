@@ -2,7 +2,9 @@ package springapp.business;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,12 +55,13 @@ public class InMemoryLabManager implements ILabManager {
     	}
     }
 
-	public List<String> getAllLabNames() {
+	@Override
+	public Map<Long, String> getLabNameMap() {
 		List<Lab> allLabs = new ArrayList<Lab>(findAll());
-		List<String> allLabNames = new ArrayList<>();
+		Map<Long,String> labMap = new LinkedHashMap<>();
 		for(Lab lab : allLabs)
-			allLabNames.add(lab.getLabName());
-		return allLabNames;
+			labMap.put(lab.getLabId(), lab.getLabName());
+		return labMap;
 	}
 
 	public Lab findByName(String name) {
