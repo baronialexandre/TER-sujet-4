@@ -31,9 +31,9 @@ public class ResearcherValidator implements Validator{
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "researcher.lastName", "Field lastName is required.");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "birthDay", "researcher.birthDay", "Field birthDay is required.");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "researcher.password", "Field password is required.");
-        
-        if(!researcherManager.getResearcher(researcher.getResearcherId()).getEmail().equals(researcher.getEmail()) && researcherManager.hasResearcher(researcher.getEmail()))
+        if(researcherManager.hasResearcher(researcher.getEmail()))
         	errors.rejectValue("email", "researcher.email", "Email already used");
+        
 	}
 
 }

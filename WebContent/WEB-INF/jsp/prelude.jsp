@@ -7,7 +7,7 @@
 
 <html>
 <head>
-    <title>JEEDA</title>
+    <title>TER-sujet-04</title>
     <%@ include file="/WEB-INF/jsp/menu.jsp" %>
 </head>
 <body class="container">

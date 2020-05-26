@@ -105,15 +105,15 @@
 					<div class="card-body">
 					<table class="table table-striped">
 						<tr>
-							<td><form:label path="lab.labName">Laboratory</form:label></td>
+							<td><form:label path="lab.labId">Laboratory</form:label></td>
 							<td>
 								<ul>
-									<form:select class="form-control" path="lab.labName">
+									<form:select class="form-control" path="lab.labId">
                 						<form:options items="${labs}" />
 						            </form:select>
 								</ul>
 							</td>
-							<td><form:errors path="lab.labName" cssClass="alert alert-warning" element="div" /></td>
+							<td><form:errors path="lab.labId" cssClass="alert alert-warning" element="div" /></td>
 						</tr>
 						<tr>
 							<td><form:label path="role">Role</form:label></td>

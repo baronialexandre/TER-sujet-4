@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -56,6 +57,7 @@ public class EditEventController {
 
 		Event curEvent = (Event)request.getSession().getAttribute("event");
 		
+		
 		curEvent.setBeginDate(e.getBeginDate());
 		curEvent.setEndDate(e.getEndDate());
 		curEvent.setEventName(new String(e.getEventName().getBytes(),Charset.forName("UTF-8")));
@@ -63,6 +65,7 @@ public class EditEventController {
 		curEvent.setType(e.getType());
 		curEvent.setFee(e.getFee());
 		curEvent.setLocation(new String(e.getLocation().getBytes(),Charset.forName("UTF-8")));
+		curEvent.setSpeakers(Stream.of(e.getSpeakers().toString().replace("[", "").replace("]", "")).collect(Collectors.toList()));
 		
 		eventManager.update(curEvent);
 		

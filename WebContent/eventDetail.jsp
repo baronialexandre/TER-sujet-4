@@ -2,6 +2,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
+<jsp:useBean id="now" class="java.util.Date"/>
+
 <h1>Event</h1>
 <div class="container">
 	<div class="card">
@@ -14,6 +16,14 @@
 				<c:forEach items="${event.speakers}" var="speaker">
 					; <c:out value="${speaker}" default="speakerName::TEST"/>
 				</c:forEach>
+			</li>
+		</ul>
+		<ul class="list-group list-group-flush">
+			<li class="list-group-item">
+				<span style="text-decoration: underline;">Begin date:</span> 
+				<c:out value="${event.beginDate}" default="beginDate::TEST"/>	; 
+				<span style="text-decoration: underline;">End date:</span> 
+				<c:out value="${event.endDate}" default="endDate::TEST"/>	; 
 			</li>
 		</ul>
 		<div class="card-body">
@@ -31,6 +41,11 @@
 				<div class="card-footer text-muted">
     				You are already registered.
   				</div>
+			</c:when>
+			<c:when test="${event.beginDate lt now}">
+				<div class="card-footer text-muted">
+				The event has passed
+				</div>
 			</c:when>
 			<c:otherwise>
 				<div class="card-footer text-muted">
@@ -59,7 +74,7 @@
 						</a>
 					</div>
 				</c:when>
-				<c:when test="${fn:contains(event.attendees, researcher)}">
+				<c:when test="${fn:contains(event.attendees, researcher) or (event.beginDate lt now)}">
 					<div class="p-2">
 						<button type="button" class="btn btn-info pull-right" disabled>Join</button>
 					</div>
@@ -89,7 +104,7 @@
 	<div class="card">
 		<div class="card-header">Involved (<c:out value="${fn:length(event.attendees)}" />/<c:out value="${event.attendeeCap}" />)</div>
 		<div class="card-body">
-			<table class="table table-dark table-striped">
+			<table class="table table-light table-striped">
 				<c:forEach items="${event.attendees}" var="p">
 					<tr>
 						<td><c:out value="${p.firstName}" /></td>
