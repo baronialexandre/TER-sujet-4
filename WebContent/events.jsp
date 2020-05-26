@@ -14,7 +14,7 @@
 				<c:when test="${event.type == \"CONFERENCE\"}">
 					<!--danger-->
 					<c:set var="typeColor" value="danger" />
-				</c:when>
+				</c:when> 
 				<c:when test="${event.type == \"SEMINAR\"}">
 					<!--success-->
 					<c:set var="typeColor" value="success" />
