@@ -26,6 +26,14 @@
 						cssClass="alert alert-warning" element="div" /></td>
 			</tr>
 			<tr>
+				<td><form:label path="speakers">Speakers</form:label></td>
+				<td><form:input type="text" class="form-control"
+						path="speakers" placeholder="[speaker1, speaker2, speaker3]"
+						value='${event.speakers}' /></td>
+				<td><form:errors path="speakers"
+						cssClass="alert alert-warning" element="div" /></td>
+			</tr>
+			<tr>
 				<td><form:label path="type">Type:</form:label></td>
 				<td><form:select class="form-control" path="type">
 					 <form:options/>
@@ -78,9 +86,9 @@
 		<button name="submit" class="btn btn-success pull-right">Save</button>
 
 		<div class="card">
-		<div class="card-header">Involved (<c:out value="${fn:length(event.attendees)}" />/<c:out value="${event.attendeeCap}" />)</div>
+		<div class="card-header">Attendees (<c:out value="${fn:length(event.attendees)}" />/<c:out value="${event.attendeeCap}" />)</div>
 		<div class="card-body">
-			<table class="table table-dark table-striped">
+			<table class="table table-light table-striped">
 				<c:forEach items="${event.attendees}" var="p">
 					<tr>
 						<td><c:out value="${p.firstName}" /></td>
