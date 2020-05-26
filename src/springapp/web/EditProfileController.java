@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.apache.commons.logging.Log;
@@ -39,74 +40,6 @@ public class EditProfileController {
 	
     protected final Log logger = LogFactory.getLog(getClass());
 
-    /*
-    @RequestMapping(value = "edit-profile")
-    public ModelAndView loadEditProfile(HttpServletRequest request,
-            HttpServletResponse response) throws ServletException, IOException {
-        logger.info("Load Edit Profile");
-        
-    	long personId = -1;
-    	try {
-			personId = (long) request.getSession().getAttribute("userId");
-		} catch (Exception e2e) {
-			e2e.printStackTrace();
-		}
-    	
-    	Person person = personManager.getPerson(personId);
-        
-        ModelAndView modelAndView = new ModelAndView();
-        request.getSession().setAttribute("person", person);
-        
-        modelAndView.setViewName("redirect:/edit-profile.jsp");
-        return modelAndView;
-    }*/
-    
-    /*
-    @RequestMapping(value = "save-profile", method = RequestMethod.POST)
-    public ModelAndView saveEditProfile(HttpServletRequest request,
-            HttpServletResponse response) {
-        logger.info("Save Edit Profile");
-        
-        long personId = -1;
-    	try {
-			personId = (long) request.getSession().getAttribute("userId");
-		} catch (Exception e2e) {
-			e2e.printStackTrace();
-		}
-    	
-    	Person person = personManager.getPerson(personId);
-        
-        String username = request.getParameter("username");
-        String firstName = request.getParameter("firstName");
-        String lastName = request.getParameter("lastName");
-        String email = request.getParameter("email");
-        String website = request.getParameter("website");
-        String birthDay = request.getParameter("birthDay");
-        
-        
-        person.setUsername(username);
-        person.setFirstName(firstName);
-        person.setLastName(lastName);
-        person.setEmail(email);
-        person.setWebsite(website);
-        try {
-        	if(!birthDay.contains("-")) throw new Exception("Date error");
-        	Date birthDayDate = new SimpleDateFormat("yyyy-MM-dd").parse(birthDay);  
-        	person.setBirthDay(birthDayDate);
-        } catch(Exception e) {
-        	
-        }
-
-        personManager.update(person);
-        request.getSession().setAttribute("person", person);
-        
-        System.out.println(person.toString());
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/profile.jsp");
-        return modelAndView;
-    }*/
-    
-     ///////////////////////////////////////////
     @RequestMapping(value = "edit-profile", method = RequestMethod.GET)
     public ModelAndView loadEditProfile(@Valid @ModelAttribute("researcher")Researcher researcher, HttpServletRequest request) {
         logger.info("edit profile " + researcher);
@@ -129,8 +62,95 @@ public class EditProfileController {
         return researcher;
     }
     
+    //no validator here .... we have to create a custom validation maybe
+    @RequestMapping(value = "change-password-profile", method = RequestMethod.POST)
+    public ModelAndView changePasswordProfile(@ModelAttribute("researcher")Researcher researcher,
+    		HttpServletRequest request,
+            HttpServletResponse response) {
+    	String message = "";
+    	
+    	String pass1 = request.getParameter("pass1");
+    	String pass2 = request.getParameter("pass2");
+    	
+        logger.info("change-password-profile");
+        Researcher resear = researcher;
+        
+        if(pass1.contentEquals(pass2)) {
+        	if(!resear.getPassword().contentEquals(pass1)) {
+	        		resear.setPassword(pass1);
+	        		researcherManager.update(researcher);
+	        		message = "Password changed !";
+        	} else {
+        		message = "No modification.";
+        	}
+        } else {
+        	message = "The two passwords are not the same.";
+        }
+        System.out.println(researcher.toString());
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("editProfile");
+        request.getSession().setAttribute("editProfileNotification", message);
+        return modelAndView;
+    }
+    
+    //no validator here .... we have to create a custom validation maybe
+    @RequestMapping(value = "change-mail-profile", method = RequestMethod.POST)
+    public ModelAndView changeMailProfile(@ModelAttribute("researcher")Researcher researcher,
+    		HttpServletRequest request,
+            HttpServletResponse response) {
+    	String message = "";
+    	
+    	String email1 = request.getParameter("email1");
+    	String email2 = request.getParameter("email2");
+    	
+        logger.info("change-mail-profile");
+        Researcher resear = researcher;
+        
+        if(email1.contentEquals(email2)) {
+        	if(!resear.getEmail().contentEquals(email1)) {
+	        	if(!researcherManager.hasResearcher(email1)) {
+	        		resear.setEmail(email1);
+	        		researcherManager.update(researcher);
+	        		message = "Email changed !";
+	        	} else {
+	        		message = "Email already used by another researcher.";
+	        	}
+        	} else {
+        		message = "No modification.";
+        	}
+        } else {
+        	message = "The two emails are not the same.";
+        }
+        System.out.println(researcher.toString());
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("editProfile");
+        request.getSession().setAttribute("editProfileNotification", message);
+        return modelAndView;
+    }
+    
+
+    @RequestMapping(value = "change-other-profile", method = RequestMethod.POST)
+    public ModelAndView changeOtherProfile(@Valid @ModelAttribute("researcher")Researcher researcher, BindingResult result, HttpServletRequest request) {
+        logger.info("change-other-profile");
+        Researcher resear = researcher;
+        validator.validate(researcher, result);
+        if (result.hasErrors()) {
+            ModelAndView modelAndView = new ModelAndView();
+            modelAndView.setViewName("editProfile");
+            modelAndView.addObject(resear);
+            return modelAndView;
+        }
+        researcherManager.update(researcher);
+        System.out.println(researcher.toString());
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("editProfile");
+        request.getSession().setAttribute("editProfileNotification", "Edited !");
+        return modelAndView;
+    }
+    
+    
     @RequestMapping(value = "change-admin-profile", method = RequestMethod.POST)
-    public ModelAndView saveEditProfile(@Valid @ModelAttribute("researcher")Researcher researcher, BindingResult result, HttpServletRequest request) {
+    public ModelAndView changeAdminProfile(@Valid @ModelAttribute("researcher")Researcher researcher, BindingResult result, HttpServletRequest request) {
         logger.info("change-admin-profile");
         Researcher resear = researcher;
         validator.validate(researcher, result);

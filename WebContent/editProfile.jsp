@@ -19,53 +19,49 @@
 <h1>Edit profile</h1>
 <div class="container">
 	<h2>Informations</h2>
-	<form:form class="form-horizontal" action="${pageContext.servletContext.contextPath}/actions/change-password-profile?researcherId=${researcher.researcherId}" method="POST" modelAttribute="researcher">
-		<form:errors path="*" cssClass="alert alert-danger" element="div" />
+	<form class="form-horizontal" action="${pageContext.servletContext.contextPath}/actions/change-password-profile" method="POST">
+		<input type="hidden" name="researcherId" value="${researcher.researcherId}"/>
 		<div class="card">
 			<div class="card-header">Change password <sup style="opacity:0.6">Optional</sup></div>
 			<div class="card-body">
 				<table class="table table-striped">
 					<tr>
-						<td><form:label path="password">New password</form:label></td>
-						<td><form:input type="password" class="form-control" path="" placeholder="Enter password" value="" /></td>
-						<td><form:errors path="password" cssClass="alert alert-warning" element="div" /></td>
+						<td>New password</td>
+						<td><input type="password" name="pass1" class="form-control" placeholder="Enter password" required/></td>
 					</tr>
 					<tr>
-						<td><form:label path="password">Confirm new password</form:label></td>
-						<td><form:input type="password" class="form-control" path="" placeholder="Enter password" value="" /></td>
-						<td><form:errors path="password" cssClass="alert alert-warning" element="div" /></td>
+						<td>Confirm new password</td>
+						<td><input type="password" name="pass2" class="form-control" placeholder="Enter password" required/></td>
 					</tr>
 				</table>
 				<br />
 				<div class="col-xs-8" style="min-width: 200px; text-align: right;"> <button name="submit" class="btn btn-success pull-right">Save</button></div>
 			</div>
 		</div>
-	</form:form>
+	</form>
 	
 	<hr />
 	
-	<form:form class="form-horizontal" action="${pageContext.servletContext.contextPath}/actions/change-mail-profile?researcherId=${researcher.researcherId}" method="POST" modelAttribute="researcher">
-		<form:errors path="*" cssClass="alert alert-danger" element="div" />
+	<form class="form-horizontal" action="${pageContext.servletContext.contextPath}/actions/change-mail-profile" method="POST">
+		<input type="hidden" name="researcherId" value="${researcher.researcherId}"/>
 		<div class="card">
 			<div class="card-header">Change email <sup style="opacity:0.6">Optional</sup></div>
 			<div class="card-body">
 				<table class="table table-striped">
 					<tr>
-						<td><form:label path="email">New email</form:label></td>
-						<td><form:input type="email" class="form-control" path="email" placeholder="Enter email" value="" /></td>
-						<td><form:errors path="email" cssClass="alert alert-warning" element="div" /></td>
+						<td>New email</td>
+						<td><input type="email" name="email1" class="form-control" placeholder="Enter email" value="${researcher.email}" required/></td>
 					</tr>
 					<tr>
-						<td><form:label path="email">Confirm new email</form:label></td>
-						<td><form:input type="email" class="form-control" path="email" placeholder="Enter email" value="" /></td>
-						<td><form:errors path="email" cssClass="alert alert-warning" element="div" /></td>
+						<td>Confirm new email</td>
+						<td><input type="email" name="email2" class="form-control" placeholder="Enter email" value="${researcher.email}" required/></td>
 					</tr>
 				</table>
 				<br />
 				<div class="col-xs-8" style="min-width: 200px; text-align: right;"> <button name="submit" class="btn btn-success pull-right">Save</button></div>
 			</div>
 		</div>
-	</form:form>
+	</form>
 		
 	<hr />
 	

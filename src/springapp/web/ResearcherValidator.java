@@ -29,7 +29,6 @@ public class ResearcherValidator implements Validator{
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "researcher.email", "Field email is required.");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "researcher.firstName", "Field firstName is required.");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "researcher.lastName", "Field lastName is required.");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "website", "researcher.website", "Field website is required.");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "birthDay", "researcher.birthDay", "Field birthDay is required.");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "researcher.password", "Field password is required.");
         

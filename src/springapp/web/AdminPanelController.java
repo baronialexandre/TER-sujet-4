@@ -29,20 +29,25 @@ public class AdminPanelController {
 	IResearcherManager researcherManager;
 	
     protected final Log logger = LogFactory.getLog(getClass());
-
-    @RequestMapping(value = "admin-panel")
-    public ModelAndView listAdmin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    
+    private ModelAndView secureAdmin(HttpServletRequest request) {
     	try {
-    		if(request.getSession().getAttribute("userId") == null && request.getSession().getAttribute("userRole") != Role.ADMIN)
+    		if(request.getSession().getAttribute("userId") == null || request.getSession().getAttribute("userRole") != Role.ADMIN)
         		return new ModelAndView("redirect:/login.jsp");
     	} catch (Exception e) {
     		return new ModelAndView("redirect:/login.jsp");
     	}
+    	return null;
+    }
+
+    @RequestMapping(value = "admin-panel")
+    public ModelAndView listAdmin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	ModelAndView modelAndView = secureAdmin(request); if(modelAndView != null) return modelAndView;
         logger.info("List of Labs with Researchers");
         
         Collection<Lab> labs = labManager.findAll();
         
-        ModelAndView modelAndView = new ModelAndView("admin-panel");
+        modelAndView = new ModelAndView("admin-panel");
         request.getSession().setAttribute("labs", labs);
         request.getSession().setAttribute("researchersWithoutLab", researcherManager.getResearchersWithNoLab());
         return modelAndView;
@@ -50,12 +55,7 @@ public class AdminPanelController {
     
     @RequestMapping(value = "admin-panel-searchResearcher")
     public ModelAndView listResearcherSearch(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	try {
-    		if(request.getSession().getAttribute("userId") == null && request.getSession().getAttribute("userRole") != Role.ADMIN)
-        		return new ModelAndView("redirect:/login.jsp");
-    	} catch (Exception e) {
-    		return new ModelAndView("redirect:/login.jsp");
-    	}
+    	ModelAndView modelAndView = secureAdmin(request); if(modelAndView != null) return modelAndView;
     	
     	String researcherToFind = "";
     	try {
@@ -77,18 +77,13 @@ public class AdminPanelController {
     	} 
         logger.info("Researchers with name or lastname " + researcherToFind);
                 
-        ModelAndView modelAndView = new ModelAndView(new RedirectView("admin-panel"));
+        modelAndView = new ModelAndView(new RedirectView("admin-panel"));
         return modelAndView;
     }
     
     @RequestMapping(value = "admin-panel-AddLab")
     public ModelAndView addLab(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	try {
-    		if(request.getSession().getAttribute("userId") == null && request.getSession().getAttribute("userRole") != Role.ADMIN)
-        		return new ModelAndView("redirect:/login.jsp");
-    	} catch (Exception e) {
-    		return new ModelAndView("redirect:/login.jsp");
-    	}
+    	ModelAndView modelAndView = secureAdmin(request); if(modelAndView != null) return modelAndView;
         //test si le lab existe ou pas
     	String labName = "";
     	try {
@@ -116,12 +111,7 @@ public class AdminPanelController {
     
     @RequestMapping(value = "admin-panel-removeLab")
     public ModelAndView removeLab(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	try {
-    		if(request.getSession().getAttribute("userId") == null && request.getSession().getAttribute("userRole") != Role.ADMIN)
-        		return new ModelAndView("redirect:/login.jsp");
-    	} catch (Exception e) {
-    		return new ModelAndView("redirect:/login.jsp");
-    	}
+    	ModelAndView modelAndView = secureAdmin(request); if(modelAndView != null) return modelAndView;
         //test si le lab existe ou pas
     	try {
     		int labId = Integer.parseInt(request.getParameter("labId"));
