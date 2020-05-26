@@ -39,8 +39,9 @@ public class ArchivesController {
     	}
     	
     	Collection<Event> events;
+		int yearResearched = 2020;
     	try {
-    		int yearResearched = Integer.parseInt(request.getParameter("year"));
+    		yearResearched = Integer.parseInt(request.getParameter("year"));
     		logger.info("List of events (archive) year " + yearResearched);
     		events = eventManager.findArchiveAtYear(yearResearched);
     	}
@@ -53,6 +54,7 @@ public class ArchivesController {
         logger.info(events.toString());
         ModelAndView modelAndView = new ModelAndView();
         request.getSession().setAttribute("events", events);
+        request.getSession().setAttribute("year", yearResearched);
         modelAndView.setViewName("archives");
         return modelAndView;
     }

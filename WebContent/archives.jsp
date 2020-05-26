@@ -12,27 +12,36 @@
 			<form action="<%=application.getContextPath()%>/actions/archives" method="GET" class="navbar-form navbar-right">
 				<div class="form-row">
 					<div class="form-group border rounded">
-						<input type="number" class="form-control" min="1900" max="${currentYear}" step="1" value="${currentYear}" name="year">
+						<c:choose>
+							<c:when test="${empty year}">
+								<c:set var="yearValue" value="${currentYear}" />
+							</c:when>
+							<c:otherwise>
+								<c:set var="yearValue" value="${year}" />
+							</c:otherwise>
+						</c:choose>
+						<input type="number" class="form-control" min="1900"
+							max="${currentYear}" step="1" value="${yearValue}" name="year">
 					</div>
 					<div class="form-group border rounded">
-						<button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+						<button type="submit" class="btn btn-default">
+							<i class="fas fa-search"></i>
+						</button>
 					</div>
 				</div>
-				
+
 			</form>
 		</div>
 	</div>
 	<div>
-		
+
 		<c:if test="${empty events}">
 			<div class="alert alert-primary" role="alert">
-				<h4 class="alert-heading">Oups!</h4>
-				<p>There is no event for this year!</p>
-				<hr>
-				<p class="mb-0">Enter a date and we will search past event(s) for you!</p>
+				<h4 class="alert-heading">Oops!</h4>
+				<p>We found no event for this year!</p>
 			</div>
 		</c:if>
-	
+
 		<c:forEach items="${events}" var="event">
 			<c:choose>
 				<c:when test="${event.type == \"CONGRESS\"}">
@@ -57,7 +66,8 @@
 					<h2 class="card-text" style="flex: none;">
 						<c:out value="${event.eventName}" default="Test::Name" />
 					</h2>
-					<p class="card-text text-${typeColor}" style="flex: auto; margin-left: 1em;">
+					<p class="card-text text-${typeColor}"
+						style="flex: auto; margin-left: 1em;">
 						<c:out value="${event.type}" default="Test::Seminaire" />
 					</p>
 					<p class="card-text" style="flex: auto; text-align: right;">
@@ -78,12 +88,16 @@
 						/
 						<c:out value="${event.attendeeCap}" default="Test::15" />
 					</p>
-					<a href="${pageContext.servletContext.contextPath}/actions/eventdetail?eventId=${event.eventId}"> <!-- LIEN "MORE" -->
-						<button type="button" class="btn btn-outline-${typeColor} btn-sm text-dark"
+					<a
+						href="${pageContext.servletContext.contextPath}/actions/eventdetail?eventId=${event.eventId}">
+						<!-- LIEN "MORE" -->
+						<button type="button"
+							class="btn btn-outline-${typeColor} btn-sm text-dark"
 							style="flex: auto;">
 							More
 							<c:choose>
-								<c:when test="${(researcher.lab.labId == event.organizer.lab.labId && researcher.role == 'ORGANIZER') || (userRole == 'ADMIN')}">
+								<c:when
+									test="${(researcher.lab.labId == event.organizer.lab.labId && researcher.role == 'ORGANIZER') || (userRole == 'ADMIN')}">
 									<i class="far fa-edit"></i>
 								</c:when>
 								<c:otherwise>
