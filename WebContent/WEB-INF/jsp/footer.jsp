@@ -1,4 +1,4 @@
-<footer class="footer">
+<footer class="footer" id="footer">
 <hr/>
 <div class="d-flex justify-content-between align-items-center">
 	<a class="text-muted" href="<%=application.getContextPath()%>/terms-of-service.jsp">Terms of service</a>

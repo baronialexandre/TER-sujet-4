@@ -1,12 +1,8 @@
 package springapp.web;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -47,8 +43,13 @@ public class EditProfileController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("editProfile");
         modelAndView.addObject(researcher);
-        List<String> labs = labManager.getAllLabNames();
+        //lab list
+        List<String> labs = new ArrayList<>();
+        labs.add("---");
+        labs.addAll(labManager.getAllLabNames());
+        labs.add("--- Not here ---");
         request.getSession().setAttribute("labs", labs);
+        //--
         System.out.print("loadEditProfile :: loaded");
         return modelAndView;
     }
@@ -160,10 +161,16 @@ public class EditProfileController {
             modelAndView.addObject(resear);
             return modelAndView;
         }
-        Lab lab = labManager.findByName((String) result.getFieldValue("lab.labName"));
+        
+        String labName = (String) result.getFieldValue("lab.labName");
+        System.out.println(labName);
+        Lab lab = labManager.findByName(labName);
         researcher.setLab(lab);
+        System.out.println(lab.getLabName());
+        
         researcherManager.update(researcher);
         System.out.println(researcher.toString());
+        System.out.println(researcher.getLab().getLabName());
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("editProfile");
         request.getSession().setAttribute("editProfileNotification", "Edited !");

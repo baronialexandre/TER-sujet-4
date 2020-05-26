@@ -34,7 +34,10 @@
 </c:if>
 
 <div class="container-fluid">
-	<h2>Admin panel</h2>
+	<div class="d-flex justify-content-between">
+		<h2>Admin panel</h2>
+		<button onclick="location.href='#footer'" alt="Max-width 10%" class="btn btn-outline-info" type="button"><i class="fas fa-arrow-down"></i></button>
+	</div>
 	<hr />
 	<div>
 		<h3>Add laboratory</h3>
