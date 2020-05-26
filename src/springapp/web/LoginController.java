@@ -1,5 +1,8 @@
 package springapp.web;
 
+import java.util.ArrayList;
+import java.util.Enumeration;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -26,6 +29,11 @@ public class LoginController{
 	
     protected final Log logger = LogFactory.getLog(getClass());
     
+    @RequestMapping(value = "index", method = RequestMethod.POST)
+    public ModelAndView index() {
+    	return new ModelAndView("");
+    }
+    
     @RequestMapping(value = "login", method = RequestMethod.POST)
     public ModelAndView logIn(HttpServletRequest request,
             HttpServletResponse response) {
@@ -47,9 +55,11 @@ public class LoginController{
     @RequestMapping(value = "logout")
     public ModelAndView logOut(HttpServletRequest request,
             HttpServletResponse response) {
-    	request.getSession().removeAttribute("userId");
-    	request.getSession().removeAttribute("userRole");
-    	request.getSession().removeAttribute("researcher");
+    	Enumeration<String> attributes = request.getSession().getAttributeNames();
+    	while(attributes.hasMoreElements()) {
+    		String attribute = attributes.nextElement();
+    		request.getSession().removeAttribute(attribute);
+    	}
         return new ModelAndView("redirect:/login.jsp");
     }
 
