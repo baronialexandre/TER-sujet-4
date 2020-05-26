@@ -26,6 +26,14 @@
 						cssClass="alert alert-warning" element="div" /></td>
 			</tr>
 			<tr>
+				<td><form:label path="speakers">Speakers</form:label></td>
+				<td><form:input type="text" class="form-control"
+						path="speakers" placeholder="[speaker1, speaker2, speaker3]"
+						value='${event.speakers}' /></td>
+				<td><form:errors path="speakers"
+						cssClass="alert alert-warning" element="div" /></td>
+			</tr>
+			<tr>
 				<td><form:label path="type">Type:</form:label></td>
 				<td><form:select class="form-control" path="type">
 					 <form:options/>
