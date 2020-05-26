@@ -59,19 +59,19 @@ public class EventLabResearcherGenerator {
 				case (0):
 					e = new Event("Congrés de " + faker.ancient().god() + " " + rnd.nextInt(1000000), EventType.CONGRESS,
 							faker.address().city(), begin, end,
-							"Description description de ce congrés " + faker.lorem().characters(500), speakers,
+							faker.lorem().sentence(50), speakers,
 							100 + rnd.nextInt(400) + 0.0f, new Long((rnd.nextInt(20) + 2) * 100));
 					break;
 				case (1):
 					e = new Event("Séminaire " + faker.app().name() + " " + rnd.nextInt(1000000), EventType.SEMINAR,
 							faker.address().city(), begin, end,
-							"Description du séminaire: " + faker.lorem().characters(500), speakers,
+							faker.lorem().sentence(20), speakers,
 							100 + rnd.nextInt(400) + 0.0f, new Long((rnd.nextInt(50) + 5)));
 					break;
 				case (2):
 					e = new Event("Conférence " + faker.commerce().department() + " " + rnd.nextInt(1000000),
 							EventType.CONFERENCE, faker.address().city(), begin, end,
-							"Description de la conf: " + faker.lorem().characters(500), speakers,
+							faker.lorem().sentence(30), speakers,
 							100 + rnd.nextInt(400) + 0.0f, new Long((rnd.nextInt(80) + 2) * 10));
 					break;
 				}
