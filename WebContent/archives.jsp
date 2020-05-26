@@ -38,7 +38,7 @@
 		<c:if test="${empty events}">
 			<div class="alert alert-primary" role="alert">
 				<h4 class="alert-heading">Oops!</h4>
-				<p>We found no event for this year!</p>
+				<p>We found no events for this year!</p>
 			</div>
 		</c:if>
 
