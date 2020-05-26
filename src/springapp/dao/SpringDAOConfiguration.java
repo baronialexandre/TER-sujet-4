@@ -32,7 +32,7 @@ public class SpringDAOConfiguration {
         dataSource.setUsername("bandol");
         dataSource.setPassword("bandol");
         //dataSource.setUrl("jdbc:h2:file:.\\data_TER_04\\h2db"); // A activer si .war
-        dataSource.setUrl("jdbc:h2:file:D:/Master/Ter/data_TER_04/h2db"); // A modifier localement pour dev, ne pas commit ce fichier (une fois modif) :)
+        dataSource.setUrl("jdbc:h2:file:C:\\Users\\kebab\\m1confinement\\terworkspace\\h2db"); // A modifier localement pour dev, ne pas commit ce fichier (une fois modif) :)
         return dataSource;
     }
 
@@ -52,7 +52,7 @@ public class SpringDAOConfiguration {
         properties.setProperty("hibernate.hbm2ddl.auto", "update"); //create-drop pour drop à la fin du test ou update
         properties.setProperty("hibernate.dialect", //
                 "org.hibernate.dialect.H2Dialect");
-        properties.setProperty("hibernate.show_sql", "true");
+        properties.setProperty("hibernate.show_sql", "false");
         properties.setProperty("hibernate.format_sql", "true");
         em.setJpaProperties(properties);
         return em;

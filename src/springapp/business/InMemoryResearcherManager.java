@@ -37,7 +37,7 @@ public class InMemoryResearcherManager implements IResearcherManager {
 	
 	@Override
 	public Collection<Researcher> findResearchers(String firstOrLastname) {
-		return dao.findResearchers(firstOrLastname);
+		return dao.searchResearchers(firstOrLastname);
 	}
 	
 	@Override
