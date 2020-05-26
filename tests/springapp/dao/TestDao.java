@@ -41,64 +41,41 @@ public class TestDao {
 	@Autowired
 	Dao dao;
 	Random rnd = new Random();
-	Researcher researcherAdd, researcherGet, researcherUpd, researcherLab1, researcherLab2, researcherLab3,attendeeEvent1,attendeeEvent2,attendeeEvent3,researcherAuth,researcherAuth2,
-	researcherHas;
-	
-	Lab labAdd, labGet, labUpd, lab;
-	Event eventAdd, eventGet, eventUpd, event;
+	List<Researcher> researchers = new ArrayList<>();
+	List<Lab> labs = new ArrayList<>();
+	List<Event> events = new ArrayList<>();
 	
 	@BeforeAll
 	public void beforeAll() {
-		researcherAdd = new Researcher("ADD"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.USER);
-		researcherGet = new Researcher("GET"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.USER);
-		researcherUpd = new Researcher("UPD"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.USER);
-		researcherLab1 = new Researcher("lab1"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.USER);
-		researcherLab2 = new Researcher("lab2"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.USER);
-		researcherLab3 = new Researcher("lab3"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.USER);
-		attendeeEvent1 = new Researcher("attendee1"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.USER);
-		attendeeEvent2 = new Researcher("attendee2"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.ORGANIZER);
-		attendeeEvent3 = new Researcher("attendee3"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.ADMIN);
-		researcherAuth = new Researcher("authgood"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.ADMIN);
-		researcherAuth2 = new Researcher("authwrongo"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.ADMIN);
-		researcherHas = new Researcher("HAS"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.USER);
-		labAdd = new Lab("addlab"+rnd.nextInt());
-		labGet = new Lab("getlab"+rnd.nextInt());
-		labUpd = new Lab("updlab"+rnd.nextInt());
-		lab = new Lab("labo"+rnd.nextInt());
-		eventAdd = new Event("ADD FYRE CONF"+rnd.nextInt(),EventType.CONFERENCE,"l'ilot",new Date(),new Date(),"cette conference de feu",Arrays.asList("Jean MICHELE","DJ dog"),new Float(5.05),new Long(150));
-		eventGet = new Event("GET FYRE CONF"+rnd.nextInt(),EventType.CONFERENCE,"l'ilot",new Date(),new Date(),"cette conference de feu",Arrays.asList("Jean MICHELE","DJ dog"),new Float(5.05),new Long(150));
-		eventUpd = new Event("UPD FYRE CONF"+rnd.nextInt(),EventType.CONFERENCE,"l'ilot",new Date(),new Date(),"cette conference de feu",Arrays.asList("Jean MICHELE","DJ dog"),new Float(5.05),new Long(150));
-		event = new Event("event"+rnd.nextInt(),EventType.CONFERENCE,"l'ilot",new Date(),new Date(),"cette conference de feu",Arrays.asList("Jean MICHELE","DJ dog"),new Float(5.05),new Long(150));
+		researchers.add(new Researcher("ADD"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.USER));
+		researchers.add(new Researcher("GET"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.USER));
+		researchers.add(new Researcher("UPD"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.USER));
+		researchers.add(new Researcher("lab1"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.USER));
+		researchers.add(new Researcher("lab2"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.USER));
+		researchers.add(new Researcher("lab3"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.USER));
+		researchers.add(new Researcher("attendee1"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.USER));
+		researchers.add(new Researcher("attendee2"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.ORGANIZER));
+		researchers.add(new Researcher("attendee3"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.ADMIN));
+		researchers.add(new Researcher("authgood"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.ADMIN));
+		researchers.add(new Researcher("authwrongo"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.ADMIN));
+		labs.add(new Lab("addlab"+rnd.nextInt()));
+		labs.add(new Lab("getlab"+rnd.nextInt()));
+		labs.add(new Lab("updlab"+rnd.nextInt()));
+		labs.add(new Lab("labo"+rnd.nextInt()));
+		events.add(new Event("ADD FYRE CONF"+rnd.nextInt(),EventType.CONFERENCE,"l'ilot",new Date(),new Date(),"cette conference de feu",Arrays.asList("Jean MICHELE","DJ dog"),new Float(5.05),new Long(150)));
+		events.add(new Event("GET FYRE CONF"+rnd.nextInt(),EventType.CONFERENCE,"l'ilot",new Date(),new Date(),"cette conference de feu",Arrays.asList("Jean MICHELE","DJ dog"),new Float(5.05),new Long(150)));
+		events.add(new Event("UPD FYRE CONF"+rnd.nextInt(),EventType.CONFERENCE,"l'ilot",new Date(),new Date(),"cette conference de feu",Arrays.asList("Jean MICHELE","DJ dog"),new Float(5.05),new Long(150)));
+		events.add(new Event("event"+rnd.nextInt(),EventType.CONFERENCE,"l'ilot",new Date(),new Date(),"cette conference de feu",Arrays.asList("Jean MICHELE","DJ dog"),new Float(5.05),new Long(150)));
 	}
 
 	@AfterAll
-	public void afterAll() {/*
-		dao.removeResearcher(researcherAdd.getResearcherId());
-		dao.removeResearcher(researcherGet.getResearcherId());
-		dao.removeResearcher(researcherUpd.getResearcherId());
-		dao.removeLab(labAdd.getLabId());
-		dao.removeLab(labGet.getLabId());
-		dao.removeLab(labUpd.getLabId());
-		dao.removeEvent(eventAdd.getEventId());
-		dao.removeEvent(eventGet.getEventId());
-		dao.removeEvent(eventUpd.getEventId());
-		/*
-		dao.removePerson(personAdd.getPersonId());
-		dao.removePerson(personGet.getPersonId());
-		dao.removePerson(personUpd.getPersonId());
-		dao.removePerson(personTeam1.getPersonId());
-		dao.removePerson(personTeam2.getPersonId());
-		dao.removePerson(personTeam3.getPersonId());
-		dao.removePerson(personAuth.getPersonId());
-		dao.removePerson(personAuth2.getPersonId());
-		dao.removeTeam(teamAdd.getTeamId());
-		dao.removeTeam(teamGet.getTeamId());
-		dao.removeTeam(teamUpd.getTeamId());
-		dao.removeTeam(team.getTeamId());
-		dao.removeTeam(teamGetAll.getTeamId());
-		dao.removeTeam(teamSearch1.getTeamId());
-		dao.removeTeam(teamSearch2.getTeamId());
-		*/
+	public void afterAll() {
+		for(Event e : events)
+			dao.removeEvent(e.getEventId());
+		for(Researcher r : researchers)
+			dao.removeResearcher(r.getResearcherId());
+		for(Lab l : labs)
+			dao.removeLab(l.getLabId());
 	}
 
 	@BeforeEach
@@ -112,20 +89,20 @@ public class TestDao {
 	//Researcher(String email, String firstName, String lastName,  String website, Date birthDay, String password, Role role) 
 	@Test
 	public void testAddResearcher() {
-		researcherAdd = dao.addResearcher(researcherAdd);
+		Researcher researcherAdd = dao.addResearcher(researchers.get(0));
 		assertTrue(true);
 	}
 
 	@Test
 	public void testFindResearcher() {
-		researcherGet = dao.addResearcher(researcherGet);
+		Researcher researcherGet = dao.addResearcher(researchers.get(1));
 		Researcher researcherGet2 = dao.findResearcher(researcherGet.getResearcherId());
 		assertEquals(researcherGet.getResearcherId(), researcherGet2.getResearcherId());
 	}
 
 	@Test
 	public void testUpdateResearcher() {
-		researcherUpd = dao.addResearcher(researcherUpd);
+		Researcher researcherUpd = dao.addResearcher(researchers.get(2));
 		researcherUpd.setFirstName("PREMIERnon");
 		dao.updateResearcher(researcherUpd);
 		assertEquals("PREMIERnon", dao.findResearcher(researcherUpd.getResearcherId()).getFirstName());
@@ -149,20 +126,20 @@ public class TestDao {
 	//Lab(String labName)
 	@Test
 	public void testAddLab() {
-		labAdd = dao.addLab(labAdd);
+		Lab labAdd = dao.addLab(labs.get(0));
 		assertTrue(true);
 	}
 
 	@Test
 	public void testFindLab() {
-		labGet = dao.addLab(labGet);
+		Lab labGet = dao.addLab(labs.get(1));
 		Lab labGet2 = dao.findLab(labGet.getLabId());
 		assertEquals(labGet.getLabId(), labGet2.getLabId());
 	}
 
 	@Test
 	public void testUpdateLab() {
-		labUpd = dao.addLab(labUpd);
+		Lab labUpd = dao.addLab(labs.get(2));
 		String randomName = "UPDATEDlab"+rnd.nextInt();
 		labUpd.setLabName(randomName);
 		dao.updateLab(labUpd);
@@ -186,20 +163,20 @@ public class TestDao {
 	//Event(String eventName, EventType type, String location, Date beginDate, Date endDate, String description, List<String> speakers, Float fee, Long attendeeCap, Researcher organizer) 
 	@Test
 	public void testAddEvent() {
-		eventAdd = dao.addEvent(eventAdd);
+		Event eventAdd = dao.addEvent(events.get(0));
 		assertTrue(true);
 	}
 
 	@Test
 	public void testFindEvent() {
-		eventGet = dao.addEvent(eventGet);
+		Event eventGet = dao.addEvent(events.get(1));
 		Event eventGet2 = dao.findEvent(eventGet.getEventId());
 		assertEquals(eventGet.getEventId(), eventGet2.getEventId());
 	}
 
 	@Test
 	public void testUpdateEvent() {
-		eventUpd = dao.addEvent(eventUpd);
+		Event eventUpd = dao.addEvent(events.get(2));
 		String randomName = "UPDATEDEvent"+rnd.nextInt();
 		eventUpd.setEventName(randomName);
 		dao.updateEvent(eventUpd);
@@ -223,17 +200,18 @@ public class TestDao {
 	//on fait des liens entre les deux
 	@Test
 	public void testAddResearcherToALab() {
-		lab.addResearcher(researcherLab1);
-		lab.addResearcher(researcherLab2);
-		lab.addResearcher(researcherLab3);
-		lab = dao.addLab(lab);
-		researcherLab1 = dao.addResearcher(researcherLab1);
-		researcherLab2 = dao.addResearcher(researcherLab2);
-		researcherLab3 = dao.addResearcher(researcherLab3);
+		Lab lab = dao.addLab(labs.get(3));
+		lab.addResearcher(researchers.get(3));
+		lab.addResearcher(researchers.get(4));
+		lab.addResearcher(researchers.get(5));
+		dao.addResearcher(researchers.get(3));
+		dao.addResearcher(researchers.get(4));
+		dao.addResearcher(researchers.get(5));
+		dao.updateLab(lab);
 		Set<Long> researcherIds = new HashSet<Long>();
-		researcherIds.add(researcherLab1.getResearcherId());
-		researcherIds.add(researcherLab2.getResearcherId());
-		researcherIds.add(researcherLab3.getResearcherId());
+		researcherIds.add(researchers.get(3).getResearcherId());
+		researcherIds.add(researchers.get(4).getResearcherId());
+		researcherIds.add(researchers.get(5).getResearcherId());
 		
 		Lab labCheck = dao.findLab(lab.getLabId());
 		System.out.println(researcherIds);
@@ -247,13 +225,17 @@ public class TestDao {
 	
 	@Test
 	public void testAddAttendeeToAEvent() {
-		event.addAttendee(attendeeEvent1);
-		event.addAttendee(attendeeEvent2);
-		event.addAttendee(attendeeEvent3);
-		attendeeEvent1 = dao.addResearcher(attendeeEvent1);
-		attendeeEvent2 = dao.addResearcher(attendeeEvent2);
-		attendeeEvent3 = dao.addResearcher(attendeeEvent3);
-		event = dao.addEvent(event);
+		Event event =  dao.addEvent(events.get(3));
+		Researcher attendeeEvent1 = dao.addResearcher(researchers.get(6));
+		Researcher attendeeEvent2 = dao.addResearcher(researchers.get(7));
+		Researcher attendeeEvent3 = dao.addResearcher(researchers.get(8));
+		event.addAttendee(researchers.get(6));
+		event.addAttendee(researchers.get(7));
+		event.addAttendee(researchers.get(8));
+		dao.updateResearcher(researchers.get(6));
+		dao.updateResearcher(researchers.get(7));
+		dao.updateResearcher(researchers.get(8));
+		dao.updateEvent(event);
 		Set<Long> attendeeIds = new HashSet<Long>();
 		attendeeIds.add(attendeeEvent1.getResearcherId());
 		attendeeIds.add(attendeeEvent2.getResearcherId());
@@ -270,19 +252,19 @@ public class TestDao {
 	
 	@Test
 	public void testAuthUser() {
-		dao.addResearcher(researcherAuth);
-		User user = new User(researcherAuth.getEmail(), researcherAuth.getPassword());
+		dao.addResearcher(researchers.get(9));
+		User user = new User(researchers.get(9).getEmail(), researchers.get(9).getPassword());
 		
 		user = dao.authUser(user);
 		
-		assertEquals(researcherAuth.getResearcherId(), user.getId());
-		assertEquals(researcherAuth.getRole(), user.getRole());
+		assertEquals(researchers.get(9).getResearcherId(), user.getId());
+		assertEquals(researchers.get(9).getRole(), user.getRole());
 	}
 	
 	@Test
 	public void testAuthUserNot() {
-		dao.addResearcher(researcherAuth2);
-		User user = new User(researcherAuth2.getEmail(), "Error");
+		dao.addResearcher(researchers.get(10));
+		User user = new User(researchers.get(10).getEmail(), "Error");
 		user.setId(-1);
 		
 		user = dao.authUser(user);
@@ -292,15 +274,16 @@ public class TestDao {
 	
 	@Test
 	public void testGenTest() {
-		EventLabResearcherGenerator.generateEventsLabsResearchers(dao, 10, 10);
+		//EventLabResearcherGenerator.generateEventsLabsResearchers(dao, 10, 10);
 	}
 	
 	@Test
 	public void testHasResearcher() {
-		dao.addResearcher(researcherHas);
-		assertTrue(dao.hasResearcher(researcherHas.getEmail()));
-		dao.removeResearcher(researcherHas.getResearcherId());
-		assertFalse(dao.hasResearcher(researcherHas.getEmail()));
+		Researcher has = new Researcher("HAS"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.USER);
+		dao.addResearcher(has);
+		assertTrue(dao.hasResearcher(has.getEmail()));
+		dao.removeResearcher(has.getResearcherId());
+		assertFalse(dao.hasResearcher(has.getEmail()));
 	}
 	
 	
