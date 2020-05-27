@@ -13,6 +13,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -47,25 +48,46 @@ public class TestDao {
 	
 	@BeforeAll
 	public void beforeAll() {
-		researchers.add(new Researcher("ADD"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.USER));
-		researchers.add(new Researcher("GET"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.USER));
-		researchers.add(new Researcher("UPD"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.USER));
-		researchers.add(new Researcher("lab1"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.USER));
-		researchers.add(new Researcher("lab2"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.USER));
-		researchers.add(new Researcher("lab3"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.USER));
-		researchers.add(new Researcher("attendee1"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.USER));
-		researchers.add(new Researcher("attendee2"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.ORGANIZER));
-		researchers.add(new Researcher("attendee3"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.ADMIN));
-		researchers.add(new Researcher("authgood"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.ADMIN));
-		researchers.add(new Researcher("authwrongo"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.ADMIN));
+		researchers.add(new Researcher("ADD"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.USER));//0
+		researchers.add(new Researcher("GET"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.USER));//1
+		researchers.add(new Researcher("UPD"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.USER));//2
+		researchers.add(new Researcher("lab1"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.USER));//3
+		researchers.add(new Researcher("lab2"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.USER));//4
+		researchers.add(new Researcher("lab3"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.USER));//5
+		researchers.add(new Researcher("attendee1"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.USER));//6
+		researchers.add(new Researcher("attendee2"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.ORGANIZER));//7
+		researchers.add(new Researcher("attendee3"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.ADMIN));//8
+		researchers.add(new Researcher("authgood"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.ADMIN));//9
+		researchers.add(new Researcher("authwrongo"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.ADMIN));//10
+		researchers.add(new Researcher("search"+rnd.nextInt()+"@gmail.com","poissonmou","yio","www.quepasa.es",new Date(),"pwd",Role.USER));//11
+		researchers.add(new Researcher("getnolab"+rnd.nextInt()+"@gmail.com","eee","yio","www.quepasa.es",new Date(),"pwd",Role.USER));//11
+		researchers.add(new Researcher("getall"+rnd.nextInt()+"@gmail.com","zzzzz","yio","www.quepasa.es",new Date(),"pwd",Role.USER));//11
+		researchers.add(new Researcher("remlab"+rnd.nextInt()+"@gmail.com","aaaaa","yio","www.quepasa.es",new Date(),"pwd",Role.USER));//11
+		
 		labs.add(new Lab("addlab"+rnd.nextInt()));
 		labs.add(new Lab("getlab"+rnd.nextInt()));
 		labs.add(new Lab("updlab"+rnd.nextInt()));
 		labs.add(new Lab("labo"+rnd.nextInt()));
+		labs.add(new Lab("getall"+rnd.nextInt()));
+		
+		Calendar activeDate = Calendar.getInstance();
+		activeDate.setTime(new Date());
+		activeDate.add(Calendar.DATE, +500);
+		Calendar archiveDate = Calendar.getInstance();
+		archiveDate.setTime(new Date());
+		archiveDate.add(Calendar.DATE, -500);
+		Calendar archiveDateYear2005 = Calendar.getInstance();
+		archiveDateYear2005.set(2005, 11, 11);
+		
 		events.add(new Event("ADD FYRE CONF"+rnd.nextInt(),EventType.CONFERENCE,"l'ilot",new Date(),new Date(),"cette conference de feu",Arrays.asList("Jean MICHELE","DJ dog"),new Float(5.05),new Long(150)));
 		events.add(new Event("GET FYRE CONF"+rnd.nextInt(),EventType.CONFERENCE,"l'ilot",new Date(),new Date(),"cette conference de feu",Arrays.asList("Jean MICHELE","DJ dog"),new Float(5.05),new Long(150)));
 		events.add(new Event("UPD FYRE CONF"+rnd.nextInt(),EventType.CONFERENCE,"l'ilot",new Date(),new Date(),"cette conference de feu",Arrays.asList("Jean MICHELE","DJ dog"),new Float(5.05),new Long(150)));
 		events.add(new Event("event"+rnd.nextInt(),EventType.CONFERENCE,"l'ilot",new Date(),new Date(),"cette conference de feu",Arrays.asList("Jean MICHELE","DJ dog"),new Float(5.05),new Long(150)));
+		events.add(new Event("getall"+rnd.nextInt(),EventType.CONFERENCE,"l'ilot",new Date(),new Date(),"cette conference de feu",Arrays.asList(""),new Float(5.05),new Long(150)));
+		events.add(new Event("active"+rnd.nextInt(),EventType.CONFERENCE,"l'ilot",activeDate.getTime(),activeDate.getTime(),"cette conference de feu",Arrays.asList(""),new Float(5.05),new Long(150)));
+		events.add(new Event("archive"+rnd.nextInt(),EventType.CONFERENCE,"l'ilot",archiveDate.getTime(),archiveDate.getTime(),"cette conference de feu",Arrays.asList(""),new Float(5.05),new Long(150)));
+		events.add(new Event("archiveDate"+rnd.nextInt(),EventType.CONFERENCE,"l'ilot",archiveDateYear2005.getTime(),archiveDateYear2005.getTime(),"cette conference de feu",Arrays.asList(""),new Float(5.05),new Long(150)));
+		
 	}
 
 	@AfterAll
@@ -150,6 +172,9 @@ public class TestDao {
 	public void testRemoveLab() {
 		Lab labRem = new Lab("rem lab lab");
 		labRem = dao.addLab(labRem);
+		labRem.addResearcher(researchers.get(14));
+		dao.addResearcher(researchers.get(14));
+		dao.updateLab(labRem);
 		dao.removeLab(labRem.getLabId());
 		try {
 			dao.findLab(labRem.getLabId());
@@ -273,11 +298,6 @@ public class TestDao {
 	}
 	
 	@Test
-	public void testGenTest() {
-		//EventLabResearcherGenerator.generateEventsLabsResearchers(dao, 10, 10);
-	}
-	
-	@Test
 	public void testHasResearcher() {
 		Researcher has = new Researcher("HAS"+rnd.nextInt()+"@gmail.com","registo","lastito","www.quepasa.es",new Date(),"pwd",Role.USER);
 		dao.addResearcher(has);
@@ -286,6 +306,79 @@ public class TestDao {
 		assertFalse(dao.hasResearcher(has.getEmail()));
 	}
 	
+	@Test
+	public void testSearchResearcher() {
+		dao.addResearcher(researchers.get(11));
+		Collection<Researcher> result = new ArrayList<>();
+		result = dao.searchResearchers("poissonmou");
+		assertTrue(result.size() >= 1);
+	}
+	
+	@Test
+	public void testGetResearchersWithNoLab() {
+		dao.addResearcher(researchers.get(12));
+		Collection<Researcher> result = new ArrayList<>();
+		result = dao.getResearchersWithNoLab();
+		assertTrue(result.size() >= 1);
+	}
+	
+	@Test
+	public void testGetAllResearchers() {
+		dao.addResearcher(researchers.get(13));
+		Collection<Researcher> result = new ArrayList<>();
+		result = dao.getAllResearchers();
+		assertTrue(result.size() >= 1);
+	}
+	
+	@Test
+	public void testFindLabByName() {
+		Lab labGet = dao.addLab(new Lab("namefind"+rnd.nextInt()));
+		String labName = labGet.getLabName();
+		Lab labGet2 = dao.findLab(labName);
+		assertEquals(labGet.getLabId(), labGet2.getLabId());
+		dao.removeLab(labGet.getLabId());
+		assertEquals(null,dao.findLab(labName));
+	}
+	
+	@Test
+	public void testGetAllLabs() {
+		dao.addLab(labs.get(4));
+		Collection<Lab> result = new ArrayList<>();
+		result = dao.getAllLabs();
+		assertTrue(result.size() >= 1);
+	}
+	
+	@Test
+	public void testGetAllEvents() {
+		dao.addEvent(events.get(4));
+		Collection<Event> result = new ArrayList<>();
+		result = dao.getAllEvents();
+		assertTrue(result.size() >= 1);
+	}
+	
+	@Test
+	public void testGetActiveEvents() {
+		dao.addEvent(events.get(5));
+		Collection<Event> result = new ArrayList<>();
+		result = dao.getActiveEvents();
+		assertTrue(result.size() >= 1);
+	}
+	
+	@Test
+	public void testGetArchiveEvents() {
+		dao.addEvent(events.get(6));
+		Collection<Event> result = new ArrayList<>();
+		result = dao.getArchivedEvents();
+		assertTrue(result.size() >= 1);
+	}
+	
+	@Test
+	public void testGetArchivedEventsAtYear() {
+		dao.addEvent(events.get(7));
+		Collection<Event> result = new ArrayList<>();
+		result = dao.getArchivedEventsAtYear(2005);
+		assertTrue(result.size() >= 1);
+	}
 	
 	/*
 	@Test

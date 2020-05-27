@@ -40,16 +40,10 @@ public class ArchivesController {
     	
     	Collection<Event> events;
 		int yearResearched = 2020;
-    	try {
-    		yearResearched = Integer.parseInt(request.getParameter("year"));
-    		logger.info("List of events (archive) year " + yearResearched);
-    		events = eventManager.findArchiveAtYear(yearResearched);
-    	}
-    	catch (Exception e)
-    	{
-    		events = eventManager.findLastArchives(5);
-    		logger.info("List of events (archive) last " + events.size());
-    	}        
+		if(request.getParameter("year") != null)
+			yearResearched = Integer.parseInt(request.getParameter("year"));
+		logger.info("List of events (archive) year " + yearResearched);
+		events = eventManager.findArchiveAtYear(yearResearched);      
         
         logger.info(events.toString());
         ModelAndView modelAndView = new ModelAndView();

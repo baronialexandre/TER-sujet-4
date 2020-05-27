@@ -149,11 +149,9 @@ public class Dao {
 		Event e = em.find(Event.class, id);
 		// System.out.println("findEvent with id=" + e.getEventId());
 		// loading lazy all the event lists
-		if (e.getAttendees().size() != 0)
-			;
+		if (e.getAttendees().size() != 0);
 		// System.out.println("number of attendees: " + e.getAttendees().size());
-		if (e.getSpeakers().size() != 0)
-			;
+		//if (e.getSpeakers().size() != 0);
 		// System.out.println("number of speakers: " + e.getSpeakers().size());
 		return e;
 	}
@@ -190,7 +188,7 @@ public class Dao {
 		return events;
 	}
 
-	public Collection<Event> getArchivesEvents() { // todo : test
+	public Collection<Event> getArchivedEvents() { // todo : test
 		Date now = new Date();
 		Collection<Event> eventsLazy = em
 				.createQuery("Select eve from Event eve Where eve.beginDate<?1 ORDER BY eve.beginDate", Event.class)
@@ -202,7 +200,7 @@ public class Dao {
 		return events;
 	}
 
-	public Collection<Event> getArchivesAtYear(int year) { // todo : à test
+	public Collection<Event> getArchivedEventsAtYear(int year) {
 		Date now = new Date();
 		Collection<Event> eventsLazy = em
 				.createQuery("Select eve from Event eve Where year(eve.beginDate)=?1 AND eve.beginDate<?2", Event.class)
@@ -210,32 +208,6 @@ public class Dao {
 		Collection<Event> events = new ArrayList<Event>();
 		for (Event e : eventsLazy) {
 			events.add(this.findEvent(e.getEventId()));
-		}
-		return events;
-	}
-
-	public Collection<Event> getLastEvents(int howMany) { // todo : à tester
-		Collection<Event> eventsLazy = getAllEvents();
-		Collection<Event> events = new ArrayList<Event>();
-		if (eventsLazy.size() <= howMany)
-			return eventsLazy;
-
-		ArrayList<Event> eventsArray = new ArrayList<>(eventsLazy);
-		for (int i = 0; i < howMany; i++) {
-			events.add(eventsArray.get(i));
-		}
-		return events;
-	}
-
-	public Collection<Event> getLastEventsArchives(int howMany) { // todo : à tester
-		Collection<Event> eventsLazy = getArchivesEvents();
-		Collection<Event> events = new ArrayList<Event>();
-		if (eventsLazy.size() <= howMany)
-			return eventsLazy;
-
-		ArrayList<Event> eventsArray = new ArrayList<>(eventsLazy);
-		for (int i = 0; i < howMany; i++) {
-			events.add(eventsArray.get(i));
 		}
 		return events;
 	}
@@ -258,34 +230,5 @@ public class Dao {
 		user.setRole(role);
 		return user;
 	}
-
-	/*
-	 * 
-	 * public User authUser(User user) {
-	 * //System.out.println("DAO AUTH user:"+user); Query query = em.
-	 * createQuery("SELECT p.personId FROM Person AS p WHERE username=?1 AND password =?2"
-	 * ).setParameter(1, user.getUsername()).setParameter(2, user.getPassword());
-	 * if(query.getResultList().isEmpty()) return user;
-	 * //System.out.println(query.getResultList().get(0)); long result = (long)
-	 * query.getResultList().get(0); //System.out.println(result);
-	 * user.setId(result); user.setLoggedIn(true); return user; }
-	 * 
-	 * 
-	 * public void clearDatabase() { Query q1 =
-	 * em.createQuery("DELETE FROM Person"); Query q2 =
-	 * em.createQuery("DELETE FROM Team"); q1.executeUpdate(); q2.executeUpdate(); }
-	 * 
-	 * 
-	 * public Collection<Team> searchTeams(String search) {
-	 * //System.out.println(search); Collection<Team> teamsLazy =
-	 * em.createQuery("Select t from Team t where t.teamName LIKE ?1",
-	 * Team.class).setParameter(1, "%"+search+"%").getResultList(); Collection<Team>
-	 * teams = new ArrayList<Team>(); for(Team t : teamsLazy) {
-	 * teams.add(this.findTeam(t.getTeamId())); } return teams; }
-	 * 
-	 * public boolean hasPerson(String username) { //System.out.println("find " +
-	 * username); Query query =
-	 * em.createQuery("SELECT p.personId FROM Person AS p WHERE username=?1").
-	 * setParameter(1, username); return !query.getResultList().isEmpty(); }
-	 */
+	
 }

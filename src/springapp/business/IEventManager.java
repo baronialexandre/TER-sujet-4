@@ -18,8 +18,4 @@ public interface IEventManager {
 
 	void add(Event event);
 
-	Collection<Event> findLast(int howMany);
-
-	Collection<Event> findLastArchives(int howMany);
-    
 }
