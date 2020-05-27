@@ -12,9 +12,9 @@
 		</div>
 		<ul class="list-group list-group-flush">
 			<li class="list-group-item">
-				<span style="text-decoration: underline;">Speaker(s)</span> 
+				<span style="text-decoration: underline;">Speaker(s) : </span> 
 				<c:forEach items="${event.speakers}" var="speaker">
-					; <c:out value="${speaker}" default="speakerName::TEST"/>
+					<c:out value="${speaker}" default="speakerName::TEST"/>; 
 				</c:forEach>
 			</li>
 		</ul>
@@ -32,20 +32,20 @@
 		
 		
 		<c:choose>
-			<c:when test="${event.organizer.lab.labName == researcher.lab.labName or event.fee == 0.0}">
+			<c:when test="${event.beginDate lt now}">
 				<div class="card-footer text-muted">
-    				Subscription fee if you're not working in the lab <c:out value="${event.organizer.lab.labName}" default="lab::TEST" /> : <b>$<c:out value="${event.fee}" default="lab::TEST" /></b>.
-  				</div>
+				The event has passed
+				</div>
 			</c:when>
 			<c:when test="${fn:contains(event.attendees, researcher)}">
 				<div class="card-footer text-muted">
     				You are already registered.
   				</div>
 			</c:when>
-			<c:when test="${event.beginDate lt now}">
+			<c:when test="${event.organizer.lab.labName == researcher.lab.labName or event.fee == 0.0}">
 				<div class="card-footer text-muted">
-				The event has passed
-				</div>
+    				Subscription fee if you're not working in the lab <c:out value="${event.organizer.lab.labName}" default="lab::TEST" /> : <b>$<c:out value="${event.fee}" default="lab::TEST" /></b>.
+  				</div>
 			</c:when>
 			<c:otherwise>
 				<div class="card-footer text-muted">
@@ -58,10 +58,12 @@
 
 	<c:set var="contains" value="false" />
 	<c:forEach var="item" items="${event.attendees}">
-		<c:if test="${item eq researcher}">
+		<c:if test="${item.researcherId eq researcher.researcherId}">
 			<c:set var="contains" value="true" />
 		</c:if>
 	</c:forEach>
+	
+	
 
 	<div class="d-flex justify-content-around bd-highlight">
 		<c:if test="${not contains}">
@@ -102,7 +104,7 @@
 		</c:if>
 	</div>
 	<div class="card">
-		<div class="card-header">Involved (<c:out value="${fn:length(event.attendees)}" />/<c:out value="${event.attendeeCap}" />)</div>
+		<div class="card-header">Attendees (<c:out value="${fn:length(event.attendees)}" />/<c:out value="${event.attendeeCap}" />)</div>
 		<div class="card-body">
 			<table class="table table-light table-striped">
 				<c:forEach items="${event.attendees}" var="p">

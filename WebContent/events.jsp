@@ -3,7 +3,12 @@
 
 <!--  TEST -->
 <div class="container-fluid">
-	<h2>Events</h2>
+	<div class="d-flex justify-content-between">
+	  <div><h2>Events</h2></div>
+	  <div><a href="<%=application.getContextPath()%>/actions/create-event">
+					<button type="button" class="btn btn-info pull-right"><i class="fa fa-plus" style="color: White;"></i> Create event</button>
+				</a></div>
+	</div>
 	<div>
 		<c:forEach items="${events}" var="event">
 			<c:choose>
@@ -38,7 +43,7 @@
 				</div>
 				<div class="card-body" style="display: flex;">
 					<p class="card-text" style="flex: auto;">
-						<c:out value="${event.organizer.lab.labName}" default="Test::Labo" />
+						<c:out value="${event.organizer.lab.labName}" default="No labo" />
 					</p>
 					<p class="card-text" style="flex: auto; text-align: right;">
 						<c:out value="${event.location}" default="Test::Lieu" />

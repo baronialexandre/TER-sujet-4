@@ -222,7 +222,7 @@ public class Event implements Serializable {
 		if (attendees == null) {
 			attendees = new HashSet<>();
 		}
-		p.addAttendingEvent(this);
+		//p.addAttendingEvent(this);
 		attendees.add(p);
 	}
 

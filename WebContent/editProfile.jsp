@@ -86,7 +86,7 @@
 						<td><form:errors path="website" cssClass="alert alert-warning" element="div" /></td>
 					</tr>
 					<tr>
-						<td><form:label path="birthDay">Birth Day (format: aaaa-mm-jj)</form:label></td>
+						<td><form:label path="birthDay">Birth Day (format: yyyy-mm-dd)</form:label></td>
 						<td><form:input type="datetime" class="form-control" path="birthDay" placeholder="2000-01-01" value="${researcher.birthDay}"/></td>
 						<td><form:errors path="birthDay" cssClass="alert alert-warning" element="div" /></td>
 					</tr>

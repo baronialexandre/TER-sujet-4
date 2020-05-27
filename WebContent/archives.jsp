@@ -76,7 +76,7 @@
 				</div>
 				<div class="card-body" style="display: flex;">
 					<p class="card-text" style="flex: auto;">
-						<c:out value="${event.organizer.lab.labName}" default="Test::Labo" />
+						<c:out value="${event.organizer.lab.labName}" default="No labo" />
 					</p>
 					<p class="card-text" style="flex: auto; text-align: right;">
 						<c:out value="${event.location}" default="Test::Lieu" />
