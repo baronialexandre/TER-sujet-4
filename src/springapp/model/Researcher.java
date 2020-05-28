@@ -248,9 +248,9 @@ public class Researcher implements Serializable, Comparable<Researcher> {
 
 	@Override
 	public int compareTo(Researcher o2) {
-		if(this.getLastName().compareTo(o2.getLastName()) == 0)
-			return this.getFirstName().compareTo(o2.getFirstName());
-		return this.getLastName().compareTo(o2.getLastName());
+		if(lastName.compareTo(o2.getLastName()) == 0)
+			return firstName.compareTo(o2.getFirstName());
+		return lastName.compareTo(o2.getLastName());
 	}
 
 

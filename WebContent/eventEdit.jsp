@@ -4,6 +4,7 @@
 
 <h1>Event</h1>
 <div class="container">
+	<hr />
 	<form:form class="form-horizontal"
 		action="${pageContext.servletContext.contextPath}/actions/edit-event?eventId=${event.eventId}"
 		method="POST" modelAttribute="event">
@@ -124,7 +125,7 @@
 						<td><c:out value="${p.firstName}" /></td>
 						<td><c:out value="${p.lastName}" /></td>
 							<td><a class="btn btn-primary"
-							href="${pageContext.servletContext.contextPath}/actions/event-add-user?researcherId=${p.researcherId}"
+							href="${pageContext.servletContext.contextPath}/actions/event-add-user?researcherId=${p.researcherId}&eventId=${event.eventId}"
 							role="button">Add</a></td>
 						</tr>
 						</c:forEach>
@@ -136,7 +137,9 @@
 					session.removeAttribute("researchersFound");
 				%>
 			</c:if>
-		</c:if>
+		</c:if>	
+		<hr />
+		
 		<div class="card">
 		<div class="card-header">Attendees (<c:out value="${fn:length(event.attendees)}" />/<c:out value="${event.attendeeCap}" />)</div>
 		<div class="card-body">
@@ -149,8 +152,8 @@
 							href="${pageContext.servletContext.contextPath}/actions/profile?researcherId=${p.researcherId}"
 							role="button">View</a></td>
 						<td>
-							<a class="btn btn-primary"
-							href="${pageContext.servletContext.contextPath}/actions/event-remove-user?researcherId=${p.researcherId}"
+							<a class="btn btn-danger"
+							href="${pageContext.servletContext.contextPath}/actions/event-remove-user?researcherId=${p.researcherId}&eventId=${event.eventId}"
 							role="button">Remove</a></td>
 					</tr>
 				</c:forEach>

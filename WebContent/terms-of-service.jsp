@@ -4,6 +4,7 @@
 
 <div class="container-fluid">
 	<h2>Legals</h2>
+	<hr />
 	<h3>Conditions of Use</h3>
 	<p>We will provide their services to you, which are subject to the
 		conditions stated below in this document. Every time you visit this

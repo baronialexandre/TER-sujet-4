@@ -4,6 +4,7 @@
 
 <h1>Create event</h1>
 <div class="container">
+	<hr />
 	<form:form class="form-horizontal"
 		action="${pageContext.servletContext.contextPath}/actions/create-event"
 		method="POST" modelAttribute="event">

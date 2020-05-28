@@ -47,7 +47,7 @@ public class Lab implements Serializable {
 	public static long updateCounter = 0;
 
 	@OneToMany(
-			cascade = { CascadeType.MERGE,  CascadeType.REMOVE },
+			cascade = { CascadeType.REMOVE },
 			fetch = FetchType.LAZY, mappedBy = "lab")
     @OrderBy(clause = "last_name ASC")
 	private SortedSet<Researcher> researchers;

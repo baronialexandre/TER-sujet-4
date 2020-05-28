@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -120,9 +121,10 @@ public class EditEventController {
     }
 	
 	@RequestMapping(value = "/event-remove-user", method = RequestMethod.GET)
-	public ModelAndView removeFromEvent(HttpServletRequest request, HttpServletResponse response,@RequestParam(value = "researcherId", required = true) long researcherId) {
+	public ModelAndView removeFromEvent(HttpServletRequest request, HttpServletResponse response,@RequestParam(value = "researcherId", required = true) long researcherId, @RequestParam(value = "eventId", required = true) long eventId) {
 
-		Event curEvent = (Event)request.getSession().getAttribute("event");
+		Event curEvent = eventManager.find(eventId);
+		
 		Set<Researcher> setOfAttendees = curEvent.getAttendees();
 		Set<Researcher> collectionOfAttendees = setOfAttendees
 				.stream()
@@ -134,18 +136,19 @@ public class EditEventController {
 		eventManager.update(curEvent);
 		
 		request.getSession().setAttribute("event", curEvent);
-		
-        return new ModelAndView("eventDetail");
+
+		return new ModelAndView("redirect:/actions/edit-event?eventId="+curEvent.getEventId());
     }
 	@RequestMapping(value = "/event-add-user", method = RequestMethod.GET)
-	public ModelAndView addToEvent(HttpServletRequest request, HttpServletResponse response,@RequestParam(value = "researcherId", required = true) long researcherId) {
+	public ModelAndView addToEvent(HttpServletRequest request, HttpServletResponse response,@RequestParam(value = "researcherId", required = true) long researcherId, @RequestParam(value = "eventId", required = true) long eventId) {
 
-		Event curEvent = (Event)request.getSession().getAttribute("event");
+		Event curEvent = eventManager.find(eventId);
+		/*
 		Set<Researcher> setOfAttendees = curEvent.getAttendees();
 		setOfAttendees.add(researcherManager.getResearcher(researcherId));
+		curEvent.setAttendees(setOfAttendees);*/
 		
-		curEvent.setAttendees(setOfAttendees);
-		
+		curEvent.addAttendee(researcherManager.getResearcher(researcherId));
 		eventManager.update(curEvent);
 		
 		request.getSession().setAttribute("event", curEvent);

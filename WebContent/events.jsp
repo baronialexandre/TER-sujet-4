@@ -9,6 +9,7 @@
 					<button type="button" class="btn btn-info pull-right"><i class="fa fa-plus" style="color: White;"></i> Create event</button>
 				</a></div>
 	</div>
+	<hr />
 	<div>
 		<c:forEach items="${events}" var="event">
 			<c:choose>

@@ -17,6 +17,8 @@
 	   </div>
 	</c:if>
 	<!-- Login Form -->
+	
+	<hr />
 	<form class="form-horizontal" action="${pageContext.servletContext.contextPath}/actions/login" method="POST" >
 		<div class="form-group">
 			<div class="col-sm-offset-1 col-xs-8" style="min-width: 200px;">

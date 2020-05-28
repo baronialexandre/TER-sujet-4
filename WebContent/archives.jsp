@@ -7,7 +7,7 @@
 
 <div class="container-fluid">
 	<div class="d-flex justify-content-between">
-		<h2>Archives</h2>
+		<h2>Archived events</h2>
 		<div>
 			<form action="<%=application.getContextPath()%>/actions/archives" method="GET" class="navbar-form navbar-right">
 				<div class="form-row">
@@ -33,6 +33,7 @@
 			</form>
 		</div>
 	</div>
+	<hr />
 	<div>
 
 		<c:if test="${empty events}">

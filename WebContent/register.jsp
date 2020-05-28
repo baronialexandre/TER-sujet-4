@@ -1,7 +1,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <h1>Register</h1>
 <div class="container">
+	<hr />
 	<h2>Informations</h2>
+	<hr />
 	<form:form class="form-horizontal" action="${pageContext.servletContext.contextPath}/actions/register-account" method="POST" modelAttribute="researcher">
 		<form:errors path="*" cssClass="alert alert-danger" element="div" />
 		<table class="table table-striped">

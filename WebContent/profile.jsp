@@ -3,6 +3,7 @@
 
 <h1>Profile</h1>
 <div class="container">
+	<hr />
 	<div class="d-flex justify-content-between">
 		<h2>Informations</h2>
 		<div>
@@ -49,52 +50,58 @@
 			<td><c:out value="${researcher.lab.labName}" default="No labo" /></td>
 		</tr>
 	</table>
-	
+
+	<hr />
+
 	<div class="card-header">Attending these events</div>
-		<div class="card-body">
-			<table class="table table-light table-striped">
-				<c:forEach items="${eventsUpcoming}" var="e">
-					<tr>
-						<td><c:out value="${e.eventName}" /></td>
-						<td><c:out value="${e.type}" /></td>
-						<td><c:out value="${e.beginDate}" /></td>
-						<td><a class="btn btn-primary"
-							href="<%=application.getContextPath()%>/actions/eventdetail?eventId=${e.eventId}"
-							role="button">View</a></td>
-					</tr>
-				</c:forEach>
-			</table>
-		</div>
-		
-		<div class="card-header">Events attended</div>
-		<div class="card-body">
-			<table class="table table-light table-striped">
-				<c:forEach items="${eventsAttended}" var="e">
-					<tr>
-						<td><c:out value="${e.eventName}" /></td>
-						<td><c:out value="${e.type}" /></td>
-						<td><c:out value="${e.beginDate}" /></td>
-						<td><a class="btn btn-primary"
-							href="<%=application.getContextPath()%>/actions/eventdetail?eventId=${e.eventId}"
-							role="button">View</a></td>
-					</tr>
-				</c:forEach>
-			</table>
-		</div>
-		
-				<div class="card-header">Events organized</div>
-		<div class="card-body">
-			<table class="table table-light table-striped">
-				<c:forEach items="${eventsOrganized}" var="e">
-					<tr>
-						<td><c:out value="${e.eventName}" /></td>
-						<td><c:out value="${e.type}" /></td>
-						<td><c:out value="${e.beginDate}" /></td>
-						<td><a class="btn btn-primary"
-							href="<%=application.getContextPath()%>/actions/eventdetail?eventId=${e.eventId}"
-							role="button">View</a></td>
-					</tr>
-				</c:forEach>
-			</table>
-		</div>
+	<div class="card-body">
+		<table class="table table-light table-striped">
+			<c:forEach items="${eventsUpcoming}" var="e">
+				<tr>
+					<td><c:out value="${e.eventName}" /></td>
+					<td><c:out value="${e.type}" /></td>
+					<td><c:out value="${e.beginDate}" /></td>
+					<td><a class="btn btn-primary"
+						href="<%=application.getContextPath()%>/actions/eventdetail?eventId=${e.eventId}"
+						role="button">View</a></td>
+				</tr>
+			</c:forEach>
+		</table>
+	</div>
+
+	<hr />
+
+	<div class="card-header">Events attended</div>
+	<div class="card-body">
+		<table class="table table-light table-striped">
+			<c:forEach items="${eventsAttended}" var="e">
+				<tr>
+					<td><c:out value="${e.eventName}" /></td>
+					<td><c:out value="${e.type}" /></td>
+					<td><c:out value="${e.beginDate}" /></td>
+					<td><a class="btn btn-primary"
+						href="<%=application.getContextPath()%>/actions/eventdetail?eventId=${e.eventId}"
+						role="button">View</a></td>
+				</tr>
+			</c:forEach>
+		</table>
+	</div>
+
+	<hr />
+
+	<div class="card-header">Events organized</div>
+	<div class="card-body">
+		<table class="table table-light table-striped">
+			<c:forEach items="${eventsOrganized}" var="e">
+				<tr>
+					<td><c:out value="${e.eventName}" /></td>
+					<td><c:out value="${e.type}" /></td>
+					<td><c:out value="${e.beginDate}" /></td>
+					<td><a class="btn btn-primary"
+						href="<%=application.getContextPath()%>/actions/eventdetail?eventId=${e.eventId}"
+						role="button">View</a></td>
+				</tr>
+			</c:forEach>
+		</table>
+	</div>
 </div>

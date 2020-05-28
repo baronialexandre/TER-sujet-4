@@ -18,6 +18,7 @@
 </c:if>
 <h1>Edit profile</h1>
 <div class="container">
+	<hr />
 	<h2>Informations</h2>
 	<form class="form-horizontal" action="${pageContext.servletContext.contextPath}/actions/change-password-profile" method="POST">
 		<input type="hidden" name="researcherId" value="${researcher.researcherId}"/>
