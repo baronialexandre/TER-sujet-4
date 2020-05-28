@@ -1,6 +1,13 @@
 package springapp.web;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import springapp.business.IResearcherManager;
+import springapp.model.Event;
 import springapp.model.Researcher;
 
 @Controller()
@@ -41,7 +49,41 @@ public class ProfileController {
     	}
     	
     	Researcher researcher = researcherManager.getResearcher(researcherId);
+    	List<Event> attending = new ArrayList<Event>(researcher.getEventsAttending());
+    	List<Event> organized = new ArrayList<Event>(researcher.getEventsOrganized());
+    	attending.sort(new Comparator<Event>() { //du plus vieux au plus recent
+			@Override
+			public int compare(Event o1, Event o2) {
+				return o1.getBeginDate().compareTo(o2.getBeginDate());
+			}
+    	});
+    	organized.sort(new Comparator<Event>() {
+			@Override
+			public int compare(Event o1, Event o2) {
+				return o1.getBeginDate().compareTo(o2.getBeginDate());
+			}
+    	});
+    	List<Event> upcoming = new ArrayList<Event>();
+    	List<Event> attended = new ArrayList<Event>();
+    	Date now = new Date();
+    	for(Event e : attending) {
+    		if(e.getBeginDate().compareTo(now) > 0)
+    			upcoming.add(e);
+    		else
+    			attended.add(e);
+    	}
+    	attended.sort(new Comparator<Event>() { //du plus recent au plus vieux
+			@Override
+			public int compare(Event o1, Event o2) {
+				return o2.getBeginDate().compareTo(o1.getBeginDate());
+			}
+    	});
+    	
     	request.getSession().setAttribute("researcher", researcher);
+    	request.getSession().setAttribute("eventsUpcoming", upcoming);
+    	request.getSession().setAttribute("eventsAttended", attended);
+    	request.getSession().setAttribute("eventsOrganized", organized);
+    	
     	
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("profile");

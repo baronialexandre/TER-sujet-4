@@ -1,7 +1,10 @@
 package springapp.web;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -38,13 +41,18 @@ public class ArchivesController {
     		return new ModelAndView("redirect:/login.jsp");
     	}
     	
-    	Collection<Event> events;
+    	List<Event> events;
 		int yearResearched = 2020;
 		if(request.getParameter("year") != null)
 			yearResearched = Integer.parseInt(request.getParameter("year"));
 		logger.info("List of events (archive) year " + yearResearched);
-		events = eventManager.findArchiveAtYear(yearResearched);      
-        
+		events = new ArrayList<Event>(eventManager.findArchiveAtYear(yearResearched));      
+        events.sort(new Comparator<Event>() { //du plus recent au plus vieux
+			@Override
+			public int compare(Event o1, Event o2) {
+				return o2.getBeginDate().compareTo(o1.getBeginDate());
+			}
+    	});
         logger.info(events.toString());
         ModelAndView modelAndView = new ModelAndView();
         request.getSession().setAttribute("events", events);

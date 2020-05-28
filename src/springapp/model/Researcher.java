@@ -2,6 +2,7 @@ package springapp.model;
 
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -34,7 +35,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import springapp.model.utils.Role;
 
 @Entity(name = "Researcher")
-public class Researcher implements Serializable {
+public class Researcher implements Serializable, Comparable<Researcher> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -243,6 +244,13 @@ public class Researcher implements Serializable {
 		return "Researcher [researcherId=" + researcherId + ", email=" + email + ", firstName=" + firstName
 				+ ", lastName=" + lastName + ", website=" + website + ", birthDay=" + birthDay + ", password="
 				+ password + ", role=" + role + ", version=" + version + "]";
+	}
+
+	@Override
+	public int compareTo(Researcher o2) {
+		if(this.getLastName().compareTo(o2.getLastName()) == 0)
+			return this.getFirstName().compareTo(o2.getFirstName());
+		return this.getLastName().compareTo(o2.getLastName());
 	}
 
 

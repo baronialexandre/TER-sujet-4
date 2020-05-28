@@ -135,7 +135,7 @@
 						<c:forEach items="${lab.researchers}" var="rs">
 							<a
 								href="<%=application.getContextPath()%>/actions/profile?researcherId=${rs.researcherId}">
-								<c:out value="${rs.firstName} ${rs.lastName}" default="---" />
+								<c:out value="${rs.lastName} ${rs.firstName}" default="---" />
 							</a>
 							<br />
 						</c:forEach>

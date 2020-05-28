@@ -1,9 +1,12 @@
 package springapp.model;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -20,6 +23,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.Version;
+
+import org.hibernate.annotations.OrderBy;
 
 @Entity(name = "Lab")
 public class Lab implements Serializable {
@@ -44,7 +49,8 @@ public class Lab implements Serializable {
 	@OneToMany(
 			cascade = { CascadeType.MERGE,  CascadeType.REMOVE },
 			fetch = FetchType.LAZY, mappedBy = "lab")
-	private Set<Researcher> researchers;
+    @OrderBy(clause = "last_name ASC")
+	private SortedSet<Researcher> researchers;
 
 	public Lab() {
 		super();
@@ -94,13 +100,13 @@ public class Lab implements Serializable {
 		return researchers;
 	}
 
-	public void setResearchers(Set<Researcher> researchers) {
+	public void setResearchers(SortedSet<Researcher> researchers) {
 		this.researchers = researchers;
 	}
 
 	public void addResearcher(Researcher p) {
 		if (researchers == null) {
-			researchers = new HashSet<>();
+			researchers = new TreeSet<Researcher>();
 		}
 		p.setLab(this);
 		researchers.add(p);
