@@ -12,7 +12,7 @@
 		</div>
 		<ul class="list-group list-group-flush">
 			<li class="list-group-item">
-				<span style="text-decoration: underline;">Speaker(s) : </span> 
+				<span style="text-decoration: underline;">Speaker(s)</span> :
 				<c:forEach items="${event.speakers}" var="speaker">
 					<c:out value="${speaker}" default="speakerName::TEST"/>; 
 				</c:forEach>
@@ -20,16 +20,23 @@
 		</ul>
 		<ul class="list-group list-group-flush">
 			<li class="list-group-item">
-				<span style="text-decoration: underline;">Begin date:</span> 
+				<span style="text-decoration: underline;">Begin date: </span> 
 				<c:out value="${event.beginDate}" default="beginDate::TEST"/>	; 
-				<span style="text-decoration: underline;">End date:</span> 
+				<span style="text-decoration: underline;">End date: </span> 
 				<c:out value="${event.endDate}" default="endDate::TEST"/>	; 
+			</li>
+		</ul>
+		<ul class="list-group list-group-flush">
+			<li class="list-group-item">
+				<span style="text-decoration: underline;">Organizer: </span> 
+				<a href="<%=application.getContextPath()%>/actions/profile?researcherId=${event.organizer.researcherId}">
+				<c:out value="${event.organizer.firstName}" default="organizer.firstName::TEST"/> <c:out value="${event.organizer.lastName}" default="organizer.lastName::TEST"/>
+				</a>
 			</li>
 		</ul>
 		<div class="card-body">
 			<c:out value="${event.description}" default="description::TEST" />
 		</div>
-		
 		
 		<c:choose>
 			<c:when test="${event.beginDate lt now}">
