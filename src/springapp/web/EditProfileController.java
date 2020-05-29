@@ -43,6 +43,12 @@ public class EditProfileController {
 	@RequestMapping(value = "edit-profile", method = RequestMethod.GET)
 	public ModelAndView loadEditProfile(@Valid @ModelAttribute("researcher") Researcher researcher,
 			HttpServletRequest request) {
+		try {
+    		if((Long)request.getSession().getAttribute("userId") != researcher.getResearcherId() && (request.getSession().getAttribute("userRole") != Role.ADMIN))
+        		return new ModelAndView("redirect:/events.jsp");
+    	} catch (Exception ex) {
+    		return new ModelAndView("redirect:/events.jsp");
+    	}
 		logger.info("edit profile " + researcher);
 		request.getSession().setAttribute("disableMenu", false);
 		ModelAndView modelAndView = new ModelAndView();

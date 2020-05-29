@@ -41,9 +41,9 @@ import springapp.model.utils.Role;
 		@RequestMapping(value = "/create-event", method = RequestMethod.GET)
 	    public ModelAndView eventCreateForm(Model model,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			try {
-	    		if(request.getSession().getAttribute("userId") == null)
+	    		if(request.getSession().getAttribute("userId") == null || (request.getSession().getAttribute("userRole") != Role.ADMIN && request.getSession().getAttribute("userRole") != Role.ORGANIZER))
 	        		return new ModelAndView("redirect:/login.jsp");
-	    	} catch (Exception e) {
+	    	} catch (Exception ex) {
 	    		return new ModelAndView("redirect:/login.jsp");
 	    	}
 	        
@@ -55,6 +55,13 @@ import springapp.model.utils.Role;
 		
 		@RequestMapping(value = "/create-event", method = RequestMethod.POST)
 		public ModelAndView createEvent(HttpServletRequest request,@ModelAttribute @Valid Event e) {
+			
+			try {
+	    		if(request.getSession().getAttribute("userId") == null || (request.getSession().getAttribute("userRole") != Role.ADMIN && request.getSession().getAttribute("userRole") != Role.ORGANIZER))
+	        		return new ModelAndView("redirect:/login.jsp");
+	    	} catch (Exception ex) {
+	    		return new ModelAndView("redirect:/login.jsp");
+	    	}
 
 			Event curEvent = new Event();
 			

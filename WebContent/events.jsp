@@ -4,10 +4,12 @@
 <!--  TEST -->
 <div class="container-fluid">
 	<div class="d-flex justify-content-between">
-	  <div><h2>Events</h2></div>
-	  <div><a href="<%=application.getContextPath()%>/actions/create-event">
-					<button type="button" class="btn btn-info pull-right"><i class="fa fa-plus" style="color: White;"></i> Create event</button>
-				</a></div>
+	 	<div><h2>Events</h2></div>
+	 	<c:if test="${userRole == 'ORGANIZER' || userRole == 'ADMIN'}">
+	  		<div><a href="<%=application.getContextPath()%>/actions/create-event">
+				<button type="button" class="btn btn-info pull-right"><i class="fa fa-plus" style="color: White;"></i> Create event</button>
+			</a></div>
+		</c:if>
 	</div>
 	<hr />
 	<div>

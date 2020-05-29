@@ -39,31 +39,17 @@ public class EditEventController {
 	@Autowired
 	IResearcherManager researcherManager;
 	
-	private ModelAndView secureAdmin(HttpServletRequest request) {
-    	try {
-    		if(request.getSession().getAttribute("userId") == null || request.getSession().getAttribute("userRole") != Role.ADMIN)
-        		return new ModelAndView("redirect:/login.jsp");
-    	} catch (Exception e) {
-    		return new ModelAndView("redirect:/login.jsp");
-    	}
-    	return null;
-    }
-	
 	@RequestMapping(value = "/edit-event", method = RequestMethod.GET)
     public ModelAndView eventEditForm(Model model,HttpServletRequest request, HttpServletResponse response,@RequestParam(value = "eventId", required = true) long eventId) throws ServletException, IOException {
-		try {
-    		if(request.getSession().getAttribute("userId") == null)
-        		return new ModelAndView("redirect:/login.jsp");
-    	} catch (Exception e) {
-    		return new ModelAndView("redirect:/login.jsp");
-    	}
-		
+		Researcher organizer = researcherManager.getResearcher((Long)request.getSession().getAttribute("userId"));
 		Event curEvent = eventManager.find(eventId);
-        
-        if(curEvent == null)
-        {
-        	return new ModelAndView("redirect:/events.jsp");
-        }
+		
+		try {
+    		if(request.getSession().getAttribute("userId") == null || (request.getSession().getAttribute("userRole") != Role.ADMIN && (request.getSession().getAttribute("userRole") != Role.ORGANIZER || organizer.getLab().getLabId() != curEvent.getEventId())))
+        		return new ModelAndView("redirect:/events.jsp");
+    	} catch (Exception ex) {
+    		return new ModelAndView("redirect:/events.jsp");
+    	}
         
         request.getSession().setAttribute("event", curEvent);
         model.addAttribute("event",curEvent);
@@ -74,7 +60,15 @@ public class EditEventController {
 	@RequestMapping(value = "/edit-event", method = RequestMethod.POST)
 	public ModelAndView editEvent(HttpServletRequest request,@ModelAttribute @Valid Event e,@RequestParam(value = "eventId", required = true) long eventId) {
 
-		Event curEvent = (Event)request.getSession().getAttribute("event");
+		Researcher organizer = researcherManager.getResearcher((Long)request.getSession().getAttribute("userId"));
+		Event curEvent = eventManager.find(eventId);
+		
+		try {
+    		if(request.getSession().getAttribute("userId") == null || (request.getSession().getAttribute("userRole") != Role.ADMIN && (request.getSession().getAttribute("userRole") != Role.ORGANIZER || organizer.getLab().getLabId() != curEvent.getEventId())))
+        		return new ModelAndView("redirect:/events.jsp");
+    	} catch (Exception ex) {
+    		return new ModelAndView("redirect:/events.jsp");
+    	}
 		
 		
 		curEvent.setBeginDate(e.getBeginDate());
@@ -94,10 +88,16 @@ public class EditEventController {
 	
 	@RequestMapping(value = "editevent-searchResearcher")
     public ModelAndView listResearcherSearch(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	ModelAndView modelAndView = secureAdmin(request); if(modelAndView != null) return modelAndView;
-    	
-    	Event curEvent = (Event)request.getSession().getAttribute("event");
-    	
+		Researcher organizer = researcherManager.getResearcher((Long)request.getSession().getAttribute("userId"));
+		Event curEvent = (Event)request.getSession().getAttribute("event");
+		
+		try {
+    		if(request.getSession().getAttribute("userId") == null || (request.getSession().getAttribute("userRole") != Role.ADMIN && (request.getSession().getAttribute("userRole") != Role.ORGANIZER || organizer.getLab().getLabId() != curEvent.getEventId())))
+        		return new ModelAndView("redirect:/events.jsp");
+    	} catch (Exception ex) {
+    		return new ModelAndView("redirect:/events.jsp");
+    	}
+
     	String researcherToFind = "";
     	try {
     		researcherToFind = request.getParameter("researcher");
@@ -123,7 +123,15 @@ public class EditEventController {
 	@RequestMapping(value = "/event-remove-user", method = RequestMethod.GET)
 	public ModelAndView removeFromEvent(HttpServletRequest request, HttpServletResponse response,@RequestParam(value = "researcherId", required = true) long researcherId, @RequestParam(value = "eventId", required = true) long eventId) {
 
+		Researcher organizer = researcherManager.getResearcher((Long)request.getSession().getAttribute("userId"));
 		Event curEvent = eventManager.find(eventId);
+		
+		try {
+    		if(request.getSession().getAttribute("userId") == null || (request.getSession().getAttribute("userRole") != Role.ADMIN && (request.getSession().getAttribute("userRole") != Role.ORGANIZER || organizer.getLab().getLabId() != curEvent.getEventId())))
+        		return new ModelAndView("redirect:/events.jsp");
+    	} catch (Exception ex) {
+    		return new ModelAndView("redirect:/events.jsp");
+    	}
 		
 		Set<Researcher> setOfAttendees = curEvent.getAttendees();
 		Set<Researcher> collectionOfAttendees = setOfAttendees
@@ -142,12 +150,16 @@ public class EditEventController {
 	@RequestMapping(value = "/event-add-user", method = RequestMethod.GET)
 	public ModelAndView addToEvent(HttpServletRequest request, HttpServletResponse response,@RequestParam(value = "researcherId", required = true) long researcherId, @RequestParam(value = "eventId", required = true) long eventId) {
 
+		Researcher organizer = researcherManager.getResearcher((Long)request.getSession().getAttribute("userId"));
 		Event curEvent = eventManager.find(eventId);
-		/*
-		Set<Researcher> setOfAttendees = curEvent.getAttendees();
-		setOfAttendees.add(researcherManager.getResearcher(researcherId));
-		curEvent.setAttendees(setOfAttendees);*/
 		
+		try {
+    		if(request.getSession().getAttribute("userId") == null || (request.getSession().getAttribute("userRole") != Role.ADMIN && (request.getSession().getAttribute("userRole") != Role.ORGANIZER || organizer.getLab().getLabId() != curEvent.getEventId())))
+        		return new ModelAndView("redirect:/events.jsp");
+    	} catch (Exception ex) {
+    		return new ModelAndView("redirect:/events.jsp");
+    	}
+				
 		curEvent.addAttendee(researcherManager.getResearcher(researcherId));
 		eventManager.update(curEvent);
 		
