@@ -144,7 +144,7 @@
 			</div>
 		</c:forEach>
 	</div>
-
+	<hr />
 	<h4>Researchers with no lab</h4>
 	<button class="btn btn-primary" data-toggle="collapse"
 		data-target="#collapse-no-lab" aria-expanded="true"
