@@ -45,7 +45,9 @@ public class EditEventController {
 		Event curEvent = eventManager.find(eventId);
 		
 		try {
-    		if(request.getSession().getAttribute("userId") == null || (request.getSession().getAttribute("userRole") != Role.ADMIN && (request.getSession().getAttribute("userRole") != Role.ORGANIZER || organizer.getLab().getLabId() != curEvent.getEventId())))
+    		if(request.getSession().getAttribute("userId") == null || 
+    				(request.getSession().getAttribute("userRole") == Role.USER || 
+    				organizer.getLab().getLabId() != curEvent.getOrganizer().getLab().getLabId()))
         		return new ModelAndView("redirect:/events.jsp");
     	} catch (Exception ex) {
     		return new ModelAndView("redirect:/events.jsp");
@@ -64,7 +66,9 @@ public class EditEventController {
 		Event curEvent = eventManager.find(eventId);
 		
 		try {
-    		if(request.getSession().getAttribute("userId") == null || (request.getSession().getAttribute("userRole") != Role.ADMIN && (request.getSession().getAttribute("userRole") != Role.ORGANIZER || organizer.getLab().getLabId() != curEvent.getEventId())))
+    		if(request.getSession().getAttribute("userId") == null || 
+    				(request.getSession().getAttribute("userRole") == Role.USER || 
+    				organizer.getLab().getLabId() != curEvent.getOrganizer().getLab().getLabId()))
         		return new ModelAndView("redirect:/events.jsp");
     	} catch (Exception ex) {
     		return new ModelAndView("redirect:/events.jsp");
@@ -83,7 +87,7 @@ public class EditEventController {
 		
 		eventManager.update(curEvent);
 		
-		return new ModelAndView("redirect:/events.jsp");
+		return new ModelAndView("redirect:/actions/eventdetail?eventId="+eventId);
     }
 	
 	@RequestMapping(value = "editevent-searchResearcher")

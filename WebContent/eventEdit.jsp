@@ -83,7 +83,9 @@
 						cssClass="alert alert-warning" element="div" /></td>
 			</tr>
 		</table>
-		<button name="submit" class="btn btn-success pull-right">Save</button>
+		<div class="d-flex flex-row-reverse">
+			<button name="submit" class="btn btn-success pull-right">Save</button>
+		</div>
 		</form:form>
 		
 		<c:if test="${userRole == 'ADMIN'}">
