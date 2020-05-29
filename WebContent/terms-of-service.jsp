@@ -62,6 +62,8 @@
 		activities that occur under your account or password.We reserve all
 		rights to terminate accounts, edit or remove content and cancel orders
 		in their sole discretion.</p>
+	<h3>Contact</h3>
+	<p>Owner : owner@ter04.com</p>
 
 
 </div>
