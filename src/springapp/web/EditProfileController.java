@@ -13,6 +13,7 @@ import javax.validation.Valid;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -84,8 +85,8 @@ public class EditProfileController {
 		Researcher resear = researcher;
 
 		if (pass1.contentEquals(pass2)) {
-			if (!resear.getPassword().contentEquals(pass1)) {
-				resear.setPassword(pass1);
+			if (!BCrypt.checkpw(pass1, resear.getPassword())) {
+				resear.setPassword(BCrypt.hashpw(pass1, BCrypt.gensalt()));
 				researcherManager.update(researcher);
 				message = "Password changed !";
 			} else {

@@ -6,6 +6,7 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +27,7 @@ public class Dao {
 
 	// DAO RESEARCHER
 	public Researcher addResearcher(Researcher r) {
+		r.setPassword(BCrypt.hashpw(r.getPassword(), BCrypt.gensalt()));//hash password
 		em.persist(r);
 		// System.out.println("addResearcher witdh id=" + r.getResearcherId());
 		return r;
@@ -215,12 +217,19 @@ public class Dao {
 	// USER
 	public User authUser(User user) {
 		// System.out.println("DAO AUTH user:"+user);
-		Query query = em.createQuery("SELECT r.researcherId FROM Researcher AS r WHERE email=?1 AND password =?2")
-				.setParameter(1, user.getEmail()).setParameter(2, user.getPassword());
-		if (query.getResultList().isEmpty())
+		Query queryUser = em.createQuery("SELECT r.researcherId FROM Researcher AS r WHERE email=?1")
+				.setParameter(1, user.getEmail());
+		
+		if (queryUser.getResultList().isEmpty())
+			return user;
+		
+		Query queryPassword = em.createQuery("SELECT r.password FROM Researcher AS r WHERE email=?1")
+				.setParameter(1, user.getEmail());
+		
+		if(!BCrypt.checkpw(user.getPassword(), (String)queryPassword.getResultList().get(0)))
 			return user;
 		// System.out.println(query.getResultList().get(0));
-		long result = (long) query.getResultList().get(0);
+		long result = (long) queryUser.getResultList().get(0);
 		Query queryRole = em.createQuery("SELECT r.role FROM Researcher AS r WHERE researcherId=?1").setParameter(1,
 				result);
 		Role role = (Role) queryRole.getResultList().get(0);
