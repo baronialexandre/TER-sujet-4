@@ -277,8 +277,8 @@ public class TestDao {
 	
 	@Test
 	public void testAuthUser() {
-		dao.addResearcher(researchers.get(9));
 		User user = new User(researchers.get(9).getEmail(), researchers.get(9).getPassword());
+		dao.addResearcher(researchers.get(9));
 		
 		user = dao.authUser(user);
 		
@@ -383,6 +383,6 @@ public class TestDao {
 	/*
 	@Test
 	public void testGen() {
-		EventLabResearcherGenerator.generateEventsLabsResearchers(dao, 1000, 1000);
+		//EventLabResearcherGenerator.generateEventsLabsResearchers(dao, 1000, 1000);
 	}*/
 }
