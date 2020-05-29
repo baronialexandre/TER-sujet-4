@@ -61,7 +61,9 @@
 				<td><form:errors path="lab.labId" cssClass="alert alert-warning" element="div" /></td>
 			</tr>
 		</table>
-		<button name="submit" class="btn btn-success pull-right">Register</button>
+		<div class="d-flex flex-row-reverse">
+			<button name="submit" class="btn btn-success pull-right">Register</button>
+		</div>
 	</form:form>
 
 </div>
