@@ -31,7 +31,7 @@
 		</div>
 	</nav>
 </c:if>
-<c:if test="${not empty userId}">
+<c:if test="${false}">
 	<div class="alert alert-info alert-dismissible fade show" role="alert">
 	  <strong>Notification : </strong>
 	  <c:out value="Your id is ${userId} ; your role is ${userRole}" default="---"/>
