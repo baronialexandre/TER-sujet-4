@@ -68,6 +68,7 @@
 	
 	<form:form class="form-horizontal" action="${pageContext.servletContext.contextPath}/actions/change-other-profile?researcherId=${researcher.researcherId}" method="POST" modelAttribute="researcher">
 		<div class="card">
+		<form:errors path="*" cssClass="alert alert-danger" element="div" />
 			<div class="card-header">Other <sup style="opacity:0.6">Optional</sup></div>
 				<div class="card-body">
 				<table class="table table-striped">

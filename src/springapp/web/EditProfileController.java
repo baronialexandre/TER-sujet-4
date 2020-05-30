@@ -140,14 +140,6 @@ public class EditProfileController {
 	public ModelAndView changeOtherProfile(@Valid @ModelAttribute("researcher") Researcher researcher,
 			BindingResult result, HttpServletRequest request) {
 		logger.info("change-other-profile");
-		Researcher resear = researcher;
-		validator.validate(researcher, result);
-		if (result.hasErrors()) {
-			ModelAndView modelAndView = new ModelAndView();
-			modelAndView.setViewName("editProfile");
-			modelAndView.addObject(resear);
-			return modelAndView;
-		}
 		researcherManager.update(researcher);
 		System.out.println(researcher.toString());
 		ModelAndView modelAndView = new ModelAndView();
