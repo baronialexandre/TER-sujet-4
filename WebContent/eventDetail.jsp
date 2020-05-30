@@ -76,6 +76,7 @@
 
 	<div class="d-flex justify-content-around bd-highlight">
 		<hr />
+		<c:if test="${not empty event.organizer.lab}">
 		<c:if test="${not contains}">
 			<c:choose>
 				<c:when
@@ -108,6 +109,12 @@
 					<button type="button" class="btn btn-info pull-right">Edit</button>
 				</a>
 			</div>
+		</c:if>
+		</c:if>
+		<c:if test="${empty event.organizer.lab}">
+		<br />
+		<span>The laboratory has been deleted, please contact an administrator if this is an error.</span>
+		<br />
 		</c:if>
 	</div>
 	<div class="card">

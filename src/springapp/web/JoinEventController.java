@@ -55,7 +55,7 @@ public class JoinEventController{
         
         if(curEvent == null)
         {
-        	return new ModelAndView("redirect:/events.jsp");
+        	return new ModelAndView("redirect:/actions/events");
         }
         
         curEvent.addAttendee((Researcher) request.getSession().getAttribute("researcher"));

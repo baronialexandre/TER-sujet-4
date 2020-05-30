@@ -37,9 +37,9 @@ public class PayEventController{
     public ModelAndView listEvent(HttpServletRequest request, HttpServletResponse response,@RequestParam(value = "eventId", required = true) long eventId) throws ServletException, IOException {
     	try {
     		if(request.getSession().getAttribute("userId") == null)
-        		return new ModelAndView("redirect:/login.jsp");
+        		return new ModelAndView("redirect:/actions/logout");
     	} catch (Exception e) {
-    		return new ModelAndView("redirect:/login.jsp");
+    		return new ModelAndView("redirect:/actions/logout");
     	}
         logger.info("Find one event");
         
@@ -55,11 +55,11 @@ public class PayEventController{
         
         if(curEvent == null)
         {
-        	return new ModelAndView("redirect:/events.jsp");
+        	return new ModelAndView("redirect:/actions/events");
         }
         
-        curEvent.addAttendee((Researcher) request.getSession().getAttribute("researcher"));
-        eventManager.update(curEvent);
+        //curEvent.addAttendee((Researcher) request.getSession().getAttribute("researcher"));
+        //eventManager.update(curEvent);
         
         logger.info(curEvent.toString());
         request.getSession().setAttribute("event", curEvent);

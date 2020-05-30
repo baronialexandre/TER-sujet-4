@@ -34,9 +34,9 @@ public class EventsController{
     public ModelAndView listEvent(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	try {
     		if(request.getSession().getAttribute("userId") == null)
-        		return new ModelAndView("redirect:/login.jsp");
+        		return new ModelAndView("redirect:/actions/logout");
     	} catch (Exception e) {
-    		return new ModelAndView("redirect:/login.jsp");
+    		return new ModelAndView("redirect:/actions/logout");
     	}
         logger.info("List of events (actives)");
         

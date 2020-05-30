@@ -14,6 +14,7 @@
 	<hr />
 	<div>
 		<c:forEach items="${events}" var="event">
+		<c:if test="${not empty event.organizer.lab}">
 			<c:choose>
 				<c:when test="${event.type == \"CONGRESS\"}">
 					<!--primary-->
@@ -74,6 +75,7 @@
 					</a>
 				</div>
 			</div>
+		</c:if>
 		</c:forEach>
 	</div>
 </div>
