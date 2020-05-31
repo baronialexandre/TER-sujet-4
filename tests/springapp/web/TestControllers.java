@@ -1,14 +1,17 @@
 package springapp.web;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestMethodOrder;
 
 import javax.servlet.ServletContext;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -24,10 +27,20 @@ import org.springframework.mock.web.MockServletContext;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 
+import java.time.Instant;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.stream.Collectors;
+
 import springapp.business.ILabManager;
 import springapp.business.IResearcherManager;
+import springapp.dao.Dao;
+import springapp.model.Event;
+import springapp.model.Researcher;
 import springapp.model.utils.Role;
 
+@TestInstance(value = TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @WebAppConfiguration
 @ExtendWith(SpringExtension.class)
@@ -37,20 +50,44 @@ public class TestControllers {
 	@Autowired
 	private WebApplicationContext wac;
 	
+	
 	@Autowired
 	ILabManager labManager;
 	@Autowired
 	IResearcherManager researcherManager;
+	@Autowired
+	Dao dao;
 	
 	private MockMvc mockMvc;
-	@BeforeEach
-	public void setup() throws Exception {
-	    this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
+	
+	private Long admIndex;
+	private Long orgaIndex;
+	private Long usrIndex;
+
+	
+	@BeforeAll
+	public void createUsers() {	
+		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
 	    System.out.println("MockMvc : "+mockMvc);
+	    
+		Researcher adm = new Researcher("admin@test.controller", "adm", "inistrator",  "", Date.from(Instant.now()), "admin", Role.ADMIN);
+		Researcher orga = new Researcher("orga@test.controller", "orga", "nizer",  "", Date.from(Instant.now()), "orga", Role.ORGANIZER);
+		Researcher usr = new Researcher("user@test.controller", "us", "er",  "", Date.from(Instant.now()), "user", Role.USER);
+		
+		dao.addResearcher(adm);
+		dao.addResearcher(orga);
+		dao.addResearcher(usr);
+	    
+		Collection<Researcher> collec = dao.getAllResearchers().stream().filter(r -> r.getEmail().contentEquals("admin@test.controller")).collect(Collectors.toCollection(HashSet::new));
+	    admIndex = ((Researcher)(collec.toArray()[0])).getResearcherId();
+	    collec = dao.getAllResearchers().stream().filter(r -> r.getEmail().contentEquals("orga@test.controller")).collect(Collectors.toCollection(HashSet::new));
+	    orgaIndex = ((Researcher)(collec.toArray()[0])).getResearcherId();
+	    collec = dao.getAllResearchers().stream().filter(r -> r.getEmail().contentEquals("user@test.controller")).collect(Collectors.toCollection(HashSet::new));
+	    usrIndex = ((Researcher)(collec.toArray()[0])).getResearcherId();
 	}
 	
 	@Test
-	public void TestSetupIsGood() {
+	public void testSetupIsGood() {
 	    ServletContext servletContext = wac.getServletContext();
 	     
 	    Assert.assertNotNull(servletContext);
@@ -62,7 +99,7 @@ public class TestControllers {
 		ResultMatcher ok = MockMvcResultMatchers.status().isFound();
 		
 		
-		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.post("/login").param("email", "admin@test.test").param("password", "admin");
+		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.post("/login").param("email", "admin@test.controller").param("password", "admin");
 		
 		this.mockMvc.perform(builder).andExpect(ok).andExpect(redirectedUrl("/actions/events"));
 	}
@@ -72,7 +109,7 @@ public class TestControllers {
 		ResultMatcher ok = MockMvcResultMatchers.status().isFound();
 		
 		
-		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.post("/login").param("email", "orga@test.test").param("password", "orga");
+		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.post("/login").param("email", "orga@test.controller").param("password", "orga");
 		
 		this.mockMvc.perform(builder).andExpect(ok).andExpect(redirectedUrl("/actions/events"));
 	}
@@ -82,7 +119,7 @@ public class TestControllers {
 		ResultMatcher ok = MockMvcResultMatchers.status().isFound();
 		
 		
-		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.post("/login").param("email", "user@test.test").param("password", "user");
+		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.post("/login").param("email", "user@test.controller").param("password", "user");
 		
 		this.mockMvc.perform(builder).andExpect(ok).andExpect(redirectedUrl("/actions/events"));
 		
@@ -94,7 +131,7 @@ public class TestControllers {
 		ResultMatcher ok = MockMvcResultMatchers.status().isFound();
 		
 		
-		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.post("/login").param("email", "notAnUser@test.test").param("password", "password");
+		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.post("/login").param("email", "notAnUser@test.controller").param("password", "password");
 		
 		this.mockMvc.perform(builder).andExpect(ok).andExpect(redirectedUrl("/login.jsp"));
 	}
@@ -104,7 +141,7 @@ public class TestControllers {
 		ResultMatcher ok = MockMvcResultMatchers.status().is(200);
 		
 		
-		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get("/create-event").sessionAttr("userId", new Long(356)).sessionAttr("userRole", Role.ADMIN);
+		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get("/create-event").sessionAttr("userId", admIndex).sessionAttr("userRole", Role.ADMIN);
 		
 		this.mockMvc.perform(builder).andExpect(ok).andExpect(redirectedUrl(null));
 	}
@@ -114,7 +151,7 @@ public class TestControllers {
 		ResultMatcher ok = MockMvcResultMatchers.status().is(200);
 		
 		
-		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get("/create-event").sessionAttr("userId", new Long(357)).sessionAttr("userRole", Role.ORGANIZER);
+		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get("/create-event").sessionAttr("userId", orgaIndex).sessionAttr("userRole", Role.ORGANIZER);
 		
 		this.mockMvc.perform(builder).andExpect(ok).andExpect(redirectedUrl(null));
 	}
@@ -124,7 +161,7 @@ public class TestControllers {
 		ResultMatcher ok = MockMvcResultMatchers.status().isFound();
 		
 		
-		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get("/create-event").sessionAttr("userId", new Long(358)).sessionAttr("userRole", Role.USER);
+		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get("/create-event").sessionAttr("userId", usrIndex).sessionAttr("userRole", Role.USER);
 		
 		this.mockMvc.perform(builder).andExpect(ok).andExpect(redirectedUrl("/actions/events"));
 	}
@@ -133,8 +170,9 @@ public class TestControllers {
 	public void testEditEventControllerAccessAdmin() throws Exception {
 		ResultMatcher ok = MockMvcResultMatchers.status().is(200);
 		
+		Long eventId = ((Event)(dao.getActiveEvents().toArray()[0])).getEventId();
 		
-		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get("/edit-event?eventId=403").sessionAttr("userId", new Long(356)).sessionAttr("userRole", Role.ADMIN);
+		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get("/edit-event?eventId="+eventId).sessionAttr("userId", admIndex).sessionAttr("userRole", Role.ADMIN);
 		
 		this.mockMvc.perform(builder).andExpect(ok).andExpect(redirectedUrl(null));
 	}
@@ -143,8 +181,9 @@ public class TestControllers {
 	public void testEditEventControllerAccessOrgaNotInLabo() throws Exception {
 		ResultMatcher ok = MockMvcResultMatchers.status().isFound();
 		
+		Long eventId = ((Event)(dao.getActiveEvents().toArray()[0])).getEventId();
 		
-		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get("/edit-event?eventId=403").sessionAttr("userId", new Long(357)).sessionAttr("userRole", Role.ORGANIZER);
+		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get("/edit-event?eventId="+eventId).sessionAttr("userId", orgaIndex).sessionAttr("userRole", Role.ORGANIZER);
 		
 		this.mockMvc.perform(builder).andExpect(ok).andExpect(redirectedUrl("/actions/events"));
 	}
@@ -153,8 +192,9 @@ public class TestControllers {
 	public void testEditEventControllerAccessUser() throws Exception {
 		ResultMatcher ok = MockMvcResultMatchers.status().isFound();
 		
+		Long eventId = ((Event)(dao.getActiveEvents().toArray()[0])).getEventId();
 		
-		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get("/edit-event?eventId=403").sessionAttr("userId", new Long(358)).sessionAttr("userRole", Role.USER);
+		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get("/edit-event?eventId="+eventId).sessionAttr("userId", usrIndex).sessionAttr("userRole", Role.USER);
 		
 		this.mockMvc.perform(builder).andExpect(ok).andExpect(redirectedUrl("/actions/events"));
 	}
@@ -164,7 +204,7 @@ public class TestControllers {
 		ResultMatcher ok = MockMvcResultMatchers.status().is(200);
 		
 		
-		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get("/admin-panel").sessionAttr("userId", new Long(356)).sessionAttr("userRole", Role.ADMIN);
+		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get("/admin-panel").sessionAttr("userId", admIndex).sessionAttr("userRole", Role.ADMIN);
 		
 		this.mockMvc.perform(builder).andExpect(ok).andExpect(redirectedUrl(null));
 	}
@@ -174,7 +214,7 @@ public class TestControllers {
 		ResultMatcher ok = MockMvcResultMatchers.status().isFound();
 		
 		
-		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get("/admin-panel").sessionAttr("userId", new Long(357)).sessionAttr("userRole", Role.ORGANIZER);
+		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get("/admin-panel").sessionAttr("userId", orgaIndex).sessionAttr("userRole", Role.ORGANIZER);
 		
 		this.mockMvc.perform(builder).andExpect(ok).andExpect(redirectedUrl("/login.jsp"));
 	}
@@ -184,7 +224,7 @@ public class TestControllers {
 		ResultMatcher ok = MockMvcResultMatchers.status().isFound();
 		
 		
-		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get("/admin-panel").sessionAttr("userId", new Long(358)).sessionAttr("userRole", Role.USER);
+		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get("/admin-panel").sessionAttr("userId", usrIndex).sessionAttr("userRole", Role.USER);
 		
 		this.mockMvc.perform(builder).andExpect(ok).andExpect(redirectedUrl("/login.jsp"));
 	}
@@ -194,7 +234,7 @@ public class TestControllers {
 		ResultMatcher ok = MockMvcResultMatchers.status().is(200);
 		
 		
-		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get("/edit-profile?researcherId=356").sessionAttr("userId", new Long(356)).sessionAttr("userRole", Role.ADMIN);
+		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get("/edit-profile?researcherId="+admIndex).sessionAttr("userId", admIndex).sessionAttr("userRole", Role.ADMIN);
 		
 		this.mockMvc.perform(builder).andExpect(ok).andExpect(redirectedUrl(null));
 	}
@@ -204,7 +244,7 @@ public class TestControllers {
 		ResultMatcher ok = MockMvcResultMatchers.status().is(200);
 		
 		
-		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get("/edit-profile?researcherId=357").sessionAttr("userId", new Long(356)).sessionAttr("userRole", Role.ADMIN);
+		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get("/edit-profile?researcherId="+orgaIndex).sessionAttr("userId", admIndex).sessionAttr("userRole", Role.ADMIN);
 		
 		this.mockMvc.perform(builder).andExpect(ok).andExpect(redirectedUrl(null));
 	}
@@ -214,7 +254,7 @@ public class TestControllers {
 		ResultMatcher ok = MockMvcResultMatchers.status().is(200);
 		
 		
-		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get("/edit-profile?researcherId=357").sessionAttr("userId", new Long(357)).sessionAttr("userRole", Role.ORGANIZER);
+		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get("/edit-profile?researcherId="+orgaIndex).sessionAttr("userId", orgaIndex).sessionAttr("userRole", Role.ORGANIZER);
 		
 		this.mockMvc.perform(builder).andExpect(ok).andExpect(redirectedUrl(null));
 	}
@@ -224,7 +264,7 @@ public class TestControllers {
 		ResultMatcher ok = MockMvcResultMatchers.status().isFound();
 		
 		
-		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get("/edit-profile?researcherId=358").sessionAttr("userId", new Long(357)).sessionAttr("userRole", Role.ORGANIZER);
+		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get("/edit-profile?researcherId="+usrIndex).sessionAttr("userId", orgaIndex).sessionAttr("userRole", Role.ORGANIZER);
 		
 		this.mockMvc.perform(builder).andExpect(ok).andExpect(redirectedUrl("/actions/events"));
 	}
@@ -234,7 +274,7 @@ public class TestControllers {
 		ResultMatcher ok = MockMvcResultMatchers.status().is(200);
 		
 		
-		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get("/edit-profile?researcherId=358").sessionAttr("userId", new Long(358)).sessionAttr("userRole", Role.USER);
+		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get("/edit-profile?researcherId="+usrIndex).sessionAttr("userId", usrIndex).sessionAttr("userRole", Role.USER);
 		
 		this.mockMvc.perform(builder).andExpect(ok).andExpect(redirectedUrl(null));
 	}
@@ -244,17 +284,16 @@ public class TestControllers {
 		ResultMatcher ok = MockMvcResultMatchers.status().isFound();
 		
 		
-		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get("/edit-profile?researcherId=357").sessionAttr("userId", new Long(358)).sessionAttr("userRole", Role.USER);
+		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get("/edit-profile?researcherId="+orgaIndex).sessionAttr("userId", usrIndex).sessionAttr("userRole", Role.USER);
 		
 		this.mockMvc.perform(builder).andExpect(ok).andExpect(redirectedUrl("/actions/events"));
 	}
 	
-	//356 admin
-	//357 orga
-	//358 user
-	
-	//.sessionAttr("exampleEntity", exampleEntity)
-	
-	//.flashAttr("exampleEntity", new ExampleEntity()));
+	@AfterAll
+	public void removeUsers() {
+		dao.removeResearcher(admIndex);
+		dao.removeResearcher(orgaIndex);
+		dao.removeResearcher(usrIndex);
+	}
 
 }

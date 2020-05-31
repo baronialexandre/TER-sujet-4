@@ -47,7 +47,7 @@ public class EditEventController {
 		try {
     		if(request.getSession().getAttribute("userId") == null || request.getSession().getAttribute("userRole") == Role.USER)
         		return new ModelAndView("redirect:/actions/events");
-    		if(!(organizer.getLab().getLabId() == curEvent.getOrganizer().getLab().getLabId() || request.getSession().getAttribute("userRole") == Role.ADMIN))
+    		if(!(request.getSession().getAttribute("userRole") == Role.ADMIN || organizer.getLab().getLabId() == curEvent.getOrganizer().getLab().getLabId()))
     			return new ModelAndView("redirect:/actions/events");
     	} catch (Exception ex) {
     		return new ModelAndView("redirect:/actions/events");
