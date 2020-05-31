@@ -46,9 +46,9 @@ public class EditProfileController {
 			HttpServletRequest request) {
 		try {
     		if((Long)request.getSession().getAttribute("userId") != researcher.getResearcherId() && (request.getSession().getAttribute("userRole") != Role.ADMIN))
-        		return new ModelAndView("redirect:/events.jsp");
+        		return new ModelAndView("redirect:/actions/events");
     	} catch (Exception ex) {
-    		return new ModelAndView("redirect:/events.jsp");
+    		return new ModelAndView("redirect:/actions/events");
     	}
 		logger.info("edit profile " + researcher);
 		request.getSession().setAttribute("disableMenu", false);
