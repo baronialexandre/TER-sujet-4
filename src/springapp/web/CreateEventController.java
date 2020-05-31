@@ -82,6 +82,6 @@ import springapp.model.utils.Role;
 			
 			eventManager.add(curEvent);
 			
-			return new ModelAndView("redirect:/events.jsp");
+			return new ModelAndView("redirect:/actions/events");
 	    }
 }

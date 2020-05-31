@@ -106,30 +106,31 @@
 	</div>
 
 	<hr />
-
-	<div class="card-header">Events organized</div>
-	<div class="card-body">
-		<button class="btn btn-primary" data-toggle="collapse"
-			data-target="#collapse-organized" aria-expanded="true"
-			aria-controls="collapse-organized">Show
-			(${fn:length(eventsOrganized)})</button>
-		<div id="collapse-organized" class="collapse"
-			aria-labelledby="heading-research">
-			<div class="card card-body">
-				<table class="table table-light table-striped">
-					<c:forEach items="${eventsOrganized}" var="e">
-						<tr>
-							<td><c:out value="${e.eventName}" /></td>
-							<td><c:out value="${e.type}" /></td>
-							<td><c:out value="${e.beginDate}" /></td>
-							<td><a class="btn btn-primary"
-								href="<%=application.getContextPath()%>/actions/eventdetail?eventId=${e.eventId}"
-								role="button">View</a></td>
-						</tr>
-					</c:forEach>
-				</table>
+	<c:if test="${researcher.role != 'USER'}">
+		<div class="card-header">Events organized</div>
+		<div class="card-body">
+			<button class="btn btn-primary" data-toggle="collapse"
+				data-target="#collapse-organized" aria-expanded="true"
+				aria-controls="collapse-organized">Show
+				(${fn:length(eventsOrganized)})</button>
+			<div id="collapse-organized" class="collapse"
+				aria-labelledby="heading-research">
+				<div class="card card-body">
+					<table class="table table-light table-striped">
+						<c:forEach items="${eventsOrganized}" var="e">
+							<tr>
+								<td><c:out value="${e.eventName}" /></td>
+								<td><c:out value="${e.type}" /></td>
+								<td><c:out value="${e.beginDate}" /></td>
+								<td><a class="btn btn-primary"
+									href="<%=application.getContextPath()%>/actions/eventdetail?eventId=${e.eventId}"
+									role="button">View</a></td>
+							</tr>
+						</c:forEach>
+					</table>
+				</div>
 			</div>
 		</div>
-	</div>
+	</c:if>
 
 </div>

@@ -33,7 +33,7 @@
 						default="organizer.firstName::TEST" /> <c:out
 						value="${event.organizer.lastName}"
 						default="organizer.lastName::TEST" />
-			</a></li>
+			</a>(<c:out value="${event.organizer.lab.labName}"></c:out>)</li>
 		</ul>
 		<div class="card-body">
 			<c:out value="${event.description}" default="description::TEST" />
