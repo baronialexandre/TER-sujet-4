@@ -46,11 +46,11 @@ public class EditEventController {
 		
 		try {
     		if(request.getSession().getAttribute("userId") == null || request.getSession().getAttribute("userRole") == Role.USER)
-        		return new ModelAndView("redirect:/events.jsp");
+        		return new ModelAndView("redirect:/actions/events");
     		if(!(organizer.getLab().getLabId() == curEvent.getOrganizer().getLab().getLabId() || request.getSession().getAttribute("userRole") == Role.ADMIN))
-    			return new ModelAndView("redirect:/events.jsp");
+    			return new ModelAndView("redirect:/actions/events");
     	} catch (Exception ex) {
-    		return new ModelAndView("redirect:/events.jsp");
+    		return new ModelAndView("redirect:/actions/events");
     	}
         
         request.getSession().setAttribute("event", curEvent);
@@ -67,11 +67,11 @@ public class EditEventController {
 		
 		try {
     		if(request.getSession().getAttribute("userId") == null || request.getSession().getAttribute("userRole") == Role.USER)
-        		return new ModelAndView("redirect:/events.jsp");
+        		return new ModelAndView("redirect:/actions/events");
     		if(!(organizer.getLab().getLabId() == curEvent.getOrganizer().getLab().getLabId() || request.getSession().getAttribute("userRole") == Role.ADMIN))
-    			return new ModelAndView("redirect:/events.jsp");
+    			return new ModelAndView("redirect:/actions/events");
     	} catch (Exception ex) {
-    		return new ModelAndView("redirect:/events.jsp");
+    		return new ModelAndView("redirect:/actions/events");
     	}
 		
 		
@@ -97,11 +97,11 @@ public class EditEventController {
 		
 		try {
     		if(request.getSession().getAttribute("userId") == null || request.getSession().getAttribute("userRole") == Role.USER)
-        		return new ModelAndView("redirect:/events.jsp");
+        		return new ModelAndView("redirect:/actions/events");
     		if(!(organizer.getLab().getLabId() == curEvent.getOrganizer().getLab().getLabId() || request.getSession().getAttribute("userRole") == Role.ADMIN))
-    			return new ModelAndView("redirect:/events.jsp");
+    			return new ModelAndView("redirect:/actions/events");
     	} catch (Exception ex) {
-    		return new ModelAndView("redirect:/events.jsp");
+    		return new ModelAndView("redirect:/actions/events");
     	}
 
     	String researcherToFind = "";
@@ -134,11 +134,11 @@ public class EditEventController {
 		
 		try {
     		if(request.getSession().getAttribute("userId") == null || request.getSession().getAttribute("userRole") == Role.USER)
-        		return new ModelAndView("redirect:/events.jsp");
+        		return new ModelAndView("redirect:/actions/events");
     		if(!(organizer.getLab().getLabId() == curEvent.getOrganizer().getLab().getLabId() || request.getSession().getAttribute("userRole") == Role.ADMIN))
-    			return new ModelAndView("redirect:/events.jsp");
+    			return new ModelAndView("redirect:/actions/events");
     	} catch (Exception ex) {
-    		return new ModelAndView("redirect:/events.jsp");
+    		return new ModelAndView("redirect:/actions/events");
     	}
 		
 		Set<Researcher> setOfAttendees = curEvent.getAttendees();
@@ -163,11 +163,11 @@ public class EditEventController {
 		
 		try {
     		if(request.getSession().getAttribute("userId") == null || request.getSession().getAttribute("userRole") == Role.USER)
-        		return new ModelAndView("redirect:/events.jsp");
+        		return new ModelAndView("redirect:/actions/events");
     		if(!(organizer.getLab().getLabId() == curEvent.getOrganizer().getLab().getLabId() || request.getSession().getAttribute("userRole") == Role.ADMIN))
-    			return new ModelAndView("redirect:/events.jsp");
+    			return new ModelAndView("redirect:/actions/events");
     	} catch (Exception ex) {
-    		return new ModelAndView("redirect:/events.jsp");
+    		return new ModelAndView("redirect:/actions/events");
     	}
 				
 		curEvent.addAttendee(researcherManager.getResearcher(researcherId));

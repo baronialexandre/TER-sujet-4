@@ -226,13 +226,14 @@ public class Event implements Serializable {
 		attendees.add(p);
 	}
 
-	@Override
+	//organizer.getEmail() make all crash if orgnizer is null...
+	/*@Override
 	public String toString() {
 		return "Event [eventId=" + eventId + ", eventName=" + eventName + ", type=" + type + ", location=" + location
 				+ ", beginDate=" + beginDate + ", endDate=" + endDate + ", description=" + description + ", speakers="
 				+ speakers + ", fee=" + fee + ", organizer=" + organizer.getEmail() + ", attendeeCap=" + attendeeCap
 				+ ", attendees=" + attendees.size() + ", version=" + version + "]";
-	}
+	}*/
 
 
 }

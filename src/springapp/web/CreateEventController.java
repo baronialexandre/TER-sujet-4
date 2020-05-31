@@ -42,11 +42,10 @@ import springapp.model.utils.Role;
 	    public ModelAndView eventCreateForm(Model model,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			try {
 	    		if(request.getSession().getAttribute("userId") == null || (request.getSession().getAttribute("userRole") != Role.ADMIN && request.getSession().getAttribute("userRole") != Role.ORGANIZER))
-	        		return new ModelAndView("redirect:/login.jsp");
+	        		return new ModelAndView("redirect:/actions/events");
 	    	} catch (Exception ex) {
-	    		return new ModelAndView("redirect:/login.jsp");
+	    		return new ModelAndView("redirect:/actions/events");
 	    	}
-	        
 			
 	        model.addAttribute("event",new Event());
 			
@@ -58,9 +57,9 @@ import springapp.model.utils.Role;
 			
 			try {
 	    		if(request.getSession().getAttribute("userId") == null || (request.getSession().getAttribute("userRole") != Role.ADMIN && request.getSession().getAttribute("userRole") != Role.ORGANIZER))
-	        		return new ModelAndView("redirect:/login.jsp");
+	        		return new ModelAndView("redirect:/actions/events");
 	    	} catch (Exception ex) {
-	    		return new ModelAndView("redirect:/login.jsp");
+	    		return new ModelAndView("redirect:/actions/events");
 	    	}
 
 			Event curEvent = new Event();
@@ -82,6 +81,6 @@ import springapp.model.utils.Role;
 			
 			eventManager.add(curEvent);
 			
-			return new ModelAndView("redirect:/events.jsp");
+			return new ModelAndView("redirect:/actions/events");
 	    }
 }
