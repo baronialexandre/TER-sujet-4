@@ -1,10 +1,7 @@
 package springapp.web;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,11 +42,12 @@ public class EditProfileController {
 	public ModelAndView loadEditProfile(@Valid @ModelAttribute("researcher") Researcher researcher,
 			HttpServletRequest request) {
 		try {
-    		if((Long)request.getSession().getAttribute("userId") != researcher.getResearcherId() && (request.getSession().getAttribute("userRole") != Role.ADMIN))
-        		return new ModelAndView("redirect:/actions/events");
-    	} catch (Exception ex) {
-    		return new ModelAndView("redirect:/actions/events");
-    	}
+			if ((Long) request.getSession().getAttribute("userId") != researcher.getResearcherId()
+					&& (request.getSession().getAttribute("userRole") != Role.ADMIN))
+				return new ModelAndView("redirect:/actions/events");
+		} catch (Exception ex) {
+			return new ModelAndView("redirect:/actions/events");
+		}
 		logger.info("edit profile " + researcher);
 		request.getSession().setAttribute("disableMenu", false);
 		ModelAndView modelAndView = new ModelAndView();
@@ -102,7 +100,6 @@ public class EditProfileController {
 		return modelAndView;
 	}
 
-	// no validator here .... we have to create a custom validation maybe
 	@RequestMapping(value = "change-mail-profile", method = RequestMethod.POST)
 	public ModelAndView changeMailProfile(@ModelAttribute("researcher") Researcher researcher,
 			HttpServletRequest request, HttpServletResponse response) {
@@ -154,10 +151,8 @@ public class EditProfileController {
 		logger.info("change-admin-profile");
 		if (Long.parseLong((String) result.getFieldValue("lab.labId")) != 0) {
 			Lab lab = labManager.find(Long.parseLong((String) result.getFieldValue("lab.labId")));
-			//logger.info("ID LAB changement: " + lab.getLabId());
 			researcher.setLab(lab);
 		} else {
-			//logger.info("PAS DE LAB");
 			researcher.setLab(null);
 		}
 		researcherManager.update(researcher);

@@ -1,7 +1,6 @@
 package springapp.web;
 
 import java.io.IOException;
-import java.util.Collections;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -22,46 +21,42 @@ import springapp.model.Event;
 import springapp.model.Researcher;
 
 @Controller()
-public class EventDetailController{
+public class EventDetailController {
 
 	@Autowired
 	IEventManager eventManager;
-	
+
 	@Autowired
 	IResearcherManager researcherManager;
-	
-    protected final Log logger = LogFactory.getLog(getClass());
 
-    
+	protected final Log logger = LogFactory.getLog(getClass());
 
-    @RequestMapping(value="eventdetail", method = RequestMethod.GET)
-    public ModelAndView eventDetail(HttpServletRequest request, HttpServletResponse response,@RequestParam(value = "eventId", required = true) long eventId) throws ServletException, IOException {
-    	try {
-    		if(request.getSession().getAttribute("userId") == null)
-        		return new ModelAndView("redirect:/login.jsp");
-    	} catch (Exception e) {
-    		return new ModelAndView("redirect:/login.jsp");
-    	}
-        logger.info("Find one event");
-        
-        if(request.getSession().getAttribute("researcher") == null)
-        {
-	        Researcher currResearcher = researcherManager.getResearcher((Long)request.getSession().getAttribute("userId"));
-	        logger.info(currResearcher.getRole());
-	        request.getSession().setAttribute("researcher",currResearcher);
-        }
-        
-        
-        Event curEvent = eventManager.find(eventId);
-        
-        if(curEvent == null)
-        {
-        	return new ModelAndView("redirect:/events.jsp");
-        }
-        
-        
-        request.getSession().setAttribute("event", curEvent);
-        return new ModelAndView("eventDetail");
-    }
+	@RequestMapping(value = "eventdetail", method = RequestMethod.GET)
+	public ModelAndView eventDetail(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam(value = "eventId", required = true) long eventId) throws ServletException, IOException {
+		try {
+			if (request.getSession().getAttribute("userId") == null)
+				return new ModelAndView("redirect:/login.jsp");
+		} catch (Exception e) {
+			return new ModelAndView("redirect:/login.jsp");
+		}
+		logger.info("Find one event");
+
+		if (request.getSession().getAttribute("researcher") == null) {
+			Researcher currResearcher = researcherManager
+					.getResearcher((Long) request.getSession().getAttribute("userId"));
+			logger.info(currResearcher.getRole());
+			request.getSession().setAttribute("researcher", currResearcher);
+		}
+
+		Event curEvent = eventManager.find(eventId);
+
+		if (curEvent == null) {
+			return new ModelAndView("redirect:/events.jsp");
+		}
+
+		request.getSession().setAttribute("event", curEvent);
+		return new ModelAndView("eventDetail");
+	}
 
 }

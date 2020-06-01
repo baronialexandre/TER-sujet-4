@@ -1,7 +1,6 @@
 package springapp.business;
 
 import java.util.Collection;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +13,7 @@ public class InMemoryResearcherManager implements IResearcherManager {
 
 	@Autowired
 	Dao dao;
-	
+
 	@Override
 	public Researcher getResearcher(long id) {
 		return dao.findResearcher(id);
@@ -24,7 +23,7 @@ public class InMemoryResearcherManager implements IResearcherManager {
 	public void update(Researcher r) {
 		dao.updateResearcher(r);
 	}
-	
+
 	@Override
 	public void add(Researcher r) {
 		dao.addResearcher(r);
@@ -34,12 +33,12 @@ public class InMemoryResearcherManager implements IResearcherManager {
 	public boolean hasResearcher(String email) {
 		return dao.hasResearcher(email);
 	}
-	
+
 	@Override
 	public Collection<Researcher> findResearchers(String firstOrLastname) {
 		return dao.searchResearchers(firstOrLastname);
 	}
-	
+
 	@Override
 	public Collection<Researcher> getResearchersWithNoLab() {
 		return dao.getResearchersWithNoLab();

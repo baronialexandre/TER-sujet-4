@@ -1,9 +1,6 @@
 package springapp.model;
 
 import java.io.Serializable;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -19,8 +16,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.PostUpdate;
 import javax.persistence.PreUpdate;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
@@ -36,8 +31,7 @@ public class Lab implements Serializable {
 	private long labId;
 
 	@Basic(optional = false)
-	@Column(name = "labName", length = 200,
-	nullable = false, unique = true)
+	@Column(name = "labName", length = 200, nullable = false, unique = true)
 	private String labName;
 
 	@Version()
@@ -46,10 +40,8 @@ public class Lab implements Serializable {
 	@Transient
 	public static long updateCounter = 0;
 
-	@OneToMany(
-			cascade = { CascadeType.REMOVE },
-			fetch = FetchType.LAZY, mappedBy = "lab")
-    @OrderBy(clause = "last_name ASC")
+	@OneToMany(cascade = { CascadeType.REMOVE }, fetch = FetchType.LAZY, mappedBy = "lab")
+	@OrderBy(clause = "last_name ASC")
 	private SortedSet<Researcher> researchers;
 
 	public Lab() {
@@ -71,7 +63,7 @@ public class Lab implements Serializable {
 		System.err.println("PostUpdate of " + this);
 		updateCounter++;
 	}
-	
+
 	public long getLabId() {
 		return labId;
 	}
@@ -116,6 +108,5 @@ public class Lab implements Serializable {
 	public String toString() {
 		return "Lab [id=" + labId + ", name=" + labName + ", version=" + version + ", researchers=" + researchers + "]";
 	}
-
 
 }

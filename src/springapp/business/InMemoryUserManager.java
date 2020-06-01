@@ -8,7 +8,7 @@ import springapp.model.utils.User;
 
 @Service("userManager")
 public class InMemoryUserManager implements IUserManager {
-	
+
 	@Autowired
 	Dao dao;
 
@@ -16,5 +16,5 @@ public class InMemoryUserManager implements IUserManager {
 	public User authentificate(User user) {
 		return dao.authUser(user);
 	}
-	
+
 }

@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
+import javax.persistence.Query;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Repository;
@@ -27,7 +30,7 @@ public class Dao {
 
 	// DAO RESEARCHER
 	public Researcher addResearcher(Researcher r) {
-		r.setPassword(BCrypt.hashpw(r.getPassword(), BCrypt.gensalt()));//hash password
+		r.setPassword(BCrypt.hashpw(r.getPassword(), BCrypt.gensalt()));// hash password
 		em.persist(r);
 		// System.out.println("addResearcher witdh id=" + r.getResearcherId());
 		return r;
@@ -151,10 +154,9 @@ public class Dao {
 		Event e = em.find(Event.class, id);
 		// System.out.println("findEvent with id=" + e.getEventId());
 		// loading lazy all the event lists
-		if (e.getAttendees().size() != 0);
+		if (e.getAttendees().size() != 0)
+			;
 		// System.out.println("number of attendees: " + e.getAttendees().size());
-		//if (e.getSpeakers().size() != 0);
-		// System.out.println("number of speakers: " + e.getSpeakers().size());
 		return e;
 	}
 
@@ -217,16 +219,16 @@ public class Dao {
 	// USER
 	public User authUser(User user) {
 		// System.out.println("DAO AUTH user:"+user);
-		Query queryUser = em.createQuery("SELECT r.researcherId FROM Researcher AS r WHERE email=?1")
-				.setParameter(1, user.getEmail());
-		
+		Query queryUser = em.createQuery("SELECT r.researcherId FROM Researcher AS r WHERE email=?1").setParameter(1,
+				user.getEmail());
+
 		if (queryUser.getResultList().isEmpty())
 			return user;
-		
-		Query queryPassword = em.createQuery("SELECT r.password FROM Researcher AS r WHERE email=?1")
-				.setParameter(1, user.getEmail());
-		
-		if(!BCrypt.checkpw(user.getPassword(), (String)queryPassword.getResultList().get(0)))
+
+		Query queryPassword = em.createQuery("SELECT r.password FROM Researcher AS r WHERE email=?1").setParameter(1,
+				user.getEmail());
+
+		if (!BCrypt.checkpw(user.getPassword(), (String) queryPassword.getResultList().get(0)))
 			return user;
 		// System.out.println(query.getResultList().get(0));
 		long result = (long) queryUser.getResultList().get(0);
@@ -239,5 +241,5 @@ public class Dao {
 		user.setRole(role);
 		return user;
 	}
-	
+
 }

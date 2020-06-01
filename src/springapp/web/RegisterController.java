@@ -1,6 +1,5 @@
 package springapp.web;
 
-import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -73,7 +72,6 @@ public class RegisterController {
 		researcher.setRole(Role.USER);
 		if (Long.parseLong((String) result.getFieldValue("lab.labId")) != 0) {
 			Lab lab = labManager.find(Long.parseLong((String) result.getFieldValue("lab.labId")));
-			// logger.info("ID LAB changement: " + lab.getLabId());
 			researcher.setLab(lab);
 		} else {
 			researcher.setLab(null);

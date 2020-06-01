@@ -9,12 +9,12 @@ public interface IEventManager {
 	Collection<Event> findAll();
 
 	Collection<Event> findActive();
-	
+
 	Collection<Event> findArchiveAtYear(int year);
 
-    void update(Event event);
+	void update(Event event);
 
-    Event find(long id);
+	Event find(long id);
 
 	void add(Event event);
 

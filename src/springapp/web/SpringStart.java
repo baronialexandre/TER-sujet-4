@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
@@ -25,42 +24,40 @@ import springapp.dao.SpringDAOConfiguration;
 
 @Configuration
 @EnableWebMvc
-@Import({SpringBusinessConfig.class, SpringDAOConfiguration.class})
+@Import({ SpringBusinessConfig.class, SpringDAOConfiguration.class })
 @ComponentScan(basePackageClasses = SpringStart.class)
 //@ComponentScan(basePackageClasses = SpringDAOConfiguration.class)
 public class SpringStart implements WebApplicationInitializer, WebMvcConfigurer {
 
-    @Override
-    public void onStartup(ServletContext ctx) throws ServletException {
-        System.out.println("Starting....");
-        // Init application context
-        AnnotationConfigWebApplicationContext webCtx
-            = new AnnotationConfigWebApplicationContext();
-        webCtx.register(SpringStart.class);
-        webCtx.setServletContext(ctx);
-        // Init dispatcher servlet
-        ServletRegistration.Dynamic servlet
-            = ctx.addServlet("springapp", new DispatcherServlet(webCtx));
-        servlet.setLoadOnStartup(1);
-        //servlet.addMapping("*.htm");
-        servlet.addMapping("/actions/*");
-    }
-    
-    @Bean
-    public ViewResolver viewResolver() {
-        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-        viewResolver.setViewClass(JstlView.class);
-        //viewResolver.setPrefix("/WEB-INF/");
-        viewResolver.setPrefix("/");
-        viewResolver.setSuffix(".jsp");
-        return viewResolver;
-    }
-    
-    @Override
-    public void configurePathMatch(PathMatchConfigurer configurer) {
-        UrlPathHelper urlPathHelper = new UrlPathHelper();
-        urlPathHelper.setRemoveSemicolonContent(false);
-        configurer.setUrlPathHelper(urlPathHelper);
-    }
+	@Override
+	public void onStartup(ServletContext ctx) throws ServletException {
+		System.out.println("Starting....");
+		// Init application context
+		AnnotationConfigWebApplicationContext webCtx = new AnnotationConfigWebApplicationContext();
+		webCtx.register(SpringStart.class);
+		webCtx.setServletContext(ctx);
+		// Init dispatcher servlet
+		ServletRegistration.Dynamic servlet = ctx.addServlet("springapp", new DispatcherServlet(webCtx));
+		servlet.setLoadOnStartup(1);
+		// servlet.addMapping("*.htm");
+		servlet.addMapping("/actions/*");
+	}
+
+	@Bean
+	public ViewResolver viewResolver() {
+		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+		viewResolver.setViewClass(JstlView.class);
+		// viewResolver.setPrefix("/WEB-INF/");
+		viewResolver.setPrefix("/");
+		viewResolver.setSuffix(".jsp");
+		return viewResolver;
+	}
+
+	@Override
+	public void configurePathMatch(PathMatchConfigurer configurer) {
+		UrlPathHelper urlPathHelper = new UrlPathHelper();
+		urlPathHelper.setRemoveSemicolonContent(false);
+		configurer.setUrlPathHelper(urlPathHelper);
+	}
 
 }

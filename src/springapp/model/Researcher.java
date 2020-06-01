@@ -1,8 +1,6 @@
 package springapp.model;
 
-
 import java.io.Serializable;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -42,29 +40,25 @@ public class Researcher implements Serializable, Comparable<Researcher> {
 	@Id()
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long researcherId;
-	
+
 	@Basic(optional = false)
 	@Email(message = "Email should be valid")
-	@Column(name = "email", length = 200,
-	nullable = false, unique = true)
+	@Column(name = "email", length = 200, nullable = false, unique = true)
 	@Size(max = 200, message = "200 characters max")
 	private String email;
 
 	@Basic(optional = false)
-	@Column(name = "first_name", length = 200,
-	nullable = false)
+	@Column(name = "first_name", length = 200, nullable = false)
 	@Size(max = 200, message = "200 characters max")
 	private String firstName;
 
 	@Basic(optional = false)
-	@Column(name = "last_name", length = 200,
-	nullable = false)
+	@Column(name = "last_name", length = 200, nullable = false)
 	@Size(max = 200, message = "200 characters max")
 	private String lastName;
 
 	@Basic(optional = false)
-	@Column(name = "website", length = 200,
-	nullable = false)
+	@Column(name = "website", length = 200, nullable = false)
 	@Size(max = 200, message = "200 characters max")
 	private String website;
 
@@ -75,13 +69,11 @@ public class Researcher implements Serializable, Comparable<Researcher> {
 	private Date birthDay;
 
 	@Basic(optional = false)
-	@Column(name = "password", length = 200,
-	nullable = false)
+	@Column(name = "password", length = 200, nullable = false)
 	private String password;
-	
+
 	@Enumerated(EnumType.STRING)
-	@Column(name = "role", length = 200,
-	nullable = false)
+	@Column(name = "role", length = 200, nullable = false)
 	private Role role;
 
 	@Version()
@@ -89,16 +81,15 @@ public class Researcher implements Serializable, Comparable<Researcher> {
 
 	@Transient
 	public static long updateCounter = 0;
-	
-    @ManyToOne(optional = true)
-    @JoinColumn(name = "lab")
-    private Lab lab;
-    
-	@ManyToMany(mappedBy = "attendees") 
+
+	@ManyToOne(optional = true)
+	@JoinColumn(name = "lab")
+	private Lab lab;
+
+	@ManyToMany(mappedBy = "attendees")
 	private Set<Event> eventsAttending;
-    
-	@OneToMany(
-			cascade = { CascadeType.MERGE,  CascadeType.REMOVE }, //CascadeType.PERSIST enlevé
+
+	@OneToMany(cascade = { CascadeType.MERGE, CascadeType.REMOVE }, // CascadeType.PERSIST enlevé
 			fetch = FetchType.LAZY, mappedBy = "organizer")
 	private Set<Event> eventsOrganized;
 
@@ -106,7 +97,8 @@ public class Researcher implements Serializable, Comparable<Researcher> {
 		super();
 	}
 
-	public Researcher(String email, String firstName, String lastName,  String website, Date birthDay, String password, Role role) {
+	public Researcher(String email, String firstName, String lastName, String website, Date birthDay, String password,
+			Role role) {
 		super();
 		this.email = email;
 		this.firstName = firstName;
@@ -231,7 +223,7 @@ public class Researcher implements Serializable, Comparable<Researcher> {
 	public void setEventsOrganized(Set<Event> eventsOrganized) {
 		this.eventsOrganized = eventsOrganized;
 	}
-	
+
 	public void addOrganizedEvent(Event event) {
 		if (eventsOrganized == null) {
 			eventsOrganized = new HashSet<>();
@@ -248,11 +240,9 @@ public class Researcher implements Serializable, Comparable<Researcher> {
 
 	@Override
 	public int compareTo(Researcher o2) {
-		if(lastName.compareTo(o2.getLastName()) == 0)
+		if (lastName.compareTo(o2.getLastName()) == 0)
 			return firstName.compareTo(o2.getFirstName());
 		return lastName.compareTo(o2.getLastName());
 	}
-
-
 
 }

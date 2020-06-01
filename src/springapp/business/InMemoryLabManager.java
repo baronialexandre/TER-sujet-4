@@ -18,48 +18,48 @@ public class InMemoryLabManager implements ILabManager {
 
 	@Autowired
 	Dao dao;
-	
+
 	Random rnd = new Random();
-    int maxId = 0;
+	int maxId = 0;
 
-    public InMemoryLabManager() {
-    }
+	public InMemoryLabManager() {
+	}
 
-    @Override
-    public Collection<Lab> findAll() {
-        return dao.getAllLabs();
-    }
+	@Override
+	public Collection<Lab> findAll() {
+		return dao.getAllLabs();
+	}
 
-    @Override
+	@Override
 	public void update(Lab lab) {
 		dao.updateLab(lab);
 	}
-    
-    @Override
+
+	@Override
 	public void add(Lab lab) {
 		dao.addLab(lab);
 	}
 
-    @Override
+	@Override
 	public Lab find(long id) {
 		return dao.findLab(id);
 	}
-    
-    @Override
-    public boolean delete(long id) {
-    	try {
-    		dao.removeLab(id);
-    		return true;
-    	} catch(Exception e) {
-    		return false;
-    	}
-    }
+
+	@Override
+	public boolean delete(long id) {
+		try {
+			dao.removeLab(id);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
 
 	@Override
 	public Map<Long, String> getLabNameMap() {
 		List<Lab> allLabs = new ArrayList<Lab>(findAll());
-		Map<Long,String> labMap = new LinkedHashMap<>();
-		for(Lab lab : allLabs)
+		Map<Long, String> labMap = new LinkedHashMap<>();
+		for (Lab lab : allLabs)
 			labMap.put(lab.getLabId(), lab.getLabName());
 		return labMap;
 	}

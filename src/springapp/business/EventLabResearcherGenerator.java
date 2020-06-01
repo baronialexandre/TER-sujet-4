@@ -49,7 +49,7 @@ public class EventLabResearcherGenerator {
 				eventDuration.setTime(begin);
 				eventDuration.add(Calendar.DATE, rnd.nextInt(4));
 				Date end = eventDuration.getTime();
-				// genere speaker funny name
+				// genere speakers
 				List<String> speakers = new ArrayList<>();
 				for (int iii = 0; iii < rnd.nextInt(5) + 1; iii++)
 					speakers.add(faker.funnyName().name());
@@ -57,28 +57,25 @@ public class EventLabResearcherGenerator {
 
 				switch (rnd.nextInt(3)) {
 				case (0):
-					e = new Event("Congrés de " + faker.ancient().god() + " " + rnd.nextInt(1000000), EventType.CONGRESS,
-							faker.address().city(), begin, end,
-							faker.lorem().sentence(50), speakers,
-							100 + rnd.nextInt(400) + 0.0f, new Long((rnd.nextInt(20) + 2) * 100));
+					e = new Event("Congrés de " + faker.ancient().god() + " " + rnd.nextInt(1000000),
+							EventType.CONGRESS, faker.address().city(), begin, end, faker.lorem().sentence(50),
+							speakers, 100 + rnd.nextInt(400) + 0.0f, new Long((rnd.nextInt(20) + 2) * 100));
 					break;
 				case (1):
 					e = new Event("Séminaire " + faker.app().name() + " " + rnd.nextInt(1000000), EventType.SEMINAR,
-							faker.address().city(), begin, end,
-							faker.lorem().sentence(20), speakers,
+							faker.address().city(), begin, end, faker.lorem().sentence(20), speakers,
 							100 + rnd.nextInt(400) + 0.0f, new Long((rnd.nextInt(50) + 5)));
 					break;
 				case (2):
 					e = new Event("Conférence " + faker.commerce().department() + " " + rnd.nextInt(1000000),
-							EventType.CONFERENCE, faker.address().city(), begin, end,
-							faker.lorem().sentence(30), speakers,
-							100 + rnd.nextInt(400) + 0.0f, new Long((rnd.nextInt(80) + 2) * 10));
+							EventType.CONFERENCE, faker.address().city(), begin, end, faker.lorem().sentence(30),
+							speakers, 100 + rnd.nextInt(400) + 0.0f, new Long((rnd.nextInt(80) + 2) * 10));
 					break;
 				}
 
 				e.addOrganizer(r);
 				int attendeeNb = rnd.nextInt(e.getAttendeeCap().intValue());
-				for (int iii = 0; iii < attendeeNb && iii < researchers.size() ; iii++) {
+				for (int iii = 0; iii < attendeeNb && iii < researchers.size(); iii++) {
 					Researcher attendee = researchers.get(rnd.nextInt(researchers.size()));
 					if (e.getAttendees() != null && e.getAttendees().contains(attendee))
 						continue;

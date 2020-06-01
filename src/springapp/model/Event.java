@@ -39,26 +39,23 @@ public class Event implements Serializable {
 	private long eventId;
 
 	@Basic(optional = false)
-	@Column(name = "eventName", length = 200,
-	nullable = false, unique = true)
+	@Column(name = "eventName", length = 200, nullable = false, unique = true)
 	private String eventName;
-	
+
 	@Enumerated(EnumType.STRING)
-	@Column(name = "email", length = 200,
-	nullable = false)
+	@Column(name = "email", length = 200, nullable = false)
 	private EventType type;
 
 	@Basic(optional = false)
-	@Column(name = "location", length = 200,
-	nullable = false)
+	@Column(name = "location", length = 200, nullable = false)
 	private String location;
-	
+
 	@Basic(optional = false)
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "begin_date")
 	private Date beginDate;
-	
+
 	@Basic(optional = false)
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -66,26 +63,25 @@ public class Event implements Serializable {
 	private Date endDate;
 
 	@Basic(optional = false)
-	@Column(name = "description", length = 5000,
-	nullable = false)
+	@Column(name = "description", length = 5000, nullable = false)
 	private String description;
-	
+
 	@Convert(converter = StringListConverter.class)
 	@Column(name = "speakers")
 	private List<String> speakers;
-	
+
 	@Basic(optional = false)
 	@Column(name = "fee", nullable = false)
 	private Float fee;
-	
-    @ManyToOne(optional = true)
-    @JoinColumn(name = "organizer")
-    private Researcher organizer;
-    
+
+	@ManyToOne(optional = true)
+	@JoinColumn(name = "organizer")
+	private Researcher organizer;
+
 	@Basic(optional = false)
 	@Column(name = "attendee_cap", nullable = false)
 	private Long attendeeCap;
-	
+
 	@ManyToMany
 	@JoinTable(name = "attendees")
 	private Set<Researcher> attendees;
@@ -95,7 +91,6 @@ public class Event implements Serializable {
 
 	@Transient
 	public static long updateCounter = 0;
-	
 
 	public Event() {
 		super();
@@ -113,8 +108,6 @@ public class Event implements Serializable {
 		this.speakers = speakers;
 		this.fee = fee;
 		this.attendeeCap = attendeeCap;
-		//this.organizer = organizer;
-		//organizer add org event?
 	}
 
 	public long getEventId() {
@@ -196,7 +189,7 @@ public class Event implements Serializable {
 	public void setOrganizer(Researcher organizer) {
 		this.organizer = organizer;
 	}
-	
+
 	public void addOrganizer(Researcher organizer) {
 		organizer.addOrganizedEvent(this);
 		this.organizer = organizer;
@@ -217,23 +210,12 @@ public class Event implements Serializable {
 	public void setAttendees(Set<Researcher> attendees) {
 		this.attendees = attendees;
 	}
-	
+
 	public void addAttendee(Researcher p) {
 		if (attendees == null) {
 			attendees = new HashSet<>();
 		}
-		//p.addAttendingEvent(this);
 		attendees.add(p);
 	}
-
-	//organizer.getEmail() make all crash if orgnizer is null...
-	/*@Override
-	public String toString() {
-		return "Event [eventId=" + eventId + ", eventName=" + eventName + ", type=" + type + ", location=" + location
-				+ ", beginDate=" + beginDate + ", endDate=" + endDate + ", description=" + description + ", speakers="
-				+ speakers + ", fee=" + fee + ", organizer=" + organizer.getEmail() + ", attendeeCap=" + attendeeCap
-				+ ", attendees=" + attendees.size() + ", version=" + version + "]";
-	}*/
-
 
 }

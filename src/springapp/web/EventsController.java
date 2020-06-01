@@ -20,39 +20,40 @@ import springapp.model.Event;
 import springapp.model.Researcher;
 
 @Controller()
-public class EventsController{
+public class EventsController {
 
 	@Autowired
 	IEventManager eventManager;
-	
+
 	@Autowired
 	IResearcherManager researcherManager;
-	
-    protected final Log logger = LogFactory.getLog(getClass());
 
-    @RequestMapping(value = "events")
-    public ModelAndView listEvent(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	try {
-    		if(request.getSession().getAttribute("userId") == null)
-        		return new ModelAndView("redirect:/actions/logout");
-    	} catch (Exception e) {
-    		return new ModelAndView("redirect:/actions/logout");
-    	}
-        logger.info("List of events (actives)");
-        
-        if(request.getSession().getAttribute("researcher") == null)
-        {
-	        Researcher currResearcher = researcherManager.getResearcher((Long)request.getSession().getAttribute("userId"));
-	        logger.info(currResearcher.getRole());
-	        request.getSession().setAttribute("researcher",currResearcher);
-        }
-        
-        Collection<Event> events = eventManager.findActive();
-        logger.info(events.toString());
-        ModelAndView modelAndView = new ModelAndView();
-        request.getSession().setAttribute("events", events);
-        modelAndView.setViewName("events");
-        return modelAndView;
-    }
+	protected final Log logger = LogFactory.getLog(getClass());
+
+	@RequestMapping(value = "events")
+	public ModelAndView listEvent(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		try {
+			if (request.getSession().getAttribute("userId") == null)
+				return new ModelAndView("redirect:/actions/logout");
+		} catch (Exception e) {
+			return new ModelAndView("redirect:/actions/logout");
+		}
+		logger.info("List of events (actives)");
+
+		if (request.getSession().getAttribute("researcher") == null) {
+			Researcher currResearcher = researcherManager
+					.getResearcher((Long) request.getSession().getAttribute("userId"));
+			logger.info(currResearcher.getRole());
+			request.getSession().setAttribute("researcher", currResearcher);
+		}
+
+		Collection<Event> events = eventManager.findActive();
+		logger.info(events.toString());
+		ModelAndView modelAndView = new ModelAndView();
+		request.getSession().setAttribute("events", events);
+		modelAndView.setViewName("events");
+		return modelAndView;
+	}
 
 }
