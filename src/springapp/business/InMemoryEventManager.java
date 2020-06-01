@@ -26,7 +26,7 @@ public class InMemoryEventManager implements IEventManager {
 	@PostConstruct
 	public void init() {
 		if (dao.getAllEvents().isEmpty())
-			EventLabResearcherGenerator.generateEventsLabsResearchers(dao, 50, 50);
+			EventLabResearcherGenerator.generateEventsLabsResearchers(dao, 15, 15);
 	}
 
 	@Override
