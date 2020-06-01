@@ -33,14 +33,14 @@
 		requirements that such communications be in writing.</p>
 	<h3>Applicable Law</h3>
 	<p>By visiting this website, you agree that the laws of the France,
-		without regard to principles of conflict laws, will govern theseterms
-		of service, or any dispute of any sort that might come between AMU
-		and you, or its business partners and associates.</p>
+		without regard to principles of conflict laws, will govern these terms
+		of service, or any dispute of any sort that might come between AMU and
+		you, or its business partners and associates.</p>
 	<h3>Disputes</h3>
 	<p>Any dispute related in any way to your visit to this website or
 		to products you purchase from us shall be arbitrated by state or
-		federal court France and you consent to exclusive
-		jurisdiction and venue of such courts.</p>
+		federal court France and you consent to exclusive jurisdiction and
+		venue of such courts.</p>
 	<h3>Comments, Reviews, and Emails</h3>
 	<p>Visitors may post content as long as it is not obscene, illegal,
 		defamatory, threatening, infringing of intellectual property rights,

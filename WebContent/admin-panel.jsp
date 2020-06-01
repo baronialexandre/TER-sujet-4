@@ -36,7 +36,10 @@
 <div class="container-fluid">
 	<div class="d-flex justify-content-between">
 		<h2>Admin panel</h2>
-		<button onclick="location.href='#footer'" alt="Max-width 10%" class="btn btn-outline-info" type="button"><i class="fas fa-arrow-down"></i></button>
+		<button onclick="location.href='#footer'" alt="Max-width 10%"
+			class="btn btn-outline-info" type="button">
+			<i class="fas fa-arrow-down"></i>
+		</button>
 	</div>
 	<hr />
 	<div>
@@ -135,7 +138,8 @@
 						<c:forEach items="${lab.researchers}" var="rs">
 							<a
 								href="<%=application.getContextPath()%>/actions/profile?researcherId=${rs.researcherId}">
-								<c:out value="${rs.lastName} ${rs.firstName} ${rs.role}" default="---" />
+								<c:out value="${rs.lastName} ${rs.firstName} ${rs.role}"
+									default="---" />
 							</a>
 							<br />
 						</c:forEach>
@@ -162,5 +166,4 @@
 			</c:forEach>
 		</div>
 	</div>
-
 </div>

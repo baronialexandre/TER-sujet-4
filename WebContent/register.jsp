@@ -4,7 +4,9 @@
 	<hr />
 	<h2>Informations</h2>
 	<hr />
-	<form:form class="form-horizontal" action="${pageContext.servletContext.contextPath}/actions/register-account" method="POST" modelAttribute="researcher">
+	<form:form class="form-horizontal"
+		action="${pageContext.servletContext.contextPath}/actions/register-account"
+		method="POST" modelAttribute="researcher">
 		<form:errors path="*" cssClass="alert alert-danger" element="div" />
 		<table class="table table-striped">
 			<tr>
@@ -54,11 +56,12 @@
 				<td>
 					<ul>
 						<form:select class="form-control" path="lab.labId">
-             						<form:options items="${labs}" />
-			            </form:select>
+							<form:options items="${labs}" />
+						</form:select>
 					</ul>
 				</td>
-				<td><form:errors path="lab.labId" cssClass="alert alert-warning" element="div" /></td>
+				<td><form:errors path="lab.labId"
+						cssClass="alert alert-warning" element="div" /></td>
 			</tr>
 		</table>
 		<div class="d-flex flex-row-reverse">

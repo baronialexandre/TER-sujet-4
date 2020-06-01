@@ -9,7 +9,8 @@
 	<div class="d-flex justify-content-between">
 		<h2>Archived events</h2>
 		<div>
-			<form action="<%=application.getContextPath()%>/actions/archives" method="GET" class="navbar-form navbar-right">
+			<form action="<%=application.getContextPath()%>/actions/archives"
+				method="GET" class="navbar-form navbar-right">
 				<div class="form-row">
 					<div class="form-group border rounded">
 						<c:choose>
@@ -46,19 +47,15 @@
 		<c:forEach items="${events}" var="event">
 			<c:choose>
 				<c:when test="${event.type == \"CONGRESS\"}">
-					<!--primary-->
 					<c:set var="typeColor" value="primary" />
 				</c:when>
 				<c:when test="${event.type == \"CONFERENCE\"}">
-					<!--danger-->
 					<c:set var="typeColor" value="danger" />
 				</c:when>
 				<c:when test="${event.type == \"SEMINAR\"}">
-					<!--success-->
 					<c:set var="typeColor" value="success" />
 				</c:when>
 				<c:otherwise>
-					<!-- muted -->
 					<c:set var="typeColor" value="muted" />
 				</c:otherwise>
 			</c:choose>
@@ -91,7 +88,6 @@
 					</p>
 					<a
 						href="${pageContext.servletContext.contextPath}/actions/eventdetail?eventId=${event.eventId}">
-						<!-- LIEN "MORE" -->
 						<button type="button"
 							class="btn btn-outline-${typeColor} btn-sm text-dark"
 							style="flex: auto;">
@@ -112,4 +108,3 @@
 		</c:forEach>
 	</div>
 </div>
-<!---->
